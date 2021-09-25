@@ -38,7 +38,6 @@
             android:id="@+id/ll_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
             android:orientation="horizontal">
 
             <com.kongzue.dialogx.datepicker.view.WheelView

@@ -5,11 +5,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kongzue.dialogx.DialogX;
 import com.kongzue.dialogx.citypicker.interfaces.OnCitySelected;
 import com.kongzue.dialogx.dialogs.BottomDialog;
 import com.kongzue.dialogx.interfaces.DialogLifecycleCallback;
 import com.kongzue.dialogx.interfaces.OnBindView;
 import com.kongzue.dialogx.interfaces.OnDialogButtonClickListener;
+import com.kongzue.dialogx.style.MaterialStyle;
 import com.lljjcoder.bean.CityBean;
 import com.lljjcoder.bean.DistrictBean;
 import com.lljjcoder.bean.ProvinceBean;
@@ -185,31 +187,6 @@ public class CityPickerDialog {
         })
                 .setCancelable(true)
                 .setAllowInterceptTouch(false)
-                .setOkButton(R.string.dialogx_city_picker_ok_button, new OnDialogButtonClickListener<BottomDialog>() {
-                    @Override
-                    public boolean onClick(BottomDialog baseDialog, View v) {
-                        
-                        selectProvinceIndexCache = selectProvinceIndex;
-                        selectCityIndexCache = selectCityIndex;
-                        selectAreaIndexCache = selectAreaIndex;
-                        
-                        onCitySelected.onSelect(parseHelper.getProvinceBean().getName() +
-                                        parseHelper.getCityBean().getName() +
-                                        parseHelper.getDistrictBean().getName(),
-                                parseHelper.getProvinceBean().getName(),
-                                parseHelper.getCityBean().getName(),
-                                parseHelper.getDistrictBean().getName()
-                        );
-                        return false;
-                    }
-                })
-                .setCancelButton(R.string.dialogx_city_picker_dialog_cancel, new OnDialogButtonClickListener<BottomDialog>() {
-                    @Override
-                    public boolean onClick(BottomDialog baseDialog, View v) {
-                        onCitySelected.onCancel();
-                        return false;
-                    }
-                })
                 .setDialogLifecycleCallback(new DialogLifecycleCallback<BottomDialog>() {
                     @Override
                     public void onDismiss(BottomDialog dialog) {
@@ -217,6 +194,51 @@ public class CityPickerDialog {
                         parseHelper = null;
                     }
                 });
+        if (DialogX.globalStyle instanceof MaterialStyle) {
+            bottomDialog.setOkButton(R.string.dialogx_city_picker_ok_button, new OnDialogButtonClickListener<BottomDialog>() {
+                @Override
+                public boolean onClick(BottomDialog baseDialog, View v) {
+                    
+                    selectProvinceIndexCache = selectProvinceIndex;
+                    selectCityIndexCache = selectCityIndex;
+                    selectAreaIndexCache = selectAreaIndex;
+                    
+                    onCitySelected.onSelect(parseHelper.getProvinceBean().getName() +
+                                    parseHelper.getCityBean().getName() +
+                                    parseHelper.getDistrictBean().getName(),
+                            parseHelper.getProvinceBean().getName(),
+                            parseHelper.getCityBean().getName(),
+                            parseHelper.getDistrictBean().getName()
+                    );
+                    return false;
+                }
+            }).setCancelButton(R.string.dialogx_city_picker_dialog_cancel, new OnDialogButtonClickListener<BottomDialog>() {
+                @Override
+                public boolean onClick(BottomDialog baseDialog, View v) {
+                    onCitySelected.onCancel();
+                    return false;
+                }
+            });
+        } else {
+            bottomDialog.setCancelButton(R.string.dialogx_city_picker_ok_button, new OnDialogButtonClickListener<BottomDialog>() {
+                @Override
+                public boolean onClick(BottomDialog baseDialog, View v) {
+                    
+                    selectProvinceIndexCache = selectProvinceIndex;
+                    selectCityIndexCache = selectCityIndex;
+                    selectAreaIndexCache = selectAreaIndex;
+                    
+                    onCitySelected.onSelect(parseHelper.getProvinceBean().getName() +
+                                    parseHelper.getCityBean().getName() +
+                                    parseHelper.getDistrictBean().getName(),
+                            parseHelper.getProvinceBean().getName(),
+                            parseHelper.getCityBean().getName(),
+                            parseHelper.getDistrictBean().getName()
+                    );
+                    return false;
+                }
+            });
+        }
         return this;
     }
     

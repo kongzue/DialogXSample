@@ -33,6 +33,9 @@ dependencies {
     implementation 'com.github.kongzue:StackLabel:1.1.8'
 
     implementation "com.github.kongzue.DialogX:DialogX:${DIALOGX_VERSION}"
+    implementation "com.github.kongzue.DialogX:DialogXIOSStyle:${DIALOGX_VERSION}"
+    implementation "com.github.kongzue.DialogX:DialogXKongzueStyle:${DIALOGX_VERSION}"
+    implementation "com.github.kongzue.DialogX:DialogXMIUIStyle:${DIALOGX_VERSION}"
     implementation project(path: ':CityPicker')
     implementation project(path: ':DatePicker')
 }

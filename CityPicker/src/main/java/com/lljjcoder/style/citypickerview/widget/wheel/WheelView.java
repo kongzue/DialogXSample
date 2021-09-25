@@ -747,13 +747,7 @@ public class WheelView extends View {
             paint.setColor(Color.parseColor("#" + getLineColorStr()));
         }
         // 设置线宽
-        if (getLineWidth() > 3) {
-            paint.setStrokeWidth((float) getLineWidth());
-        }
-        else {
-            paint.setStrokeWidth((float) 3);
-            
-        }
+        paint.setStrokeWidth((float) getLineWidth());
         
         // 绘制上边直线
         canvas.drawLine(0, center - offset, getWidth(), center - offset, paint);

@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kongzue.dialogx.DialogX;
 import com.kongzue.dialogx.datepicker.interfaces.OnDateSelected;
 import com.kongzue.dialogx.datepicker.view.ArrayWheelAdapter;
 import com.kongzue.dialogx.datepicker.view.OnWheelChangedListener;
@@ -11,6 +12,7 @@ import com.kongzue.dialogx.datepicker.view.WheelView;
 import com.kongzue.dialogx.dialogs.BottomDialog;
 import com.kongzue.dialogx.interfaces.OnBindView;
 import com.kongzue.dialogx.interfaces.OnDialogButtonClickListener;
+import com.kongzue.dialogx.style.MaterialStyle;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -150,25 +152,38 @@ public class DatePickerDialog {
             }
         })
                 .setCancelable(true)
-                .setAllowInterceptTouch(false)
-                .setOkButton(R.string.dialogx_date_picker_ok_button, new OnDialogButtonClickListener<BottomDialog>() {
-                    @Override
-                    public boolean onClick(BottomDialog baseDialog, View v) {
-                        onDateSelected.onSelect(yearList.get(selectYearIndex) + "-" + monthList.get(selectMonthIndex) + "-" + dayList.get(selectDayIndex),
-                                Integer.parseInt(yearList.get(selectYearIndex)),
-                                Integer.parseInt(monthList.get(selectMonthIndex)),
-                                Integer.parseInt(dayList.get(selectDayIndex))
-                        );
-                        return false;
-                    }
-                })
-                .setCancelButton(R.string.dialogx_date_picker_dialog_cancel, new OnDialogButtonClickListener<BottomDialog>() {
-                    @Override
-                    public boolean onClick(BottomDialog baseDialog, View v) {
-                        
-                        return false;
-                    }
-                });
+                .setAllowInterceptTouch(false);
+        if (DialogX.globalStyle instanceof MaterialStyle) {
+            bottomDialog.setOkButton(R.string.dialogx_date_picker_ok_button, new OnDialogButtonClickListener<BottomDialog>() {
+                @Override
+                public boolean onClick(BottomDialog baseDialog, View v) {
+                    onDateSelected.onSelect(yearList.get(selectYearIndex) + "-" + monthList.get(selectMonthIndex) + "-" + dayList.get(selectDayIndex),
+                            Integer.parseInt(yearList.get(selectYearIndex)),
+                            Integer.parseInt(monthList.get(selectMonthIndex)),
+                            Integer.parseInt(dayList.get(selectDayIndex))
+                    );
+                    return false;
+                }
+            }).setCancelButton(R.string.dialogx_date_picker_dialog_cancel, new OnDialogButtonClickListener<BottomDialog>() {
+                @Override
+                public boolean onClick(BottomDialog baseDialog, View v) {
+                    onDateSelected.onCancel();
+                    return false;
+                }
+            });
+        } else {
+            bottomDialog.setCancelButton(R.string.dialogx_date_picker_ok_button, new OnDialogButtonClickListener<BottomDialog>() {
+                @Override
+                public boolean onClick(BottomDialog baseDialog, View v) {
+                    onDateSelected.onSelect(yearList.get(selectYearIndex) + "-" + monthList.get(selectMonthIndex) + "-" + dayList.get(selectDayIndex),
+                            Integer.parseInt(yearList.get(selectYearIndex)),
+                            Integer.parseInt(monthList.get(selectMonthIndex)),
+                            Integer.parseInt(dayList.get(selectDayIndex))
+                    );
+                    return false;
+                }
+            });
+        }
         return this;
     }
     

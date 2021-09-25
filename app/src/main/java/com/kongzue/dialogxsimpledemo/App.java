@@ -3,6 +3,8 @@ package com.kongzue.dialogxsimpledemo;
 import android.app.Application;
 
 import com.kongzue.dialogx.DialogX;
+import com.kongzue.dialogx.style.IOSStyle;
+import com.kongzue.dialogx.style.MIUIStyle;
 
 /**
  * @author: Kongzue
@@ -16,5 +18,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         DialogX.init(this);
+        DialogX.globalStyle = MIUIStyle.style();
     }
 }
