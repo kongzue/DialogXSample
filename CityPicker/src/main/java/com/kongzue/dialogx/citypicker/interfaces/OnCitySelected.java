@@ -8,6 +8,8 @@ package com.kongzue.dialogx.citypicker.interfaces;
  * @createTime: 2021/9/25 11:13
  */
 public abstract class OnCitySelected {
-    public abstract void onSuccess(String text,String province,String city,String district);
-    public void onCancel(){};
+    public abstract void onSelect(String text, String province, String city, String district);
+    
+    public void onCancel() {
+    }
 }

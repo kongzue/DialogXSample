@@ -18,7 +18,6 @@ import com.lljjcoder.style.citypickerview.widget.wheel.OnWheelChangedListener;
 import com.lljjcoder.style.citypickerview.widget.wheel.WheelView;
 import com.lljjcoder.style.citypickerview.widget.wheel.adapters.ArrayWheelAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +32,7 @@ public class CityPickerDialog {
     private int selectProvinceIndexCache = 0, selectCityIndexCache = 0, selectAreaIndexCache = 0;
     private CityParseHelper parseHelper;
     private int selectProvinceIndex = 0, selectCityIndex = 0, selectAreaIndex = 0;
+    private BottomDialog bottomDialog;
     
     public CityPickerDialog setDefaultSelect(String province, String city, String district) {
         initParseHelper();
@@ -61,6 +61,13 @@ public class CityPickerDialog {
         return this;
     }
     
+    public CityPickerDialog cleanDefaultSelect() {
+        selectProvinceIndexCache = 0;
+        selectCityIndexCache = 0;
+        selectAreaIndexCache = 0;
+        return this;
+    }
+    
     private void initParseHelper() {
         if (parseHelper == null) {
             parseHelper = new CityParseHelper();
@@ -74,8 +81,8 @@ public class CityPickerDialog {
         return new CityPickerDialog();
     }
     
-    public void show(OnCitySelected onCitySelected) {
-        BottomDialog.show(new OnBindView<BottomDialog>(R.layout.dialogx_city_picker) {
+    public CityPickerDialog show(OnCitySelected onCitySelected) {
+        bottomDialog = BottomDialog.show(new OnBindView<BottomDialog>(R.layout.dialogx_city_picker) {
             
             private TextView txtDialogTitle;
             private LinearLayout llTitleBackground;
@@ -92,6 +99,8 @@ public class CityPickerDialog {
                 idProvince = v.findViewById(R.id.id_province);
                 idCity = v.findViewById(R.id.id_city);
                 idDistrict = v.findViewById(R.id.id_district);
+                
+                txtDialogTitle.getPaint().setFakeBoldText(true);
                 
                 selectProvinceIndex = selectProvinceIndexCache;
                 selectCityIndex = selectCityIndexCache;
@@ -184,7 +193,7 @@ public class CityPickerDialog {
                         selectCityIndexCache = selectCityIndex;
                         selectAreaIndexCache = selectAreaIndex;
                         
-                        onCitySelected.onSuccess(parseHelper.getProvinceBean().getName() +
+                        onCitySelected.onSelect(parseHelper.getProvinceBean().getName() +
                                         parseHelper.getCityBean().getName() +
                                         parseHelper.getDistrictBean().getName(),
                                 parseHelper.getProvinceBean().getName(),
@@ -208,5 +217,10 @@ public class CityPickerDialog {
                         parseHelper = null;
                     }
                 });
+        return this;
+    }
+    
+    public BottomDialog getDialog() {
+        return bottomDialog;
     }
 }

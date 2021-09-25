@@ -34,4 +34,5 @@ dependencies {
 
     implementation "com.github.kongzue.DialogX:DialogX:${DIALOGX_VERSION}"
     implementation project(path: ':CityPicker')
+    implementation project(path: ':DatePicker')
 }

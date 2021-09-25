@@ -23,7 +23,7 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:layout_width="110dp"
+                android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:gravity="center"
                 android:onClick="onCityPicker"
@@ -31,7 +31,7 @@
                 android:text="地址选择对话框" />
 
             <Button
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:gravity="center"
                 android:onClick="onDatePicker"
@@ -39,7 +39,7 @@
                 android:text="日期选择对话框" />
 
             <Button
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:gravity="center"
                 android:onClick="onShare"
