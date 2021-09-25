@@ -6,7 +6,7 @@ android {
     compileSdk 30
 
     defaultConfig {
-        applicationId "com.kongzue.dialogxsimpledemo"
+        applicationId 'com.kongzue.dialogxsampledemo'
         minSdk 21
         targetSdk 30
         versionCode 1

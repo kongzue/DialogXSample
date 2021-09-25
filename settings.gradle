@@ -9,7 +9,7 @@ dependencyResolutionManagement {
         }
     }
 }
-rootProject.name = "DialogXSimpleDemo"
+rootProject.name = "DialogXSampleDemo"
 include ':app'
 include ':CityPicker'
 include ':DatePicker'
