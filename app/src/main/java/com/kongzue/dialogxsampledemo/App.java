@@ -1,10 +1,8 @@
-package com.kongzue.dialogxsimpledemo;
+package com.kongzue.dialogxsampledemo;
 
 import android.app.Application;
 
 import com.kongzue.dialogx.DialogX;
-import com.kongzue.dialogx.style.IOSStyle;
-import com.kongzue.dialogx.style.MIUIStyle;
 
 /**
  * @author: Kongzue
@@ -18,5 +16,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         DialogX.init(this);
+        DialogX.globalTheme = DialogX.THEME.AUTO;
     }
 }

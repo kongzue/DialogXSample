@@ -1,10 +1,9 @@
-package com.kongzue.dialogxsimpledemo;
+package com.kongzue.dialogxsampledemo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
