@@ -16,7 +16,6 @@
 package com.kongzue.dialogx.datepicker.view;
 
 import android.content.Context;
-
 import java.util.List;
 
 /**
@@ -53,7 +52,7 @@ public class ArrayWheelAdapter<T> extends AbstractWheelTextAdapter {
         }
         return null;
     }
-
+    
     @Override
     public int getItemsCount() {
         return items.size();

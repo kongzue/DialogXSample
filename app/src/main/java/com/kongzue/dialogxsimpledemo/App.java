@@ -18,6 +18,5 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         DialogX.init(this);
-        DialogX.globalStyle = MIUIStyle.style();
     }
 }

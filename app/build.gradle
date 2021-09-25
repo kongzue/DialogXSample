@@ -38,4 +38,5 @@ dependencies {
     implementation "com.github.kongzue.DialogX:DialogXMIUIStyle:${DIALOGX_VERSION}"
     implementation project(path: ':CityPicker')
     implementation project(path: ':DatePicker')
+    implementation project(path: ':ShareDialog')
 }

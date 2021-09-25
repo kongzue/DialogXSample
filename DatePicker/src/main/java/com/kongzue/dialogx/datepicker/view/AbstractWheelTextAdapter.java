@@ -206,6 +206,7 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
                 if (text == null) {
                     text = "";
                 }
+                textView.setTextColor(getTextColor());
                 textView.setText(text);
                 
                 if (itemResourceId == TEXT_VIEW_ITEM_RESOURCE) {

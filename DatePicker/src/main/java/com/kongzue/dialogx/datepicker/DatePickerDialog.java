@@ -74,6 +74,7 @@ public class DatePickerDialog {
             
             @Override
             public void onBind(BottomDialog dialog, View v) {
+                bottomDialog = dialog;
                 txtDialogTitle = v.findViewById(R.id.txt_dialog_title);
                 llTitleBackground = v.findViewById(R.id.ll_title_background);
                 llTitle = v.findViewById(R.id.ll_title);
@@ -81,6 +82,7 @@ public class DatePickerDialog {
                 idMonth = v.findViewById(R.id.id_month);
                 idDay = v.findViewById(R.id.id_day);
                 
+                txtDialogTitle.setTextColor(dialog.getResources().getColor(dialog.isLightTheme() ? R.color.black : R.color.white));
                 txtDialogTitle.getPaint().setFakeBoldText(true);
                 
                 idYear.addChangingListener(new OnWheelChangedListener() {
@@ -117,6 +119,7 @@ public class DatePickerDialog {
                 ArrayWheelAdapter<String> yearAdapter = new ArrayWheelAdapter<String>(BottomDialog.getContext(), yearList);
                 yearAdapter.setItemResource(R.layout.default_item_date);
                 yearAdapter.setItemTextResource(R.id.default_item_date_name_tv);
+                yearAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
                 idYear.setViewAdapter(yearAdapter);
                 idYear.setCurrentItem(selectYearIndex < yearList.size() ? selectYearIndex : 0);
             }
@@ -129,6 +132,7 @@ public class DatePickerDialog {
                 ArrayWheelAdapter<String> monthAdapter = new ArrayWheelAdapter<String>(BottomDialog.getContext(), monthList);
                 monthAdapter.setItemResource(R.layout.default_item_date);
                 monthAdapter.setItemTextResource(R.id.default_item_date_name_tv);
+                monthAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
                 idMonth.setViewAdapter(monthAdapter);
                 idMonth.setCurrentItem(selectMonthIndex < monthList.size() ? selectMonthIndex : 0);
             }
@@ -146,6 +150,7 @@ public class DatePickerDialog {
                     ArrayWheelAdapter<String> dayAdapter = new ArrayWheelAdapter<String>(BottomDialog.getContext(), dayList);
                     dayAdapter.setItemResource(R.layout.default_item_date);
                     dayAdapter.setItemTextResource(R.id.default_item_date_name_tv);
+                    dayAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
                     idDay.setViewAdapter(dayAdapter);
                     idDay.setCurrentItem(selectDayIndex < dayList.size() ? selectDayIndex : 0);
                 }
