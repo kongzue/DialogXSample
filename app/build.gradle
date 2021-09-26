@@ -9,8 +9,8 @@ android {
         applicationId 'com.kongzue.dialogxsampledemo'
         minSdk 21
         targetSdk 30
-        versionCode 1
-        versionName "1.0"
+        versionCode SAMPLE_VERSION_INT as int
+        versionName SAMPLE_VERSION
     }
 
     buildTypes {

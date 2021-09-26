@@ -39,6 +39,8 @@ public class ShareDialog {
                 txtDialogTitle = v.findViewById(R.id.txt_dialog_title);
                 boxTable = v.findViewById(R.id.box_table);
                 
+                txtDialogTitle.getPaint().setFakeBoldText(true);
+                
                 if (shareDataList != null) {
                     for (ShareData shareData : shareDataList) {
                         View shareButton = dialog.createView(R.layout.item_dialogx_share_button);
