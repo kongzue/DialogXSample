@@ -18,7 +18,13 @@ DialogX 计划提供模块扩展包
 
 √ 日期选择对话框
 
-- 分享选择对话框
+  - 日历选择对话框
+  
+    - 日期区间选择功能
+
+- 分享选择对话框（纵向堆叠图标样式）
+
+  - 横向列滑动模式
 ```
 
 建议功能可以直接提交 [issues](https://github.com/kongzue/DialogXSample/issues)

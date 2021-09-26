@@ -30,6 +30,7 @@ public class DatePickerDialog {
     private int selectYearIndex, selectMonthIndex, selectDayIndex;
     private BottomDialog bottomDialog;
     private int maxYear = 2100, minYear = 1900;
+    private String yearLabel = "年", monthLabel = "月", dayLabel = "日";
     
     public static DatePickerDialog build() {
         return new DatePickerDialog();
@@ -114,7 +115,7 @@ public class DatePickerDialog {
             private void initYear() {
                 yearList = new ArrayList<>();
                 for (int i = minYear; i <= maxYear; i++) {
-                    yearList.add(String.valueOf(i));
+                    yearList.add(i + yearLabel);
                 }
                 ArrayWheelAdapter<String> yearAdapter = new ArrayWheelAdapter<String>(BottomDialog.getContext(), yearList);
                 yearAdapter.setItemResource(R.layout.default_item_date);
@@ -127,7 +128,7 @@ public class DatePickerDialog {
             private void initMonth() {
                 monthList = new ArrayList<>();
                 for (int i = 1; i <= 12; i++) {
-                    monthList.add(String.valueOf(i));
+                    monthList.add(i + monthLabel);
                 }
                 ArrayWheelAdapter<String> monthAdapter = new ArrayWheelAdapter<String>(BottomDialog.getContext(), monthList);
                 monthAdapter.setItemResource(R.layout.default_item_date);
@@ -139,13 +140,13 @@ public class DatePickerDialog {
             
             private void initDays() {
                 if (yearList == null || monthList == null) return;
-                int year = Integer.parseInt(yearList.get(idYear.getCurrentItem()));
-                int month = Integer.parseInt(monthList.get(idMonth.getCurrentItem()));
+                int year = minYear + idYear.getCurrentItem();
+                int month = 1 + idMonth.getCurrentItem();
                 int maxDay = getLastDayOfMonth(year, month);
                 if (maxDay != 0) {
                     dayList = new ArrayList<>();
                     for (int i = 1; i <= maxDay; i++) {
-                        dayList.add(String.valueOf(i));
+                        dayList.add(i + dayLabel);
                     }
                     ArrayWheelAdapter<String> dayAdapter = new ArrayWheelAdapter<String>(BottomDialog.getContext(), dayList);
                     dayAdapter.setItemResource(R.layout.default_item_date);
@@ -162,10 +163,13 @@ public class DatePickerDialog {
             bottomDialog.setOkButton(R.string.dialogx_date_picker_ok_button, new OnDialogButtonClickListener<BottomDialog>() {
                 @Override
                 public boolean onClick(BottomDialog baseDialog, View v) {
-                    onDateSelected.onSelect(yearList.get(selectYearIndex) + "-" + monthList.get(selectMonthIndex) + "-" + dayList.get(selectDayIndex),
-                            Integer.parseInt(yearList.get(selectYearIndex)),
-                            Integer.parseInt(monthList.get(selectMonthIndex)),
-                            Integer.parseInt(dayList.get(selectDayIndex))
+                    int year = minYear + selectYearIndex;
+                    int month = 1 + selectMonthIndex;
+                    int day = 1 + selectDayIndex;
+                    onDateSelected.onSelect(year + "-" + month + "-" + day,
+                            year,
+                            month,
+                            day
                     );
                     return false;
                 }
@@ -180,10 +184,13 @@ public class DatePickerDialog {
             bottomDialog.setCancelButton(R.string.dialogx_date_picker_ok_button, new OnDialogButtonClickListener<BottomDialog>() {
                 @Override
                 public boolean onClick(BottomDialog baseDialog, View v) {
-                    onDateSelected.onSelect(yearList.get(selectYearIndex) + "-" + monthList.get(selectMonthIndex) + "-" + dayList.get(selectDayIndex),
-                            Integer.parseInt(yearList.get(selectYearIndex)),
-                            Integer.parseInt(monthList.get(selectMonthIndex)),
-                            Integer.parseInt(dayList.get(selectDayIndex))
+                    int year = minYear + selectYearIndex;
+                    int month = 1 + selectMonthIndex;
+                    int day = 1 + selectDayIndex;
+                    onDateSelected.onSelect(year + "-" + month + "-" + day,
+                            year,
+                            month,
+                            day
                     );
                     return false;
                 }
@@ -222,5 +229,32 @@ public class DatePickerDialog {
         cal.add(Calendar.MONTH, 1);
         cal.set(Calendar.DAY_OF_MONTH, 0);
         return cal.get(Calendar.DAY_OF_MONTH);
+    }
+    
+    public String getYearLabel() {
+        return yearLabel;
+    }
+    
+    public DatePickerDialog setYearLabel(String yearLabel) {
+        this.yearLabel = yearLabel;
+        return this;
+    }
+    
+    public String getMonthLabel() {
+        return monthLabel;
+    }
+    
+    public DatePickerDialog setMonthLabel(String monthLabel) {
+        this.monthLabel = monthLabel;
+        return this;
+    }
+    
+    public String getDayLabel() {
+        return dayLabel;
+    }
+    
+    public DatePickerDialog setDayLabel(String dayLabel) {
+        this.dayLabel = dayLabel;
+        return this;
     }
 }
