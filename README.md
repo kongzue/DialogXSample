@@ -7,6 +7,8 @@ DialogX 计划提供模块扩展包
 
 此框架基于 [DialogX](https://github.com/kongzue/DialogX) 实现，需要先引入 DialogX 框架才可以使用，对话框样式、主题等继承自 DialogX 设置。
 
+![DialogXSample](https://github.com/kongzue/DialogXSample/raw/master/img_dialogx_sample.png)
+
 ### 目前进度
 
 施工中...
