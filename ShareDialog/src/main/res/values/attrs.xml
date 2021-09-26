@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TableLayout">
+        <attr format="dimension" name="marginDp"/>
+        <attr format="dimension" name="itemHeight"/>
+        <attr format="integer" name="column"/>
+    </declare-styleable>
+</resources>

@@ -1,6 +1,7 @@
 package com.kongzue.dialogx.citypicker;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -184,9 +185,10 @@ public class CityPickerDialog {
                 areaWheelAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
                 idDistrict.setViewAdapter(areaWheelAdapter);
                 idDistrict.setCurrentItem(selectAreaIndex < areaList.size() ? selectAreaIndex : 0);
+                
                 DistrictBean selectDistrict = null;
                 if (areaList.size() > 0) {
-                    selectDistrict = (DistrictBean) areaList.get(0);
+                    selectDistrict = (DistrictBean) areaList.get(selectAreaIndex);
                 }
                 parseHelper.setDistrictBean(selectDistrict);
             }
