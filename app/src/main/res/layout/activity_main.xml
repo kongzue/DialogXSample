@@ -43,6 +43,14 @@
                 android:onClick="onShare"
                 android:text="分享对话框" />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:onClick="onCustomWheelPicker"
+                android:text="自定义联动选择" />
+
+
         </com.kongzue.stacklabelview.StackLayout>
     </LinearLayout>
 </ScrollView>

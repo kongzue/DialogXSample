@@ -39,4 +39,5 @@ dependencies {
     implementation project(path: ':CityPicker')
     implementation project(path: ':DatePicker')
     implementation project(path: ':ShareDialog')
+    implementation project(path: ':CustomWheelPicker')
 }
