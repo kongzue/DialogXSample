@@ -13,13 +13,17 @@ import com.kongzue.dialogx.customwheelpicker.view.ArrayWheelAdapter;
 import com.kongzue.dialogx.customwheelpicker.view.OnWheelChangedListener;
 import com.kongzue.dialogx.customwheelpicker.view.WheelView;
 import com.kongzue.dialogx.dialogs.BottomDialog;
+import com.kongzue.dialogx.interfaces.BaseDialog;
 import com.kongzue.dialogx.interfaces.OnBindView;
 import com.kongzue.dialogx.interfaces.OnDialogButtonClickListener;
 import com.kongzue.dialogx.style.MaterialStyle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author: Kongzue
@@ -33,7 +37,9 @@ public class CustomWheelPickerDialog {
     protected BottomDialog bottomDialog;
     protected List<String[]> wheelDataList;
     protected List<WheelView> wheelViewList;
+    protected Map<Integer, Integer> defaultSelect;
     protected OnWheelChangeListener onWheelChangeListener;
+    protected String title;
     
     private TextView txtDialogTitle;
     private LinearLayout boxWheel;
@@ -50,8 +56,21 @@ public class CustomWheelPickerDialog {
                 bottomDialog = dialog;
                 txtDialogTitle = v.findViewById(R.id.txt_dialog_title);
                 boxWheel = v.findViewById(R.id.box_wheel);
+    
+                txtDialogTitle.setTextColor(dialog.getResources().getColor(dialog.isLightTheme() ? R.color.black : R.color.white));
+                txtDialogTitle.getPaint().setFakeBoldText(true);
+                if (title != null) txtDialogTitle.setText(title);
                 
                 refreshUI();
+                
+                for (WheelView wheelView : wheelViewList) {
+                    if (defaultSelect != null) {
+                        Integer selectIndex = defaultSelect.get(wheelViewList.indexOf(wheelView));
+                        if (selectIndex != null) {
+                            wheelView.setCurrentItem(selectIndex);
+                        }
+                    }
+                }
             }
         })
                 .setCancelable(true)
@@ -201,6 +220,53 @@ public class CustomWheelPickerDialog {
     
     public CustomWheelPickerDialog setOnWheelChangeListener(OnWheelChangeListener onWheelChangeListener) {
         this.onWheelChangeListener = onWheelChangeListener;
+        return this;
+    }
+    
+    public CustomWheelPickerDialog setDefaultSelect(Map<Integer, Integer> defaultSelect) {
+        this.defaultSelect = defaultSelect;
+        if (wheelViewList != null) {
+            Set<Integer> keySet = defaultSelect.keySet();
+            for (Integer key : keySet) {
+                if (key < wheelViewList.size()) {
+                    int selection = defaultSelect.get(key);
+                    wheelViewList.get(key).setCurrentItem(selection);
+                }
+            }
+        }
+        return this;
+    }
+    
+    public CustomWheelPickerDialog setDefaultSelect(int wheelIndex, int selectItemIndex) {
+        if (defaultSelect == null) {
+            defaultSelect = new HashMap<>();
+        }
+        defaultSelect.put(wheelIndex, selectItemIndex);
+        if (wheelViewList != null) {
+            Set<Integer> keySet = defaultSelect.keySet();
+            for (Integer key : keySet) {
+                if (key < wheelViewList.size()) {
+                    int selection = defaultSelect.get(key);
+                    wheelViewList.get(key).setCurrentItem(selection);
+                }
+            }
+        }
+        return this;
+    }
+    
+    public CustomWheelPickerDialog setTitle(String title) {
+        this.title = title;
+        if (txtDialogTitle != null) {
+            txtDialogTitle.setText(title);
+        }
+        return this;
+    }
+    
+    public CustomWheelPickerDialog setTitle(int resId) {
+        this.title = BaseDialog.getContext().getString(resId);
+        if (txtDialogTitle != null) {
+            txtDialogTitle.setText(title);
+        }
         return this;
     }
 }

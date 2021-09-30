@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
     
+    private int[] defaultCustomWheelSelect = new int[]{1, 3, 2};
+    
     public void onCustomWheelPicker(View view) {
         CustomWheelPickerDialog.build()
                 .addWheel(new String[]{"小学", "初中", "高中"})
@@ -148,10 +150,14 @@ public class MainActivity extends AppCompatActivity {
                         refreshWheelData(picker);
                     }
                 })
+                .setDefaultSelect(0, defaultCustomWheelSelect[0])
+                .setDefaultSelect(1, defaultCustomWheelSelect[1])
+                .setDefaultSelect(2, defaultCustomWheelSelect[2])
                 .show(new OnCustomWheelPickerSelected() {
                     @Override
                     public void onSelected(CustomWheelPickerDialog picker, String text, String[] selectedTexts, int[] selectedIndex) {
                         ((Button) view).setText(text);
+                        defaultCustomWheelSelect = selectedIndex;
                     }
                 });
     }

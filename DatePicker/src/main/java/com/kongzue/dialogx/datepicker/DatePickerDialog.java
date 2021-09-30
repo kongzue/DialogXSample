@@ -10,6 +10,7 @@ import com.kongzue.dialogx.datepicker.view.ArrayWheelAdapter;
 import com.kongzue.dialogx.datepicker.view.OnWheelChangedListener;
 import com.kongzue.dialogx.datepicker.view.WheelView;
 import com.kongzue.dialogx.dialogs.BottomDialog;
+import com.kongzue.dialogx.interfaces.BaseDialog;
 import com.kongzue.dialogx.interfaces.OnBindView;
 import com.kongzue.dialogx.interfaces.OnDialogButtonClickListener;
 import com.kongzue.dialogx.style.MaterialStyle;
@@ -27,10 +28,11 @@ import java.util.List;
  */
 public class DatePickerDialog {
     
-    private int selectYearIndex, selectMonthIndex, selectDayIndex;
-    private BottomDialog bottomDialog;
-    private int maxYear = 2100, minYear = 1900;
-    private String yearLabel = "年", monthLabel = "月", dayLabel = "日";
+    protected int selectYearIndex, selectMonthIndex, selectDayIndex;
+    protected BottomDialog bottomDialog;
+    protected int maxYear = 2100, minYear = 1900;
+    protected String yearLabel = "年", monthLabel = "月", dayLabel = "日";
+    protected String title;
     
     public static DatePickerDialog build() {
         return new DatePickerDialog();
@@ -62,11 +64,11 @@ public class DatePickerDialog {
     List<String> yearList;
     List<String> monthList;
     List<String> dayList;
+    private TextView txtDialogTitle;
     
     public DatePickerDialog show(OnDateSelected onDateSelected) {
         bottomDialog = BottomDialog.show(new OnBindView<BottomDialog>(R.layout.dialogx_date_picker) {
             
-            private TextView txtDialogTitle;
             private LinearLayout llTitleBackground;
             private LinearLayout llTitle;
             private WheelView idYear;
@@ -85,6 +87,7 @@ public class DatePickerDialog {
                 
                 txtDialogTitle.setTextColor(dialog.getResources().getColor(dialog.isLightTheme() ? R.color.black : R.color.white));
                 txtDialogTitle.getPaint().setFakeBoldText(true);
+                if (title != null) txtDialogTitle.setText(title);
                 
                 idYear.addChangingListener(new OnWheelChangedListener() {
                     @Override
@@ -255,6 +258,22 @@ public class DatePickerDialog {
     
     public DatePickerDialog setDayLabel(String dayLabel) {
         this.dayLabel = dayLabel;
+        return this;
+    }
+    
+    public DatePickerDialog setTitle(String title) {
+        this.title = title;
+        if (txtDialogTitle != null) {
+            txtDialogTitle.setText(title);
+        }
+        return this;
+    }
+    
+    public DatePickerDialog setTitle(int resId) {
+        this.title = BaseDialog.getContext().getString(resId);
+        if (txtDialogTitle != null) {
+            txtDialogTitle.setText(title);
+        }
         return this;
     }
 }

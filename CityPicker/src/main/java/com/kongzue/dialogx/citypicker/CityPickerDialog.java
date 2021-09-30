@@ -33,10 +33,11 @@ import java.util.List;
  */
 public class CityPickerDialog {
     
-    private int selectProvinceIndexCache = 0, selectCityIndexCache = 0, selectAreaIndexCache = 0;
-    private CityParseHelper parseHelper;
-    private int selectProvinceIndex = 0, selectCityIndex = 0, selectAreaIndex = 0;
-    private BottomDialog bottomDialog;
+    protected int selectProvinceIndexCache = 0, selectCityIndexCache = 0, selectAreaIndexCache = 0;
+    protected CityParseHelper parseHelper;
+    protected int selectProvinceIndex = 0, selectCityIndex = 0, selectAreaIndex = 0;
+    protected BottomDialog bottomDialog;
+    protected String title;
     
     public CityPickerDialog setDefaultSelect(String province, String city, String district) {
         initParseHelper();
@@ -85,10 +86,11 @@ public class CityPickerDialog {
         return new CityPickerDialog();
     }
     
+    private TextView txtDialogTitle;
+    
     public CityPickerDialog show(OnCitySelected onCitySelected) {
         bottomDialog = BottomDialog.show(new OnBindView<BottomDialog>(R.layout.dialogx_city_picker) {
             
-            private TextView txtDialogTitle;
             private LinearLayout llTitleBackground;
             private LinearLayout llTitle;
             private WheelView idProvince;
@@ -107,6 +109,7 @@ public class CityPickerDialog {
                 
                 txtDialogTitle.setTextColor(dialog.getResources().getColor(dialog.isLightTheme() ? R.color.black : R.color.white));
                 txtDialogTitle.getPaint().setFakeBoldText(true);
+                if (title != null) txtDialogTitle.setText(title);
                 
                 selectProvinceIndex = selectProvinceIndexCache;
                 selectCityIndex = selectCityIndexCache;
@@ -252,5 +255,21 @@ public class CityPickerDialog {
     
     public BottomDialog getDialog() {
         return bottomDialog;
+    }
+    
+    public CityPickerDialog setTitle(String title) {
+        this.title = title;
+        if (txtDialogTitle != null) {
+            txtDialogTitle.setText(title);
+        }
+        return this;
+    }
+    
+    public CityPickerDialog setTitle(int resId) {
+        this.title = BaseDialog.getContext().getString(resId);
+        if (txtDialogTitle != null) {
+            txtDialogTitle.setText(title);
+        }
+        return this;
     }
 }

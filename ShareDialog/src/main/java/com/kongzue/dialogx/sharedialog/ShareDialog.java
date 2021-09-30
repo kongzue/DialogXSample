@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kongzue.dialogx.dialogs.BottomDialog;
+import com.kongzue.dialogx.interfaces.BaseDialog;
 import com.kongzue.dialogx.interfaces.OnBindView;
 import com.kongzue.dialogx.sharedialog.bean.ShareData;
 import com.kongzue.dialogx.sharedialog.interfaces.OnShareClick;
@@ -21,17 +22,19 @@ import java.util.List;
  */
 public class ShareDialog {
     
-    private BottomDialog bottomDialog;
-    private List<ShareData> shareDataList;
+    protected BottomDialog bottomDialog;
+    protected List<ShareData> shareDataList;
+    protected String title;
     
     public static ShareDialog build() {
         return new ShareDialog();
     }
     
+    private TextView txtDialogTitle;
+    
     public ShareDialog show(OnShareClick onShareClick) {
         bottomDialog = BottomDialog.show(new OnBindView<BottomDialog>(R.layout.dialogx_share) {
             
-            private TextView txtDialogTitle;
             private TableLayout boxTable;
             
             @Override
@@ -39,7 +42,9 @@ public class ShareDialog {
                 txtDialogTitle = v.findViewById(R.id.txt_dialog_title);
                 boxTable = v.findViewById(R.id.box_table);
                 
+                txtDialogTitle.setTextColor(dialog.getResources().getColor(dialog.isLightTheme() ? R.color.black : R.color.white));
                 txtDialogTitle.getPaint().setFakeBoldText(true);
+                if (title != null) txtDialogTitle.setText(title);
                 
                 if (shareDataList != null) {
                     for (ShareData shareData : shareDataList) {
@@ -57,7 +62,7 @@ public class ShareDialog {
                             @Override
                             public void onClick(View v) {
                                 if (onShareClick != null) {
-                                    if (!onShareClick.onClick(v.getContext(), shareData, shareButton, shareDataList.indexOf(shareData))){
+                                    if (!onShareClick.onClick(v.getContext(), shareData, shareButton, shareDataList.indexOf(shareData))) {
                                         dialog.dismiss();
                                     }
                                 }
@@ -80,6 +85,22 @@ public class ShareDialog {
     
     public ShareDialog setShareDataList(List<ShareData> shareDataList) {
         this.shareDataList = shareDataList;
+        return this;
+    }
+    
+    public ShareDialog setTitle(String title) {
+        this.title = title;
+        if (txtDialogTitle != null) {
+            txtDialogTitle.setText(title);
+        }
+        return this;
+    }
+    
+    public ShareDialog setTitle(int resId) {
+        this.title = BaseDialog.getContext().getString(resId);
+        if (txtDialogTitle != null) {
+            txtDialogTitle.setText(title);
+        }
         return this;
     }
 }
