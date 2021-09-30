@@ -1,5 +1,6 @@
 package com.kongzue.dialogx.datepicker;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,6 +32,8 @@ public class DatePickerDialog {
     protected int selectYearIndex, selectMonthIndex, selectDayIndex;
     protected BottomDialog bottomDialog;
     protected int maxYear = 2100, minYear = 1900;
+    protected int maxYearMonth = 12, minYearMonth = 1;
+    protected int maxYearDay = 30, minYearDay = 1;
     protected String yearLabel = "年", monthLabel = "月", dayLabel = "日";
     protected String title;
     
@@ -93,6 +96,7 @@ public class DatePickerDialog {
                     @Override
                     public void onChanged(WheelView wheelView, int oldValue, int newValue) {
                         selectYearIndex = newValue;
+                        initMonth();
                         initDays();
                     }
                 });
@@ -112,7 +116,6 @@ public class DatePickerDialog {
                     }
                 });
                 initYear();
-                initMonth();
             }
             
             private void initYear() {
@@ -130,8 +133,20 @@ public class DatePickerDialog {
             
             private void initMonth() {
                 monthList = new ArrayList<>();
-                for (int i = 1; i <= 12; i++) {
-                    monthList.add(i + monthLabel);
+                if (selectYearIndex == 0) {
+                    //min
+                    for (int i = Math.max(minYearMonth, 1); i <= 12; i++) {
+                        monthList.add(i + monthLabel);
+                    }
+                } else if (selectYearIndex == yearList.size() - 1) {
+                    //max
+                    for (int i = 1; i <= (maxYearMonth == 0 ? 12 : Math.min(12, maxYearMonth)); i++) {
+                        monthList.add(i + monthLabel);
+                    }
+                } else {
+                    for (int i = 1; i <= 12; i++) {
+                        monthList.add(i + monthLabel);
+                    }
                 }
                 ArrayWheelAdapter<String> monthAdapter = new ArrayWheelAdapter<String>(BottomDialog.getContext(), monthList);
                 monthAdapter.setItemResource(R.layout.default_item_date);
@@ -143,12 +158,29 @@ public class DatePickerDialog {
             
             private void initDays() {
                 if (yearList == null || monthList == null) return;
-                int year = minYear + idYear.getCurrentItem();
-                int month = 1 + idMonth.getCurrentItem();
-                int maxDay = getLastDayOfMonth(year, month);
+                int year = 0;
+                int month = 0;
+                int minDay = 1;
+                int maxDay = 0;
+                if (selectYearIndex == 0 && selectMonthIndex == 0) {
+                    //min
+                    year = minYear + idYear.getCurrentItem();
+                    month = 1 + idMonth.getCurrentItem();
+                    maxDay=getLastDayOfMonth(year, month);
+                    minDay = minYearDay == 0 ? 1 : Math.max(1, minYearDay);
+                } else if (selectYearIndex == yearList.size() - 1 && selectMonthIndex == monthList.size() - 1) {
+                    //max
+                    year = minYear + idYear.getCurrentItem();
+                    month = 1 + idMonth.getCurrentItem();
+                    maxDay = maxYearDay == 0 ? getLastDayOfMonth(year, month) : Math.min(getLastDayOfMonth(year, month), maxYearDay);
+                } else {
+                    year = minYear + idYear.getCurrentItem();
+                    month = 1 + idMonth.getCurrentItem();
+                    maxDay = getLastDayOfMonth(year, month);
+                }
                 if (maxDay != 0) {
                     dayList = new ArrayList<>();
-                    for (int i = 1; i <= maxDay; i++) {
+                    for (int i = minDay; i <= maxDay; i++) {
                         dayList.add(i + dayLabel);
                     }
                     ArrayWheelAdapter<String> dayAdapter = new ArrayWheelAdapter<String>(BottomDialog.getContext(), dayList);
@@ -221,6 +253,56 @@ public class DatePickerDialog {
     
     public DatePickerDialog setMinYear(int minYear) {
         this.minYear = minYear;
+        return this;
+    }
+    
+    public int getMaxYearMonth() {
+        return maxYearMonth;
+    }
+    
+    public DatePickerDialog setMaxYearMonth(int maxYearMonth) {
+        this.maxYearMonth = maxYearMonth;
+        return this;
+    }
+    
+    public int getMinYearMonth() {
+        return minYearMonth;
+    }
+    
+    public DatePickerDialog setMinYearMonth(int minYearMonth) {
+        this.minYearMonth = minYearMonth;
+        return this;
+    }
+    
+    public int getMaxYearDay() {
+        return maxYearDay;
+    }
+    
+    public DatePickerDialog setMaxYearDay(int maxYearDay) {
+        this.maxYearDay = maxYearDay;
+        return this;
+    }
+    
+    public int getMinYearDay() {
+        return minYearDay;
+    }
+    
+    public DatePickerDialog setMinYearDay(int minYearDay) {
+        this.minYearDay = minYearDay;
+        return this;
+    }
+    
+    public DatePickerDialog setMinTime(int minYear,int minMonth,int minDay) {
+        this.minYear = minYear;
+        this.minYearMonth = minMonth;
+        this.minYearDay = minDay;
+        return this;
+    }
+    
+    public DatePickerDialog setMaxTime(int maxYear,int maxMonth,int maxDay) {
+        this.maxYear = maxYear;
+        this.maxYearMonth = maxMonth;
+        this.maxYearDay = maxDay;
         return this;
     }
     

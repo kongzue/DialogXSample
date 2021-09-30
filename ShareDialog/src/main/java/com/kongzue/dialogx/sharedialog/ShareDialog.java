@@ -52,6 +52,8 @@ public class ShareDialog {
                         
                         ImageView imgIcon = shareButton.findViewById(R.id.img_icon);
                         TextView txtLabel = shareButton.findViewById(R.id.txt_label);
+    
+                        txtLabel.setTextColor(dialog.getResources().getColor(dialog.isLightTheme() ? R.color.black : R.color.white));
                         
                         imgIcon.setImageDrawable(shareData.getIcon());
                         txtLabel.setText(shareData.getLabel());

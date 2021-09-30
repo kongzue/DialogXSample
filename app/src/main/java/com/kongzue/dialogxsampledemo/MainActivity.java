@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
     
     public void onDatePicker(View view) {
         DatePickerDialog.build()
-                .setDefaultSelect(defaultYear, defaultMonth, defaultDay)
+                .setMinTime(1990, 5, 20)            //指定最小可选日期 1990年5月20日
+                .setMaxTime(2030, 2, 10)            //指定最大可选日期 2030年2月10日
+                .setDefaultSelect(defaultYear, defaultMonth, defaultDay)    //设置默认选中日期
                 .show(new OnDateSelected() {
                     @Override
                     public void onSelect(String text, int year, int month, int day) {
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
     
-    private int[] defaultCustomWheelSelect = new int[]{1, 3, 2};
+    int[] defaultCustomWheelSelect = new int[]{1, 3, 1};
     
     public void onCustomWheelPicker(View view) {
         CustomWheelPickerDialog.build()
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                                         "初1班", "初2班", "初3班", "初4班", "初5班", "初6班", "初7班"
                                 });
                                 classIndex = picker.getWheelSelectedIndex(1);
-                                if (classIndex <= 1) {
+                                if (classIndex <= 3) {
                                     picker.setWheel(2, new String[]{
                                             "奥数组", "声乐组", "实验组"
                                     });
@@ -138,9 +140,16 @@ public class MainActivity extends AppCompatActivity {
                                 picker.setWheel(1, new String[]{
                                         "高1班", "高2班", "高3班", "高4班", "高5班"
                                 });
-                                picker.setWheel(2, new String[]{
-                                        "学术研究社", "社会问题研究会", "文艺社", "棋艺社", "摄影社", "歌咏队", "剧团", "篮球队", "足球队"
-                                });
+                                classIndex = picker.getWheelSelectedIndex(1);
+                                if (classIndex <= 1) {
+                                    picker.setWheel(2, new String[]{
+                                            "语文组", "数学组", "英语组", "美术组", "音乐组"
+                                    });
+                                } else {
+                                    picker.setWheel(2, new String[]{
+                                            "学术研究社", "社会问题研究会", "文艺社", "棋艺社", "摄影社", "歌咏队", "剧团", "篮球队", "足球队"
+                                    });
+                                }
                                 break;
                         }
                     }
