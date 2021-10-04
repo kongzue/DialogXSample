@@ -61,13 +61,19 @@ allprojects {
 
 ```
 //地址选择对话框
-implementation 'com.github.kongzue.DialogXSample:CityPicker:0.0.1.alpha2'
+implementation 'com.github.kongzue.DialogXSample:CityPicker:0.0.1.alpha4'
 
 //日期选择对话框
-implementation 'com.github.kongzue.DialogXSample:DatePicker:0.0.1.alpha2'
+implementation 'com.github.kongzue.DialogXSample:DatePicker:0.0.1.alpha4'
 
 //分享选择对话框
-implementation 'com.github.kongzue.DialogXSample:ShareDialog:0.0.1.alpha2'
+implementation 'com.github.kongzue.DialogXSample:ShareDialog:0.0.1.alpha4'
+
+//自定义联动选择对话框
+implementation 'com.github.kongzue.DialogXSample:CustomWheelPicker:0.0.1.alpha4'
+
+//回复消息对话框
+implementation 'com.github.kongzue.DialogXSample:ReplyDialog:0.0.1.alpha4'
 ```
 
 ### 其他
