@@ -30,7 +30,7 @@ DialogX 计划提供模块扩展包
 
 √ 自定义联动滚动选择对话框
 
-- 底部弹出的评论输入对话框
+√ 底部弹出的评论输入对话框
 ```
 
 建议功能可以直接提交 [issues](https://github.com/kongzue/DialogXSample/issues)

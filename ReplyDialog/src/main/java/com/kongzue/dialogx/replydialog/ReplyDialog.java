@@ -48,10 +48,24 @@ public class ReplyDialog {
                 btnReplyCommit = v.findViewById(R.id.btn_reply_commit);
                 editReplyCommit = v.findViewById(R.id.edit_reply_commit);
                 
-                if (!isNull(title)) txtDialogTitle.setText(title);
-                if (!isNull(content)) editReplyCommit.setText(content);
-                if (!isNull(replyButtonText)) btnReplyCommit.setText(replyButtonText);
-                if (!isNull(contentHint)) editReplyCommit.setHint(contentHint);
+                if (!isNull(title)) {
+                    txtDialogTitle.setText(title);
+                    txtDialogTitle.setVisibility(View.VISIBLE);
+                } else {
+                    txtDialogTitle.setVisibility(View.GONE);
+                }
+                if (!isNull(replyButtonText)) {
+                    btnReplyCommit.setText(replyButtonText);
+                    btnReplyCommit.setVisibility(View.VISIBLE);
+                } else {
+                    btnReplyCommit.setVisibility(View.GONE);
+                }
+                if (!isNull(content)) {
+                    editReplyCommit.setText(content);
+                }
+                if (!isNull(contentHint)) {
+                    editReplyCommit.setHint(contentHint);
+                }
                 
                 bottomDialog = dialog;
                 editReplyCommit.post(new Runnable() {

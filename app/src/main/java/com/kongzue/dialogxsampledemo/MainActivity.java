@@ -24,7 +24,9 @@ import com.kongzue.dialogx.customwheelpicker.interfaces.OnCustomWheelPickerSelec
 import com.kongzue.dialogx.customwheelpicker.interfaces.OnWheelChangeListener;
 import com.kongzue.dialogx.datepicker.DatePickerDialog;
 import com.kongzue.dialogx.datepicker.interfaces.OnDateSelected;
+import com.kongzue.dialogx.dialogs.WaitDialog;
 import com.kongzue.dialogx.interfaces.BaseDialog;
+import com.kongzue.dialogx.interfaces.OnBackPressedListener;
 import com.kongzue.dialogx.replydialog.ReplyDialog;
 import com.kongzue.dialogx.sharedialog.ShareDialog;
 import com.kongzue.dialogx.sharedialog.bean.ShareData;
@@ -243,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
         ReplyDialog.build()
                 .setTitle("回复 @Kongzue:")
                 .setReplyButtonText("发送")
+                .setContentHint("请输入回复内容...")
                 .show();
     }
     
