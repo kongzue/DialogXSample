@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/colorBkg"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
+            android:textColor="@color/textColor"
             android:text="DialogX Simple 是基于 DialogX 框架的范例实现库，会不断的补充各种常用的工具对话框" />
 
         <TextView
@@ -24,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="选择风格"
-            android:textColor="#dc000000"
+            android:textColor="@color/titleColor"
             android:textSize="14dp"
             android:textStyle="bold" />
 
@@ -43,7 +44,7 @@
                 android:layout_weight="1"
                 android:checked="true"
                 android:text="Material"
-                android:textColor="#7b000000"
+                android:textColor="@color/textColor"
                 android:textSize="12dp" />
 
             <RadioButton
@@ -52,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="iOS"
-                android:textColor="#7b000000"
+                android:textColor="@color/textColor"
                 android:textSize="12dp" />
 
             <RadioButton
@@ -61,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Kongzue"
-                android:textColor="#7b000000"
+                android:textColor="@color/textColor"
                 android:textSize="12dp" />
 
             <RadioButton
@@ -70,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="MIUI"
-                android:textColor="#7b000000"
+                android:textColor="@color/textColor"
                 android:textSize="12dp" />
 
         </RadioGroup>
@@ -79,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="选择主题"
-            android:textColor="#dc000000"
+            android:textColor="@color/titleColor"
             android:textSize="14dp"
             android:textStyle="bold" />
 
@@ -98,7 +99,7 @@
                 android:checked="true"
                 android:padding="10dp"
                 android:text="自动"
-                android:textColor="#7b000000"
+                android:textColor="@color/textColor"
                 android:textSize="12dp" />
 
             <RadioButton
@@ -107,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="亮色"
-                android:textColor="#7b000000"
+                android:textColor="@color/textColor"
                 android:textSize="12dp" />
 
             <RadioButton
@@ -116,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="暗色"
-                android:textColor="#7b000000" />
+                android:textColor="@color/textColor" />
 
         </RadioGroup>
 
