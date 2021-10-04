@@ -12,8 +12,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.kongzue.dialogx.DialogX;
 import com.kongzue.dialogx.citypicker.CityPickerDialog;
 import com.kongzue.dialogx.citypicker.interfaces.OnCitySelected;
 import com.kongzue.dialogx.customwheelpicker.CustomWheelPickerDialog;
@@ -21,19 +24,84 @@ import com.kongzue.dialogx.customwheelpicker.interfaces.OnCustomWheelPickerSelec
 import com.kongzue.dialogx.customwheelpicker.interfaces.OnWheelChangeListener;
 import com.kongzue.dialogx.datepicker.DatePickerDialog;
 import com.kongzue.dialogx.datepicker.interfaces.OnDateSelected;
+import com.kongzue.dialogx.interfaces.BaseDialog;
+import com.kongzue.dialogx.replydialog.ReplyDialog;
 import com.kongzue.dialogx.sharedialog.ShareDialog;
 import com.kongzue.dialogx.sharedialog.bean.ShareData;
 import com.kongzue.dialogx.sharedialog.interfaces.OnShareClick;
+import com.kongzue.dialogx.style.IOSStyle;
+import com.kongzue.dialogx.style.KongzueStyle;
+import com.kongzue.dialogx.style.MIUIStyle;
+import com.kongzue.dialogx.style.MaterialStyle;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     
+    private RadioGroup grpStyle;
+    private RadioButton rdoMaterial;
+    private RadioButton rdoIos;
+    private RadioButton rdoKongzue;
+    private RadioButton rdoMiui;
+    private RadioGroup grpTheme;
+    private RadioButton rdoAuto;
+    private RadioButton rdoLight;
+    private RadioButton rdoDark;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    
+        grpStyle = findViewById(R.id.grp_style);
+        rdoMaterial = findViewById(R.id.rdo_material);
+        rdoIos = findViewById(R.id.rdo_ios);
+        rdoKongzue = findViewById(R.id.rdo_kongzue);
+        rdoMiui = findViewById(R.id.rdo_miui);
+        grpTheme = findViewById(R.id.grp_theme);
+        rdoAuto = findViewById(R.id.rdo_auto);
+        rdoLight = findViewById(R.id.rdo_light);
+        rdoDark = findViewById(R.id.rdo_dark);
+    
+        grpStyle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                DialogX.cancelButtonText = "取消";
+                switch (checkedId) {
+                    case R.id.rdo_material:
+                        DialogX.globalStyle = MaterialStyle.style();
+                        DialogX.cancelButtonText = "";
+                        break;
+                    case R.id.rdo_kongzue:
+                        DialogX.globalStyle = KongzueStyle.style();
+                        break;
+                    case R.id.rdo_ios:
+                        DialogX.globalStyle = IOSStyle.style();
+                        break;
+                    case R.id.rdo_miui:
+                        DialogX.globalStyle = MIUIStyle.style();
+                        break;
+                }
+            }
+        });
+    
+        grpTheme.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rdo_auto:
+                        DialogX.globalTheme = DialogX.THEME.AUTO;
+                        break;
+                    case R.id.rdo_light:
+                        DialogX.globalTheme = DialogX.THEME.LIGHT;
+                        break;
+                    case R.id.rdo_dark:
+                        DialogX.globalTheme = DialogX.THEME.DARK;
+                        break;
+                }
+            }
+        });
     }
     
     String defaultProvince = "陕西省", defaultCity = "西安市", defaultDistrict = "未央区";
@@ -169,6 +237,13 @@ public class MainActivity extends AppCompatActivity {
                         defaultCustomWheelSelect = selectedIndex;
                     }
                 });
+    }
+    
+    public void onReplyComments(View view) {
+        ReplyDialog.build()
+                .setTitle("回复 @Kongzue:")
+                .setReplyButtonText("发送")
+                .show();
     }
     
     @Override

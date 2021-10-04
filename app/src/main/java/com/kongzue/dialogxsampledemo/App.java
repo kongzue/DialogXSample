@@ -15,6 +15,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        DialogX.DEBUGMODE = BuildConfig.DEBUG;
         DialogX.init(this);
         DialogX.globalTheme = DialogX.THEME.AUTO;
     }

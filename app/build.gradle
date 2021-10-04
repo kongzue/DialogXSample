@@ -11,6 +11,9 @@ android {
         targetSdk 30
         versionCode SAMPLE_VERSION_INT as int
         versionName SAMPLE_VERSION
+
+        renderscriptTargetApi 21
+        renderscriptSupportModeEnabled true
     }
 
     buildTypes {
@@ -40,4 +43,5 @@ dependencies {
     implementation project(path: ':DatePicker')
     implementation project(path: ':ShareDialog')
     implementation project(path: ':CustomWheelPicker')
+    implementation project(path: ':ReplyDialog')
 }
