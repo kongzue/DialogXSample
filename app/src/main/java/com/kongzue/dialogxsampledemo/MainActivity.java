@@ -22,6 +22,7 @@ import com.kongzue.dialogx.citypicker.interfaces.OnCitySelected;
 import com.kongzue.dialogx.customwheelpicker.CustomWheelPickerDialog;
 import com.kongzue.dialogx.customwheelpicker.interfaces.OnCustomWheelPickerSelected;
 import com.kongzue.dialogx.customwheelpicker.interfaces.OnWheelChangeListener;
+import com.kongzue.dialogx.datepicker.CalendarDialog;
 import com.kongzue.dialogx.datepicker.DatePickerDialog;
 import com.kongzue.dialogx.datepicker.interfaces.OnDateSelected;
 import com.kongzue.dialogx.dialogs.WaitDialog;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    
+        
         grpStyle = findViewById(R.id.grp_style);
         rdoMaterial = findViewById(R.id.rdo_material);
         rdoIos = findViewById(R.id.rdo_ios);
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         rdoAuto = findViewById(R.id.rdo_auto);
         rdoLight = findViewById(R.id.rdo_light);
         rdoDark = findViewById(R.id.rdo_dark);
-    
+        
         grpStyle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    
+        
         grpTheme.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                      * @param shareData     返回点击的 ShareData 实例
                      * @param shareButton   返回按钮
                      * @param index         返回索引
-                     * @return              为 true 时，不自动关闭对话框
+                     * @return 为 true 时，不自动关闭对话框
                      */
                     @Override
                     public boolean onClick(Context context, ShareData shareData, View shareButton, int index) {
@@ -245,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                         }
                     }
-    
+                    
                     /**
                      * 当滚轮滑动时触发
                      * @param picker            滑动对话框
@@ -312,5 +313,22 @@ public class MainActivity extends AppCompatActivity {
     private int dip2px(int dpValue) {
         float scale = getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
+    }
+    
+    public void onCalendar(View view) {
+        CalendarDialog.build()
+                .setMinTime(1990, 5, 20)            //指定最小可选日期 1990年5月20日
+                .setMaxTime(2030, 2, 10)            //指定最大可选日期 2030年2月10日
+                .setDefaultSelect(defaultYear, defaultMonth, defaultDay)    //设置默认选中日期
+                .show(new OnDateSelected() {
+                    @Override
+                    public void onSelect(String text, int year, int month, int day) {
+                        ((Button) view).setText(text);
+    
+                        defaultYear = year;
+                        defaultMonth = month;
+                        defaultDay = day;
+                    }
+                });
     }
 }

@@ -306,15 +306,6 @@ public class DatePickerDialog {
         return this;
     }
     
-    private int getLastDayOfMonth(int year, int month) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.MONTH, month - 1);
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.add(Calendar.MONTH, 1);
-        cal.set(Calendar.DAY_OF_MONTH, 0);
-        return cal.get(Calendar.DAY_OF_MONTH);
-    }
     
     public String getYearLabel() {
         return yearLabel;
@@ -357,5 +348,15 @@ public class DatePickerDialog {
             txtDialogTitle.setText(title);
         }
         return this;
+    }
+    
+    private int getLastDayOfMonth(int year, int month) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month - 1);
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.add(Calendar.MONTH, 1);
+        cal.set(Calendar.DAY_OF_MONTH, 0);
+        return cal.get(Calendar.DAY_OF_MONTH);
     }
 }

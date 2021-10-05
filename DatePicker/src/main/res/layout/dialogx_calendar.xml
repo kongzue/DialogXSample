@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="350dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:id="@+id/txt_dialog_year_and_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="2021年10月"
+            android:textColor="@color/black"
+            android:textSize="21dp" />
+
+        <ImageView
+            android:id="@+id/img_dialog_select_year_and_month"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/img_dialogx_calendar_down" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/btn_last_month"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="5dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:rotation="90"
+            android:src="@mipmap/img_dialogx_calendar_down" />
+
+        <ImageView
+            android:id="@+id/btn_next_month"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:rotation="270"
+            android:src="@mipmap/img_dialogx_calendar_down" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/box_year_month_selector"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <com.kongzue.dialogx.datepicker.view.WheelView
+                android:id="@+id/id_year"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <com.kongzue.dialogx.datepicker.view.WheelView
+                android:id="@+id/id_month"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_calendar_screenshot"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:id="@+id/box_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/dialogx_date_sunday"
+                    android:textColor="@color/black50"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/dialogx_date_monday"
+                    android:textColor="@color/black50"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/dialogx_date_tuesday"
+                    android:textColor="@color/black50"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/dialogx_date_wednesday"
+                    android:textColor="@color/black50"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/dialogx_date_thursday"
+                    android:textColor="@color/black50"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/dialogx_date_friday"
+                    android:textColor="@color/black50"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/dialogx_date_saturday"
+                    android:textColor="@color/black50"
+                    android:textSize="12dp" />
+
+            </LinearLayout>
+
+            <com.kongzue.dialogx.datepicker.view.TableLayout
+                android:id="@+id/tab_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:column="7"
+                app:itemHeight="44dp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

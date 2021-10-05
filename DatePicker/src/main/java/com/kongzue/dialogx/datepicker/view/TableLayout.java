@@ -1,4 +1,4 @@
-package com.kongzue.dialogx.sharedialog.view;
+package com.kongzue.dialogx.datepicker.view;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.kongzue.dialogx.sharedialog.R;
+import com.kongzue.dialogx.datepicker.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +50,11 @@ public class TableLayout extends ViewGroup {
     }
     
     private void loadAttrs(Context context, AttributeSet attrs) {
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ShareDialogTableLayout);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.DateDialogTableLayout);
         
-        itemMargin = typedArray.getDimensionPixelOffset(R.styleable.ShareDialogTableLayout_marginDp, 0);
-        setChildHeight = typedArray.getDimensionPixelOffset(R.styleable.ShareDialogTableLayout_itemHeight, dp2px(150));
-        maxColumn = typedArray.getInteger(R.styleable.ShareDialogTableLayout_column, 2);
+        itemMargin = typedArray.getDimensionPixelOffset(R.styleable.DateDialogTableLayout_marginDp, 0);
+        setChildHeight = typedArray.getDimensionPixelOffset(R.styleable.DateDialogTableLayout_itemHeight, dp2px(150));
+        maxColumn = typedArray.getInteger(R.styleable.DateDialogTableLayout_column, 2);
         
         typedArray.recycle();
     }

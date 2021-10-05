@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dialogXCalendarToday">#2196F3</color>
+    <color name="dialogXCalendarSelected">#EB4D3D</color>
+    <color name="black5">#0D000000</color>
+</resources>
