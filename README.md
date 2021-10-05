@@ -80,7 +80,7 @@ implementation 'com.github.kongzue.DialogXSample:ReplyDialog:0.0.1.alpha4'
 
 <a href="https://github.com/kongzue/DialogXSample/wiki/"><img src="https://github.com/kongzue/DialogX/raw/master/readme/img_how_to_use_tip.png" alt="如何使用" width="450" height="280" /></a>
 
-请[参阅 Wiki](https://github.com/kongzue/DialogXSample/wiki)
+具体的使用说明，请参阅 [DialogXSample Wiki](https://github.com/kongzue/DialogXSample/wiki/)
 
 ### 其他
 
