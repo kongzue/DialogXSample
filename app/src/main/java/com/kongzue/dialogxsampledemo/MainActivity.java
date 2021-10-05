@@ -112,6 +112,13 @@ public class MainActivity extends AppCompatActivity {
         CityPickerDialog.build()
                 .setDefaultSelect(defaultProvince, defaultCity, defaultDistrict)
                 .show(new OnCitySelected() {
+                    /**
+                     * 此处为回调，
+                     * @param text 直接返回文本，例如“陕西省西安市未央区”
+                     * @param province 为省
+                     * @param city 为市
+                     * @param district 为区
+                     */
                     @Override
                     public void onSelect(String text, String province, String city, String district) {
                         ((Button) view).setText(text);
@@ -131,6 +138,13 @@ public class MainActivity extends AppCompatActivity {
                 .setMaxTime(2030, 2, 10)            //指定最大可选日期 2030年2月10日
                 .setDefaultSelect(defaultYear, defaultMonth, defaultDay)    //设置默认选中日期
                 .show(new OnDateSelected() {
+                    /**
+                     * 此处为回调，
+                     * @param text 直接返回默认文本，例如“2021-9-25”
+                     * @param year  年
+                     * @param month 月
+                     * @param day   日
+                     */
                     @Override
                     public void onSelect(String text, int year, int month, int day) {
                         ((Button) view).setText(text);
@@ -155,6 +169,14 @@ public class MainActivity extends AppCompatActivity {
         ShareDialog.build()
                 .setShareDataList(shareDataList)
                 .show(new OnShareClick() {
+                    /**
+                     * 此处为回调，
+                     * @param context       返回上下文
+                     * @param shareData     返回点击的 ShareData 实例
+                     * @param shareButton   返回按钮
+                     * @param index         返回索引
+                     * @return              为 true 时，不自动关闭对话框
+                     */
                     @Override
                     public boolean onClick(Context context, ShareData shareData, View shareButton, int index) {
                         Toast.makeText(MainActivity.this, shareData.getLabel() + " Click!", Toast.LENGTH_SHORT).show();
@@ -223,7 +245,15 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                         }
                     }
-                    
+    
+                    /**
+                     * 当滚轮滑动时触发
+                     * @param picker            滑动对话框
+                     * @param wheelIndex        当前是第几个列表项触发滑动
+                     * @param originWheelData   原始列表项数据
+                     * @param itemIndex         已选中数据的索引
+                     * @param itemText          已选中数据的内容
+                     */
                     @Override
                     public void onWheel(CustomWheelPickerDialog picker, int wheelIndex, String[] originWheelData, int itemIndex, String itemText) {
                         refreshWheelData(picker);
@@ -233,6 +263,13 @@ public class MainActivity extends AppCompatActivity {
                 .setDefaultSelect(1, defaultCustomWheelSelect[1])
                 .setDefaultSelect(2, defaultCustomWheelSelect[2])
                 .show(new OnCustomWheelPickerSelected() {
+                    /**
+                     * 当确认后，
+                     * @param picker        滑动对话框
+                     * @param text          返回默认文本，例如“初中 初4班 声乐组”
+                     * @param selectedTexts 选中的每个列表项文本集合
+                     * @param selectedIndex 选中的每个列表项索引集合
+                     */
                     @Override
                     public void onSelected(CustomWheelPickerDialog picker, String text, String[] selectedTexts, int[] selectedIndex) {
                         ((Button) view).setText(text);
