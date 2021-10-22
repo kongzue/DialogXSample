@@ -2,6 +2,7 @@ package com.kongzue.dialogx.datepicker;
 
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.kongzue.dialogx.DialogX;
 import com.kongzue.dialogx.datepicker.interfaces.OnDateSelected;
 import com.kongzue.dialogx.datepicker.view.ArrayWheelAdapter;
+import com.kongzue.dialogx.datepicker.view.CalendarLabelTextView;
 import com.kongzue.dialogx.datepicker.view.OnWheelChangedListener;
 import com.kongzue.dialogx.datepicker.view.TableLayout;
 import com.kongzue.dialogx.datepicker.view.WheelView;
@@ -70,6 +72,8 @@ public class CalendarDialog {
         selectDayIndex = 0;
         return this;
     }
+    
+    CalendarLabelTextView selectDayViewCache;
     
     public CalendarDialog show(OnDateSelected onDateSelected) {
         bottomDialog = BottomDialog.show(new OnBindView<BottomDialog>(R.layout.dialogx_calendar) {
@@ -264,8 +268,6 @@ public class CalendarDialog {
                 });
             }
             
-            TextView selectDayViewCache;
-            
             private void initCalendar() {
                 txtDialogYearAndMonth.setText((selectYearIndex + minYear) + yearLabel + (selectMonthIndex + 1) + monthLabel);
                 
@@ -286,43 +288,24 @@ public class CalendarDialog {
                 
                 int lastDay = getLastDayOfMonth((selectYearIndex + minYear), selectMonthIndex + 1);
                 for (int i = 1; i <= lastDay; i++) {
-                    TextView dayView = new TextView(tabCalendar.getContext());
+                    CalendarLabelTextView dayView = new CalendarLabelTextView(tabCalendar.getContext());
                     dayView.setGravity(Gravity.CENTER);
                     dayView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
                     dayView.setText(String.valueOf(i));
                     dayView.setTag(i);
                     
-                    dayView.setBackground(getDefaultCalendarItemBackground());
-                    
-                    //如果是今天，变蓝
-                    if (i == nowDay && selectMonthIndex == nowMonth && selectYearIndex == nowYear - minYear) {
-                        dayView.setTextColor(bottomDialog.getResources().getColor(R.color.dialogXCalendarToday));
-                    } else {
-                        dayView.setTextColor(bottomDialog.getResources().getColor(
-                                (bottomDialog.isLightTheme() ? R.color.black : R.color.white)
-                        ));
-                    }
+                    setCalendarLabelStatus(dayView, false);
                     
                     //如果是之前选择的日期，放大+变红
                     if ((i == selectDayIndex + 1) && selectMonthIndex == selectedMonthIndex && selectYearIndex == selectedYearIndex) {
-                        selectDayViewCache = dayView;
-                        selectDayIndex = (int) selectDayViewCache.getTag() - 1;
-                        selectDayViewCache.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-                        selectDayViewCache.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 22);
-                        selectDayViewCache.setTextColor(bottomDialog.getResources().getColor(R.color.dialogXCalendarSelected));
+                        setCalendarLabelStatus(dayView, true);
                     }
                     
                     dayView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (selectDayViewCache != null) {
-                                selectDayViewCache.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-                                selectDayViewCache.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-                            }
-                            selectDayViewCache = (TextView) v;
-                            selectDayIndex = (int) selectDayViewCache.getTag() - 1;
-                            selectDayViewCache.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-                            selectDayViewCache.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 22);
+                            setCalendarLabelStatus(selectDayViewCache, false);
+                            setCalendarLabelStatus((CalendarLabelTextView) v, true);
                         }
                     });
                     dayView.setOnTouchListener(new View.OnTouchListener() {
@@ -397,6 +380,32 @@ public class CalendarDialog {
             });
         }
         return this;
+    }
+    
+    private void setCalendarLabelStatus(CalendarLabelTextView view, boolean select) {
+        if (view == null) return;
+        if (select) {
+            selectDayIndex = (int) view.getTag() - 1;
+            view.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+            view.setTextColor(bottomDialog.getResources().getColor(
+                    (bottomDialog.isLightTheme() ? R.color.white : R.color.black)
+            ));
+            view.setSelect(true);
+            selectDayViewCache = view;
+        } else {
+            int i = view.getTag() != null ? (int) view.getTag() : -1;
+            if (i == nowDay && selectMonthIndex == nowMonth && selectYearIndex == nowYear - minYear) {
+                view.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+                view.setSelect(false);
+                view.setTextColor(bottomDialog.getResources().getColor(R.color.dialogXCalendarToday));
+            } else {
+                view.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+                view.setSelect(false);
+                view.setTextColor(bottomDialog.getResources().getColor(
+                        (bottomDialog.isLightTheme() ? R.color.black : R.color.white)
+                ));
+            }
+        }
     }
     
     //API-23+ 支持水波纹效果

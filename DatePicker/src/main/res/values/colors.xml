@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="dialogXCalendarToday">#2196F3</color>
+    <color name="dialogXCalendarToday">#EB4D3D</color>
     <color name="dialogXCalendarSelected">#EB4D3D</color>
     <color name="black5">#0D000000</color>
+    <color name="black60">#99000000</color>
+    <color name="white70">#B3FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 </resources>
