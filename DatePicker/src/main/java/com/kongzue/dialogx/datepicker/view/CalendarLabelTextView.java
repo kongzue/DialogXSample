@@ -41,6 +41,7 @@ public class CalendarLabelTextView extends androidx.appcompat.widget.AppCompatTe
     
     public CalendarLabelTextView setSelect(boolean select) {
         this.select = select;
+        invalidate();
         return this;
     }
     
@@ -58,16 +59,18 @@ public class CalendarLabelTextView extends androidx.appcompat.widget.AppCompatTe
             }
             switch (section) {
                 case 0:
-                    
+                    canvas.drawRect(0, 0, getWidth(), getHeight(), bkgPaint);
                     break;
                 case 1:
-                    
+                    canvas.drawCircle(getWidth() / 2, getHeight() / 2, size / 2, bkgPaint);
+                    canvas.drawRect(0, 0, getWidth() / 2, getHeight(), bkgPaint);
                     break;
                 case -1:
-                    
+                    canvas.drawCircle(getWidth() / 2, getHeight() / 2, size / 2, bkgPaint);
+                    canvas.drawRect(getWidth() / 2, 0, getWidth(), getHeight(), bkgPaint);
                     break;
                 default:
-                    canvas.drawCircle(getWidth() / 2, getHeight() / 2, size/2, bkgPaint);
+                    canvas.drawCircle(getWidth() / 2, getHeight() / 2, size / 2, bkgPaint);
                     break;
             }
         }
@@ -80,6 +83,7 @@ public class CalendarLabelTextView extends androidx.appcompat.widget.AppCompatTe
     
     public CalendarLabelTextView setSection(int section) {
         this.section = section;
+        invalidate();
         return this;
     }
 }

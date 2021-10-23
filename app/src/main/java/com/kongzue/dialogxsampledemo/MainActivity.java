@@ -317,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
                 .setMinTime(1990, 5, 20)            //指定最小可选日期 1990年5月20日
                 .setMaxTime(2030, 2, 10)            //指定最大可选日期 2030年2月10日
                 .setDefaultSelect(defaultYear, defaultMonth, defaultDay)    //设置默认选中日期
+                .setMultiSelect(true)
                 .show(new OnDateSelected() {
                     @Override
                     public void onSelect(String text, int year, int month, int day) {
