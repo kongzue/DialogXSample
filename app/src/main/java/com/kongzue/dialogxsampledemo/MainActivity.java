@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -317,12 +318,29 @@ public class MainActivity extends AppCompatActivity {
                 .setMinTime(1990, 5, 20)            //指定最小可选日期 1990年5月20日
                 .setMaxTime(2030, 2, 10)            //指定最大可选日期 2030年2月10日
                 .setDefaultSelect(defaultYear, defaultMonth, defaultDay)    //设置默认选中日期
-                .setMultiSelect(true)
                 .show(new OnDateSelected() {
                     @Override
                     public void onSelect(String text, int year, int month, int day) {
                         ((Button) view).setText(text);
     
+                        defaultYear = year;
+                        defaultMonth = month;
+                        defaultDay = day;
+                    }
+                });
+    }
+    
+    public void onCalendarMulti(View view) {
+        CalendarDialog.build()
+                .setMinTime(1990, 5, 20)            //指定最小可选日期 1990年5月20日
+                .setMaxTime(2030, 2, 10)            //指定最大可选日期 2030年2月10日
+                .setDefaultSelect(defaultYear, defaultMonth, defaultDay)    //设置默认选中日期
+                .setMultiSelect(true)
+                .show(new OnDateSelected() {
+                    @Override
+                    public void onSelect(String text, int year, int month, int day) {
+                        ((Button) view).setText(text);
+                    
                         defaultYear = year;
                         defaultMonth = month;
                         defaultDay = day;

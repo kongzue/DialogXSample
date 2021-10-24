@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,8 +22,11 @@ import com.kongzue.dialogx.datepicker.R;
  */
 public class CalendarLabelTextView extends androidx.appcompat.widget.AppCompatTextView {
     
+    boolean debug;
     boolean select;
     int section = 2;
+    boolean isLight;
+    boolean today;
     
     public CalendarLabelTextView(Context context) {
         super(context);
@@ -40,9 +45,34 @@ public class CalendarLabelTextView extends androidx.appcompat.widget.AppCompatTe
     }
     
     public CalendarLabelTextView setSelect(boolean select) {
+        if (debug){
+            try{
+                throw new RuntimeException();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         this.select = select;
+        refreshStatus();
         invalidate();
         return this;
+    }
+    
+    private void refreshStatus() {
+        if (select) {
+            setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+            setTextColor(getResources().getColor(R.color.white));
+        } else {
+            if (today) {
+                setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+                setTextColor(getResources().getColor(R.color.dialogXCalendarToday));
+            } else {
+                setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+                setTextColor(getResources().getColor(
+                        isLight() ? R.color.black : R.color.white)
+                );
+            }
+        }
     }
     
     Paint bkgPaint;
@@ -83,7 +113,34 @@ public class CalendarLabelTextView extends androidx.appcompat.widget.AppCompatTe
     
     public CalendarLabelTextView setSection(int section) {
         this.section = section;
+        refreshStatus();
         invalidate();
+        return this;
+    }
+    
+    public boolean isLight() {
+        return isLight;
+    }
+    
+    public CalendarLabelTextView setLight(boolean light) {
+        isLight = light;
+        refreshStatus();
+        return this;
+    }
+    
+    public boolean isToday() {
+        return today;
+    }
+    
+    public CalendarLabelTextView setToday(boolean today) {
+        this.today = today;
+        refreshStatus();
+        invalidate();
+        return this;
+    }
+    
+    public CalendarLabelTextView setDebug(boolean debug) {
+        this.debug = debug;
         return this;
     }
 }

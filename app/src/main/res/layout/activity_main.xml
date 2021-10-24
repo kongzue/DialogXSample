@@ -165,7 +165,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:onClick="onCalendar"
-                android:text="日历选择对话框" />
+                android:text="日历单选对话框" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:onClick="onCalendarMulti"
+                android:text="日历多选对话框" />
 
         </com.kongzue.stacklabelview.StackLayout>
     </LinearLayout>
