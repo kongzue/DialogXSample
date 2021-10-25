@@ -46,7 +46,6 @@ import java.util.List;
  */
 public class CalendarDialog {
     
-    protected int selectYearIndex, selectMonthIndex, selectDayIndex;
     protected BottomDialog bottomDialog;
     protected int maxYear = 2100, minYear = 1900;
     protected int maxYearMonth = 12, minYearMonth = 1;
@@ -54,6 +53,7 @@ public class CalendarDialog {
     protected String yearLabel = "年", monthLabel = "月", dayLabel = "日";
     protected String title;
     protected int selectedYearIndex, selectedMonthIndex, selectedDayIndex;
+    protected int selectYearIndex, selectMonthIndex, selectDayIndex;
     protected int selectYearStart = -1, selectMonthStart = -1, selectDayStart = -1;
     protected int selectYearEnd = -1, selectMonthEnd = -1, selectDayEnd = -1;
     protected boolean multiSelect = false;
@@ -71,6 +71,25 @@ public class CalendarDialog {
         selectedYearIndex = year - minYear;
         selectedMonthIndex = month - 1;
         selectedDayIndex = day - 1;
+        return this;
+    }
+    
+    public CalendarDialog setDefaultSelect(int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay) {
+        selectYearIndex = startYear - minYear;
+        selectMonthIndex = startMonth - 1;
+        selectDayIndex = startDay - 1;
+        
+        selectYearStart = startYear - minYear;
+        selectMonthStart = startMonth - 1;
+        selectDayStart = startDay;
+        
+        selectYearEnd = endYear - minYear;
+        selectMonthEnd = endMonth - 1;
+        selectDayEnd = endDay;
+        
+        selectedYearIndex = startYear - minYear;
+        selectedMonthIndex = startMonth - 1;
+        selectedDayIndex = startDay - 1;
         return this;
     }
     
@@ -97,6 +116,8 @@ public class CalendarDialog {
         realShow();
         return this;
     }
+    
+    boolean isShowYearAndMonthSelect;
     
     private void realShow() {
         bottomDialog = BottomDialog.show(new OnBindView<BottomDialog>(R.layout.dialogx_calendar) {
@@ -170,6 +191,7 @@ public class CalendarDialog {
                                     btnNextMonth.setVisibility(View.GONE);
                                 }
                             });
+                            isShowYearAndMonthSelect = true;
                         } else {
                             boxYearMonthSelector.animate().alpha(0f).withEndAction(new Runnable() {
                                 @Override
@@ -188,6 +210,7 @@ public class CalendarDialog {
                             btnNextMonth.animate().alpha(1f);
                             
                             initCalendar();
+                            isShowYearAndMonthSelect = false;
                         }
                     }
                 });
@@ -342,14 +365,13 @@ public class CalendarDialog {
                             if (isMultiSelect()) {
                                 int i = v.getTag() != null ? (int) v.getTag() : -1;
                                 selectDayIndex = i;
-                                //ToDo
                                 if (selectYearStart == -1 && selectMonthStart == -1 && selectDayStart == -1) {
                                     selectYearStart = selectYearIndex;
                                     selectMonthStart = selectMonthIndex;
                                     selectDayStart = i;
                                     refreshCalendarViews();
                                 } else {
-                                    if (v.getAlpha()!=1f){
+                                    if (v.getAlpha() != 1f) {
                                         PopTip.show(R.string.error_dialogx_calendardialog_max_multi_select);
                                         return;
                                     }
@@ -440,11 +462,11 @@ public class CalendarDialog {
                     if (childLabelView instanceof CalendarLabelTextView) {
                         CalendarLabelTextView labelView = (CalendarLabelTextView) childLabelView;
                         int day = labelView.getTag() != null ? (int) labelView.getTag() : -1;
-    
+                        
                         //如果是之前选择的日期，放大+变红
                         if (isMultiSelect()) {
                             //ToDo
-        
+                            
                         } else {
                             if ((day == selectDayIndex + 1) && selectMonthIndex == selectedMonthIndex && selectYearIndex == selectedYearIndex) {
                                 selectDayIndex = (int) labelView.getTag() - 1;
@@ -464,15 +486,15 @@ public class CalendarDialog {
                         CalendarLabelTextView labelView = (CalendarLabelTextView) childLabelView;
                         if (selectYearStart == -1 && selectMonthStart == -1 && selectDayStart == -1) {
                             labelView.setAlpha(1f);
-                        }else{
+                        } else {
                             int day = childLabelView.getTag() != null ? (int) childLabelView.getTag() : -1;
                             int startDelta = dayDelta((minYear + selectYearStart) + "-" + (selectMonthStart + 1) + "-" + selectDayStart,
                                     (minYear + selectYearIndex) + "-" + (selectMonthIndex + 1) + "-" + day);
                             int endDelta = dayDelta((minYear + selectYearIndex) + "-" + (selectMonthIndex + 1) + "-" + day,
                                     (minYear + selectYearEnd) + "-" + (selectMonthEnd + 1) + "-" + selectDayEnd);
-    
+                            
                             if (selectYearEnd == -1 && selectMonthEnd == -1 && selectDayEnd == -1) {
-                                if (selectYearStart == selectedYearIndex && selectMonthStart == (selectMonthIndex) && selectDayStart == day) {
+                                if (selectYearStart == selectYearIndex && selectMonthStart == selectMonthIndex && selectDayStart == day) {
                                     labelView.setSelect(true);
                                     labelView.setSection(2);
                                     selectDayIndex = (int) labelView.getTag() - 1;
@@ -480,31 +502,31 @@ public class CalendarDialog {
                                 } else {
                                     labelView.setSelect(false);
                                 }
-                                if (getMaxMultiDay() > 1 && Math.abs(startDelta) > getMaxMultiDay()-1) {
+                                if (getMaxMultiDay() > 1 && Math.abs(startDelta) > getMaxMultiDay() - 1) {
                                     labelView.setAlpha(0.2f);
-                                }else{
+                                } else {
                                     labelView.setAlpha(1f);
                                 }
                             } else {
                                 if (startDelta == 0) {
                                     labelView.setSelect(true);
                                     labelView.setSection(-1);
-            
+                                    
                                     selectDayIndex = (int) labelView.getTag() - 1;
                                     selectDayViewCache = labelView;
-            
+                                    
                                     labelView.setAlpha(1f);
                                 } else if (startDelta > 0) {
                                     if (endDelta > 0) {
                                         labelView.setSelect(true);
                                         labelView.setSection(0);
-                
+                                        
                                         selectDayIndex = (int) labelView.getTag() - 1;
                                         selectDayViewCache = labelView;
                                     } else if (endDelta == 0) {
                                         labelView.setSelect(true);
                                         labelView.setSection(1);
-                
+                                        
                                         selectDayIndex = (int) labelView.getTag() - 1;
                                         selectDayViewCache = labelView;
                                     } else {
@@ -524,20 +546,51 @@ public class CalendarDialog {
             bottomDialog.setOkButton(R.string.dialogx_date_picker_ok_button, new OnDialogButtonClickListener<BottomDialog>() {
                 @Override
                 public boolean onClick(BottomDialog baseDialog, View v) {
-                    int year = minYear + selectYearIndex;
-                    int month = 1 + selectMonthIndex;
-                    int day = 1 + selectDayIndex;
-                    onDateSelected.onSelect(year + "-" + month + "-" + day,
-                            year,
-                            month,
-                            day
-                    );
+                    if (isShowYearAndMonthSelect) {
+                        View txtDialogYearAndMonth = baseDialog.getDialogImpl().boxContent.findViewById(R.id.txt_dialog_year_and_month);
+                        if (txtDialogYearAndMonth != null) txtDialogYearAndMonth.callOnClick();
+                        return true;
+                    }
+                    
+                    if (onDateSelected != null) {
+                        int year = minYear + selectYearIndex;
+                        int month = 1 + selectMonthIndex;
+                        int day = 1 + selectDayIndex;
+                        
+                        onDateSelected.onSelect(year + "-" + month + "-" + day,
+                                year,
+                                month,
+                                day
+                        );
+                    }
+                    if (onMultiDateSelected != null) {
+                        int startYear = minYear + selectYearStart;
+                        int startMonth = 1 + selectMonthStart;
+                        int startDay = selectDayStart;
+                        
+                        int endYear = minYear + selectYearEnd;
+                        int endMonth = 1 + selectMonthEnd;
+                        int endDay = selectDayEnd;
+                        
+                        onMultiDateSelected.onSelect((selectYearStart == -1 && selectMonthStart == -1 && startDay == -1) ? "" : startYear + "-" + startMonth + "-" + startDay,
+                                (selectYearEnd == -1 && selectMonthEnd == -1 && endDay == -1) ? "" : endYear + "-" + endMonth + "-" + endDay,
+                                startYear, startMonth, startDay,
+                                endYear, endMonth, endDay
+                        );
+                    }
                     return false;
                 }
             }).setCancelButton(R.string.dialogx_date_picker_dialog_cancel, new OnDialogButtonClickListener<BottomDialog>() {
                 @Override
                 public boolean onClick(BottomDialog baseDialog, View v) {
-                    onDateSelected.onCancel();
+                    if (isShowYearAndMonthSelect) {
+                        View txtDialogYearAndMonth = baseDialog.getDialogImpl().boxContent.findViewById(R.id.txt_dialog_year_and_month);
+                        if (txtDialogYearAndMonth != null) txtDialogYearAndMonth.callOnClick();
+                        return true;
+                    }
+                    if (onDateSelected != null) {
+                        onDateSelected.onCancel();
+                    }
                     return false;
                 }
             });
@@ -545,14 +598,21 @@ public class CalendarDialog {
             bottomDialog.setCancelButton(R.string.dialogx_date_picker_ok_button, new OnDialogButtonClickListener<BottomDialog>() {
                 @Override
                 public boolean onClick(BottomDialog baseDialog, View v) {
-                    int year = minYear + selectYearIndex;
-                    int month = 1 + selectMonthIndex;
-                    int day = 1 + selectDayIndex;
-                    onDateSelected.onSelect(year + "-" + month + "-" + day,
-                            year,
-                            month,
-                            day
-                    );
+                    if (isShowYearAndMonthSelect) {
+                        View txtDialogYearAndMonth = baseDialog.getDialogImpl().boxContent.findViewById(R.id.txt_dialog_year_and_month);
+                        if (txtDialogYearAndMonth != null) txtDialogYearAndMonth.callOnClick();
+                        return true;
+                    }
+                    if (onDateSelected != null) {
+                        int year = minYear + selectYearIndex;
+                        int month = 1 + selectMonthIndex;
+                        int day = 1 + selectDayIndex;
+                        onDateSelected.onSelect(year + "-" + month + "-" + day,
+                                year,
+                                month,
+                                day
+                        );
+                    }
                     return false;
                 }
             });

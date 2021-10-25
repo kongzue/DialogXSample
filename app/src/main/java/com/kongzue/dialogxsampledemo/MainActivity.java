@@ -26,6 +26,7 @@ import com.kongzue.dialogx.customwheelpicker.interfaces.OnWheelChangeListener;
 import com.kongzue.dialogx.datepicker.CalendarDialog;
 import com.kongzue.dialogx.datepicker.DatePickerDialog;
 import com.kongzue.dialogx.datepicker.interfaces.OnDateSelected;
+import com.kongzue.dialogx.datepicker.interfaces.OnMultiDateSelected;
 import com.kongzue.dialogx.replydialog.ReplyDialog;
 import com.kongzue.dialogx.sharedialog.ShareDialog;
 import com.kongzue.dialogx.sharedialog.bean.ShareData;
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
     
-    int defaultYear = 2021, defaultMonth = 9, defaultDay = 25;
+    int defaultYear = 2021, defaultMonth = 9, defaultDay = 15;
     
     public void onDatePicker(View view) {
         DatePickerDialog.build()
@@ -322,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSelect(String text, int year, int month, int day) {
                         ((Button) view).setText(text);
-    
+                        
                         defaultYear = year;
                         defaultMonth = month;
                         defaultDay = day;
@@ -330,21 +331,53 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
     
+    int defaultEndYear = 2021, defaultEndMonth = 9, defaultEndDay = 17;
+    
     public void onCalendarMulti(View view) {
         CalendarDialog.build()
                 .setMinTime(1990, 5, 20)            //指定最小可选日期 1990年5月20日
                 .setMaxTime(2030, 2, 10)            //指定最大可选日期 2030年2月10日
-                .setDefaultSelect(defaultYear, defaultMonth, defaultDay)    //设置默认选中日期
-                .setMultiSelect(true)
-                .setMaxMultiDay(3)
-                .show(new OnDateSelected() {
+                .setDefaultSelect(defaultYear, defaultMonth, defaultDay, defaultEndYear, defaultEndMonth, defaultEndDay)    //设置默认选中日期
+                .show(new OnMultiDateSelected() {
                     @Override
-                    public void onSelect(String text, int year, int month, int day) {
-                        ((Button) view).setText(text);
-                    
-                        defaultYear = year;
-                        defaultMonth = month;
-                        defaultDay = day;
+                    public void onSelect(String startText, String endText, int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay) {
+                        if ((startText.isEmpty() && endText.isEmpty())) {
+                            return;
+                        }
+                        ((Button) view).setText(startText + "~" + endText);
+                
+                        defaultYear = startYear;
+                        defaultMonth = startMonth;
+                        defaultDay = startDay;
+                
+                        defaultEndYear = endYear;
+                        defaultEndMonth = endMonth;
+                        defaultEndDay = endDay;
+                    }
+                });
+    }
+    
+    public void onCalendarMultiLimit(View view) {
+        CalendarDialog.build()
+                .setMinTime(1990, 5, 20)            //指定最小可选日期 1990年5月20日
+                .setMaxTime(2030, 2, 10)            //指定最大可选日期 2030年2月10日
+                //.setDefaultSelect(defaultYear, defaultMonth, defaultDay, defaultEndYear, defaultEndMonth, defaultEndDay)    //设置默认选中日期
+                .setMaxMultiDay(3)
+                .show(new OnMultiDateSelected() {
+                    @Override
+                    public void onSelect(String startText, String endText, int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay) {
+                        if ((startText.isEmpty() && endText.isEmpty())) {
+                            return;
+                        }
+                        ((Button) view).setText(startText + "~" + endText);
+                        
+                        defaultYear = startYear;
+                        defaultMonth = startMonth;
+                        defaultDay = startDay;
+                        
+                        defaultEndYear = endYear;
+                        defaultEndMonth = endMonth;
+                        defaultEndDay = endDay;
                     }
                 });
     }
