@@ -25,6 +25,7 @@ import com.kongzue.dialogx.datepicker.view.OnWheelChangedListener;
 import com.kongzue.dialogx.datepicker.view.TableLayout;
 import com.kongzue.dialogx.datepicker.view.WheelView;
 import com.kongzue.dialogx.dialogs.BottomDialog;
+import com.kongzue.dialogx.dialogs.PopTip;
 import com.kongzue.dialogx.interfaces.OnBindView;
 import com.kongzue.dialogx.interfaces.OnDialogButtonClickListener;
 import com.kongzue.dialogx.style.MaterialStyle;
@@ -335,19 +336,6 @@ public class CalendarDialog {
                         dayView.setToday(false);
                     }
                     
-                    //如果是之前选择的日期，放大+变红
-                    if (isMultiSelect()) {
-                        //ToDo
-                        
-                    } else {
-                        if ((i == selectDayIndex + 1) && selectMonthIndex == selectedMonthIndex && selectYearIndex == selectedYearIndex) {
-                            dayView.setDebug(true);
-                            selectDayIndex = (int) dayView.getTag() - 1;
-                            selectDayViewCache = (CalendarLabelTextView) dayView;
-                            dayView.setSelect(true);
-                        }
-                    }
-                    
                     dayView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -361,6 +349,10 @@ public class CalendarDialog {
                                     selectDayStart = i;
                                     refreshCalendarViews();
                                 } else {
+                                    if (v.getAlpha()!=1f){
+                                        PopTip.show(R.string.error_dialogx_calendardialog_max_multi_select);
+                                        return;
+                                    }
                                     int delta = dayDelta((minYear + selectYearStart) + "-" + (selectMonthStart + 1) + "-" + selectDayStart,
                                             (minYear + selectYearIndex) + "-" + (selectMonthIndex + 1) + "-" + i);
                                     
@@ -368,15 +360,14 @@ public class CalendarDialog {
                                         if (selectYearEnd == -1 && selectMonthEnd == -1 && selectDayEnd == -1) {
                                             //取消选择
                                             ((CalendarLabelTextView) v).setSelect(false);
-                                        } else {
-                                            selectYearEnd = -1;
-                                            selectMonthEnd = -1;
-                                            selectDayEnd = -1;
-                                            selectYearStart = -1;
-                                            selectMonthStart = -1;
-                                            selectDayStart = -1;
-                                            refreshCalendarViews();
                                         }
+                                        selectYearEnd = -1;
+                                        selectMonthEnd = -1;
+                                        selectDayEnd = -1;
+                                        selectYearStart = -1;
+                                        selectMonthStart = -1;
+                                        selectDayStart = -1;
+                                        refreshCalendarViews();
                                     } else {
                                         if (selectYearEnd == -1 && selectMonthEnd == -1 && selectDayEnd == -1) {
                                             if (delta < 0) {
@@ -441,6 +432,28 @@ public class CalendarDialog {
                     });
                     tabCalendar.addView(dayView);
                 }
+                refreshCalendarViews();
+                
+                //处理默认选中逻辑
+                for (int c = 0; c < tabCalendar.getChildCount(); c++) {
+                    View childLabelView = tabCalendar.getChildAt(c);
+                    if (childLabelView instanceof CalendarLabelTextView) {
+                        CalendarLabelTextView labelView = (CalendarLabelTextView) childLabelView;
+                        int day = labelView.getTag() != null ? (int) labelView.getTag() : -1;
+    
+                        //如果是之前选择的日期，放大+变红
+                        if (isMultiSelect()) {
+                            //ToDo
+        
+                        } else {
+                            if ((day == selectDayIndex + 1) && selectMonthIndex == selectedMonthIndex && selectYearIndex == selectedYearIndex) {
+                                selectDayIndex = (int) labelView.getTag() - 1;
+                                selectDayViewCache = (CalendarLabelTextView) labelView;
+                                labelView.setSelect(true);
+                            }
+                        }
+                    }
+                }
             }
             
             private void refreshCalendarViews() {
@@ -448,45 +461,57 @@ public class CalendarDialog {
                 for (int c = 0; c < tabCalendar.getChildCount(); c++) {
                     View childLabelView = tabCalendar.getChildAt(c);
                     if (childLabelView instanceof CalendarLabelTextView) {
-                        int day = childLabelView.getTag() != null ? (int) childLabelView.getTag() : -1;
-                        int startDelta = dayDelta((minYear + selectYearStart) + "-" + (selectMonthStart + 1) + "-" + selectDayStart,
-                                (minYear + selectYearIndex) + "-" + (selectMonthIndex + 1) + "-" + day);
-                        int endDelta = dayDelta((minYear + selectYearIndex) + "-" + (selectMonthIndex + 1) + "-" + day,
-                                (minYear + selectYearEnd) + "-" + (selectMonthEnd + 1) + "-" + selectDayEnd);
-                        
                         CalendarLabelTextView labelView = (CalendarLabelTextView) childLabelView;
-                        if (selectYearEnd == -1 && selectMonthEnd == -1 && selectDayEnd == -1) {
-                            if (selectYearStart == selectedYearIndex && selectMonthStart == (selectMonthIndex) && selectDayStart == day) {
-                                labelView.setSelect(true);
-                                labelView.setSection(2);
-                                selectDayIndex = (int) labelView.getTag() - 1;
-                                selectDayViewCache = labelView;
-                            } else {
-                                labelView.setSelect(false);
-                            }
-                        } else {
-                            if (startDelta == 0) {
-                                labelView.setSelect(true);
-                                labelView.setSection(-1);
-                                
-                                selectDayIndex = (int) labelView.getTag() - 1;
-                                selectDayViewCache = labelView;
-                            } else if (startDelta > 0) {
-                                if (endDelta > 0) {
+                        if (selectYearStart == -1 && selectMonthStart == -1 && selectDayStart == -1) {
+                            labelView.setAlpha(1f);
+                        }else{
+                            int day = childLabelView.getTag() != null ? (int) childLabelView.getTag() : -1;
+                            int startDelta = dayDelta((minYear + selectYearStart) + "-" + (selectMonthStart + 1) + "-" + selectDayStart,
+                                    (minYear + selectYearIndex) + "-" + (selectMonthIndex + 1) + "-" + day);
+                            int endDelta = dayDelta((minYear + selectYearIndex) + "-" + (selectMonthIndex + 1) + "-" + day,
+                                    (minYear + selectYearEnd) + "-" + (selectMonthEnd + 1) + "-" + selectDayEnd);
+    
+                            if (selectYearEnd == -1 && selectMonthEnd == -1 && selectDayEnd == -1) {
+                                if (selectYearStart == selectedYearIndex && selectMonthStart == (selectMonthIndex) && selectDayStart == day) {
                                     labelView.setSelect(true);
-                                    labelView.setSection(0);
-                                    
-                                    selectDayIndex = (int) labelView.getTag() - 1;
-                                    selectDayViewCache = labelView;
-                                } else if (endDelta == 0) {
-                                    labelView.setSelect(true);
-                                    labelView.setSection(1);
-                                    
+                                    labelView.setSection(2);
                                     selectDayIndex = (int) labelView.getTag() - 1;
                                     selectDayViewCache = labelView;
                                 } else {
                                     labelView.setSelect(false);
                                 }
+                                if (getMaxMultiDay() > 1 && Math.abs(startDelta) > getMaxMultiDay()-1) {
+                                    labelView.setAlpha(0.2f);
+                                }else{
+                                    labelView.setAlpha(1f);
+                                }
+                            } else {
+                                if (startDelta == 0) {
+                                    labelView.setSelect(true);
+                                    labelView.setSection(-1);
+            
+                                    selectDayIndex = (int) labelView.getTag() - 1;
+                                    selectDayViewCache = labelView;
+            
+                                    labelView.setAlpha(1f);
+                                } else if (startDelta > 0) {
+                                    if (endDelta > 0) {
+                                        labelView.setSelect(true);
+                                        labelView.setSection(0);
+                
+                                        selectDayIndex = (int) labelView.getTag() - 1;
+                                        selectDayViewCache = labelView;
+                                    } else if (endDelta == 0) {
+                                        labelView.setSelect(true);
+                                        labelView.setSection(1);
+                
+                                        selectDayIndex = (int) labelView.getTag() - 1;
+                                        selectDayViewCache = labelView;
+                                    } else {
+                                        labelView.setSelect(false);
+                                    }
+                                }
+                                labelView.setAlpha(1f);
                             }
                         }
                     }
@@ -534,23 +559,8 @@ public class CalendarDialog {
         }
     }
     
-    @Deprecated
-    private void setCalendarLabelStatus(CalendarLabelTextView view, boolean select) {
-        if (view == null) return;
-        if (select) {
-            selectDayIndex = (int) view.getTag() - 1;
-            selectDayViewCache = view;
-        } else {
-            int i = view.getTag() != null ? (int) view.getTag() : -1;
-            if (i == nowDay && selectMonthIndex == nowMonth && selectYearIndex == nowYear - minYear) {
-                view.setToday(true);
-            } else {
-                view.setToday(false);
-            }
-        }
-    }
-    
     //API-23+ 支持水波纹效果
+    @Deprecated
     private Drawable getDefaultCalendarItemBackground() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             int[] attrs = new int[]{android.R.attr.selectableItemBackgroundBorderless};
@@ -719,7 +729,7 @@ public class CalendarDialog {
         try {
             Date date1 = df.parse(origin);
             Date date2 = df.parse(newDate);
-            return (int) ((date2.getTime() - date1.getTime()) / 86400);
+            return (int) ((date2.getTime() - date1.getTime()) / 86400000);
         } catch (Exception exception) {
             exception.printStackTrace();
         }

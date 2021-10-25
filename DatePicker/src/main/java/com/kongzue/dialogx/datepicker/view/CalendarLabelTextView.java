@@ -22,7 +22,6 @@ import com.kongzue.dialogx.datepicker.R;
  */
 public class CalendarLabelTextView extends androidx.appcompat.widget.AppCompatTextView {
     
-    boolean debug;
     boolean select;
     int section = 2;
     boolean isLight;
@@ -45,13 +44,6 @@ public class CalendarLabelTextView extends androidx.appcompat.widget.AppCompatTe
     }
     
     public CalendarLabelTextView setSelect(boolean select) {
-        if (debug){
-            try{
-                throw new RuntimeException();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
         this.select = select;
         refreshStatus();
         invalidate();
@@ -136,11 +128,6 @@ public class CalendarLabelTextView extends androidx.appcompat.widget.AppCompatTe
         this.today = today;
         refreshStatus();
         invalidate();
-        return this;
-    }
-    
-    public CalendarLabelTextView setDebug(boolean debug) {
-        this.debug = debug;
         return this;
     }
 }
