@@ -105,7 +105,19 @@ public class CustomWheelPickerDialog {
             bottomDialog.setCancelButton(R.string.dialogx_custom_wheel_picker_ok_button, new OnDialogButtonClickListener<BottomDialog>() {
                 @Override
                 public boolean onClick(BottomDialog baseDialog, View v) {
-                    
+                    String text = "";
+                    if (wheelViewList == null || wheelViewList.isEmpty()) {
+                        onCustomWheelPickerSelected.onSelected(CustomWheelPickerDialog.this, text, new String[]{}, new int[]{});
+                        return false;
+                    }
+                    String[] selectedTexts = new String[wheelDataList.size()];
+                    int[] selectedIndex = new int[wheelDataList.size()];
+                    for (int i = 0; i < wheelDataList.size(); i++) {
+                        text = text.isEmpty() ? getWheelSelected(i) : text + " " + getWheelSelected(i);
+                        selectedTexts[i] = getWheelSelected(i);
+                        selectedIndex[i] = getWheelSelectedIndex(i);
+                    }
+                    onCustomWheelPickerSelected.onSelected(CustomWheelPickerDialog.this, text, selectedTexts, selectedIndex);
                     return false;
                 }
             });
