@@ -326,6 +326,17 @@ public class CalendarDialog {
             }
             
             private void initCalendar() {
+                //默认选中的日期超限（低于最低允许日期或高于最高允许日期）的情况
+                int minDelta = dayDelta(minYear + "-" + minYearMonth + "-" + minYearDay,
+                        (minYear + selectedYearIndex) + "-" + (selectedMonthIndex + 1) + "-" + (selectedDayIndex + 1));
+                int maxDelta = dayDelta((minYear + selectedYearIndex) + "-" + (selectedMonthIndex + 1) + "-" + (selectedDayIndex + 1),
+                        maxYear + "-" + maxYearMonth + "-" + maxYearDay);
+                if (minDelta < 0) {
+                    setDefaultSelect(minYear, minYearMonth, minYearDay);
+                }
+                if (maxDelta < 0) {
+                    setDefaultSelect(maxYear, maxYearMonth, maxYearDay);
+                }
                 txtDialogYearAndMonth.setText((selectYearIndex + minYear) + yearLabel + (selectMonthIndex + 1) + monthLabel);
                 
                 Calendar calendar = Calendar.getInstance();
@@ -353,7 +364,6 @@ public class CalendarDialog {
                     dayView.setTag(i);
                     if (i == nowDay && selectMonthIndex == nowMonth && selectYearIndex == nowYear - minYear) {
                         dayView.setToday(true);
-                        selectDayIndex = (int) dayView.getTag() - 1;
                         selectDayViewCache = dayView;
                     } else {
                         dayView.setToday(false);
@@ -417,6 +427,10 @@ public class CalendarDialog {
                                     }
                                 }
                             } else {
+                                if (v.getAlpha() != 1f) {
+                                    PopTip.show(R.string.error_dialogx_calendardialog_max_multi_select);
+                                    return;
+                                }
                                 if (selectDayViewCache != null) selectDayViewCache.setSelect(false);
                                 selectDayIndex = (int) v.getTag() - 1;
                                 selectDayViewCache = (CalendarLabelTextView) v;
@@ -454,8 +468,9 @@ public class CalendarDialog {
                     });
                     tabCalendar.addView(dayView);
                 }
-                refreshCalendarViews();
                 
+                refreshCalendarViews();
+    
                 //处理默认选中逻辑
                 for (int c = 0; c < tabCalendar.getChildCount(); c++) {
                     View childLabelView = tabCalendar.getChildAt(c);
@@ -484,10 +499,24 @@ public class CalendarDialog {
                     View childLabelView = tabCalendar.getChildAt(c);
                     if (childLabelView instanceof CalendarLabelTextView) {
                         CalendarLabelTextView labelView = (CalendarLabelTextView) childLabelView;
+                        int day = childLabelView.getTag() != null ? (int) childLabelView.getTag() : -1;
+                        
+                        int minDelta = dayDelta(minYear + "-" + minYearMonth + "-" + minYearDay,
+                                (minYear + selectYearIndex) + "-" + (selectMonthIndex + 1) + "-" + day);
+                        int maxDelta = dayDelta((minYear + selectYearIndex) + "-" + (selectMonthIndex + 1) + "-" + day,
+                                maxYear + "-" + maxYearMonth + "-" + maxYearDay);
+                        if (minDelta < 0) {
+                            labelView.setAlpha(0.2f);
+                            continue;
+                        }
+                        if (maxDelta < 0) {
+                            labelView.setAlpha(0.2f);
+                            continue;
+                        }
+                        
                         if (selectYearStart == -1 && selectMonthStart == -1 && selectDayStart == -1) {
                             labelView.setAlpha(1f);
                         } else {
-                            int day = childLabelView.getTag() != null ? (int) childLabelView.getTag() : -1;
                             int startDelta = dayDelta((minYear + selectYearStart) + "-" + (selectMonthStart + 1) + "-" + selectDayStart,
                                     (minYear + selectYearIndex) + "-" + (selectMonthIndex + 1) + "-" + day);
                             int endDelta = dayDelta((minYear + selectYearIndex) + "-" + (selectMonthIndex + 1) + "-" + day,
