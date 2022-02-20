@@ -19,6 +19,7 @@
     <color name="text_color_02">#FF6C6C6C</color>
     <color name="sort_catagory">#FFE0E0E0</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 
     <color name="province_line_border">#C7C7C7</color>
     <color name="liji_c_blue">#26A5FF</color>
