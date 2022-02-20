@@ -586,7 +586,7 @@ public class CalendarDialog {
                         int month = 1 + selectMonthIndex;
                         int day = 1 + selectDayIndex;
                         
-                        onDateSelected.onSelect(year + "-" + month + "-" + day,
+                        onDateSelected.onSelect(year + "-" + format(month) + "-" + format(day),
                                 year,
                                 month,
                                 day
@@ -601,8 +601,8 @@ public class CalendarDialog {
                         int endMonth = 1 + selectMonthEnd;
                         int endDay = selectDayEnd;
                         
-                        onMultiDateSelected.onSelect((selectYearStart == -1 && selectMonthStart == -1 && startDay == -1) ? "" : startYear + "-" + startMonth + "-" + startDay,
-                                (selectYearEnd == -1 && selectMonthEnd == -1 && endDay == -1) ? "" : endYear + "-" + endMonth + "-" + endDay,
+                        onMultiDateSelected.onSelect((selectYearStart == -1 && selectMonthStart == -1 && startDay == -1) ? "" : startYear + "-" + format(startMonth) + "-" + format(startDay),
+                                (selectYearEnd == -1 && selectMonthEnd == -1 && endDay == -1) ? "" : endYear + "-" + format(endMonth) + "-" + format(endDay),
                                 startYear, startMonth, startDay,
                                 endYear, endMonth, endDay
                         );
@@ -636,7 +636,7 @@ public class CalendarDialog {
                         int year = minYear + selectYearIndex;
                         int month = 1 + selectMonthIndex;
                         int day = 1 + selectDayIndex;
-                        onDateSelected.onSelect(year + "-" + month + "-" + day,
+                        onDateSelected.onSelect(year + "-" + format(month) + "-" + format(day),
                                 year,
                                 month,
                                 day
@@ -823,5 +823,28 @@ public class CalendarDialog {
             exception.printStackTrace();
         }
         return 0;
+    }
+    boolean doubleDateFormat;
+    
+    public boolean isDoubleDateFormat() {
+        return doubleDateFormat;
+    }
+    
+    public CalendarDialog setDoubleDateFormat(boolean doubleDateFormat) {
+        this.doubleDateFormat = doubleDateFormat;
+        return this;
+    }
+    
+    private String format(int day) {
+        if (isDoubleDateFormat()) {
+            if (day < 10) {
+                return "0" + day;
+            }
+        }
+        return String.valueOf(day);
+    }
+    
+    public BottomDialog getDialog() {
+        return bottomDialog;
     }
 }

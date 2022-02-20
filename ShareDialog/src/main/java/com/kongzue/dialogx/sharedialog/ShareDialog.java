@@ -105,4 +105,8 @@ public class ShareDialog {
         }
         return this;
     }
+    
+    public BottomDialog getDialog() {
+        return bottomDialog;
+    }
 }

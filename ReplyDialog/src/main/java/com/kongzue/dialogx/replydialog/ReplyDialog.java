@@ -137,4 +137,8 @@ public class ReplyDialog {
         this.contentHint = contentHint;
         return this;
     }
+    
+    public BottomDialog getDialog() {
+        return bottomDialog;
+    }
 }

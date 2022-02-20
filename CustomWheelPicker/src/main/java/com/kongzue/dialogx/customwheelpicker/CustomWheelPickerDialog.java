@@ -281,4 +281,8 @@ public class CustomWheelPickerDialog {
         }
         return this;
     }
+    
+    public BottomDialog getDialog() {
+        return bottomDialog;
+    }
 }

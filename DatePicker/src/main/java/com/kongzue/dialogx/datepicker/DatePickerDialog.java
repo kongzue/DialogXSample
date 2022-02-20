@@ -166,7 +166,7 @@ public class DatePickerDialog {
                     //min
                     year = minYear + idYear.getCurrentItem();
                     month = 1 + idMonth.getCurrentItem();
-                    maxDay=getLastDayOfMonth(year, month);
+                    maxDay = getLastDayOfMonth(year, month);
                     minDay = minYearDay == 0 ? 1 : Math.max(1, minYearDay);
                 } else if (selectYearIndex == yearList.size() - 1 && selectMonthIndex == monthList.size() - 1) {
                     //max
@@ -201,7 +201,7 @@ public class DatePickerDialog {
                     int year = minYear + selectYearIndex;
                     int month = 1 + selectMonthIndex;
                     int day = 1 + selectDayIndex;
-                    onDateSelected.onSelect(year + "-" + month + "-" + day,
+                    onDateSelected.onSelect(year + "-" + format(month) + "-" + format(day),
                             year,
                             month,
                             day
@@ -222,7 +222,7 @@ public class DatePickerDialog {
                     int year = minYear + selectYearIndex;
                     int month = 1 + selectMonthIndex;
                     int day = 1 + selectDayIndex;
-                    onDateSelected.onSelect(year + "-" + month + "-" + day,
+                    onDateSelected.onSelect(year + "-" + format(month) + "-" + format(day),
                             year,
                             month,
                             day
@@ -292,14 +292,14 @@ public class DatePickerDialog {
         return this;
     }
     
-    public DatePickerDialog setMinTime(int minYear,int minMonth,int minDay) {
+    public DatePickerDialog setMinTime(int minYear, int minMonth, int minDay) {
         this.minYear = minYear;
         this.minYearMonth = minMonth;
         this.minYearDay = minDay;
         return this;
     }
     
-    public DatePickerDialog setMaxTime(int maxYear,int maxMonth,int maxDay) {
+    public DatePickerDialog setMaxTime(int maxYear, int maxMonth, int maxDay) {
         this.maxYear = maxYear;
         this.maxYearMonth = maxMonth;
         this.maxYearDay = maxDay;
@@ -358,5 +358,29 @@ public class DatePickerDialog {
         cal.add(Calendar.MONTH, 1);
         cal.set(Calendar.DAY_OF_MONTH, 0);
         return cal.get(Calendar.DAY_OF_MONTH);
+    }
+    
+    boolean doubleDateFormat;
+    
+    public boolean isDoubleDateFormat() {
+        return doubleDateFormat;
+    }
+    
+    public DatePickerDialog setDoubleDateFormat(boolean doubleDateFormat) {
+        this.doubleDateFormat = doubleDateFormat;
+        return this;
+    }
+    
+    private String format(int day) {
+        if (isDoubleDateFormat()) {
+            if (day < 10) {
+                return "0" + day;
+            }
+        }
+        return String.valueOf(day);
+    }
+    
+    public BottomDialog getDialog() {
+        return bottomDialog;
     }
 }
