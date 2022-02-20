@@ -53,7 +53,7 @@ public class CalendarDialog {
     protected String yearLabel = "年", monthLabel = "月", dayLabel = "日";
     protected String title;
     protected int selectedYearIndex, selectedMonthIndex, selectedDayIndex;
-    protected int selectYearIndex, selectMonthIndex, selectDayIndex;
+    protected int selectYearIndex = -1, selectMonthIndex= -1, selectDayIndex= -1;
     protected int selectYearStart = -1, selectMonthStart = -1, selectDayStart = -1;
     protected int selectYearEnd = -1, selectMonthEnd = -1, selectDayEnd = -1;
     protected boolean multiSelect = false;
@@ -274,10 +274,10 @@ public class CalendarDialog {
                     }
                 });
             }
-    
+            
             List<String> yearList;
             List<String> monthList;
-    
+            
             private void initWheelYearAndMonthPicker() {
                 yearList = new ArrayList<>();
                 for (int i = minYear; i <= maxYear; i++) {
@@ -300,7 +300,7 @@ public class CalendarDialog {
                 
                 initMonthPicker();
             }
-    
+            
             private void initMonthPicker() {
                 monthList = new ArrayList<>();
                 if (selectYearIndex == 0) {
@@ -332,12 +332,16 @@ public class CalendarDialog {
                     }
                 });
             }
-    
+            
             private void initCalendar() {
                 //默认选中的日期超限（低于最低允许日期或高于最高允许日期）的情况
                 int minDelta = dayDelta(minYear + "-" + minYearMonth + "-" + minYearDay,
-                        (minYear + selectedYearIndex) + "-" + (selectedMonthIndex + 1) + "-" + (selectedDayIndex + 1));
-                int maxDelta = dayDelta((minYear + selectedYearIndex) + "-" + (selectedMonthIndex + 1) + "-" + (selectedDayIndex + 1),
+                        (minYear + selectYearIndex) + "-" +
+                                (selectMonthIndex + 1) + "-" +
+                                (selectDayIndex + 1));
+                int maxDelta = dayDelta((minYear + selectYearIndex) + "-" +
+                                (selectMonthIndex + 1) + "-" +
+                                (selectDayIndex + 1),
                         maxYear + "-" + maxYearMonth + "-" + maxYearDay);
                 if (minDelta < 0) {
                     setDefaultSelect(minYear, minYearMonth, minYearDay);
@@ -372,7 +376,7 @@ public class CalendarDialog {
                     dayView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
                     dayView.setText(String.valueOf(i));
                     dayView.setTag(i);
-                    if (i == nowDay && selectMonthIndex == nowMonth && selectYearIndex == nowYear - minYear) {
+                    if (i == nowDay && selectedMonthIndex == nowMonth && selectedYearIndex == nowYear - minYear) {
                         dayView.setToday(true);
                         selectDayViewCache = dayView;
                     } else {
@@ -445,6 +449,10 @@ public class CalendarDialog {
                                 selectDayIndex = (int) v.getTag() - 1;
                                 selectDayViewCache = (CalendarLabelTextView) v;
                                 selectDayViewCache.setSelect(true);
+                                
+                                selectedMonthIndex = selectMonthIndex;
+                                selectedYearIndex = selectYearIndex;
+                                selectedDayIndex = selectDayIndex;
                             }
                         }
                     });
@@ -480,7 +488,7 @@ public class CalendarDialog {
                 }
                 
                 refreshCalendarViews();
-    
+                
                 //处理默认选中逻辑
                 for (int c = 0; c < tabCalendar.getChildCount(); c++) {
                     View childLabelView = tabCalendar.getChildAt(c);
@@ -592,9 +600,9 @@ public class CalendarDialog {
                     }
                     
                     if (onDateSelected != null) {
-                        int year = minYear + selectYearIndex;
-                        int month = 1 + selectMonthIndex;
-                        int day = 1 + selectDayIndex;
+                        int year = minYear + selectedYearIndex;
+                        int month = 1 + selectedMonthIndex;
+                        int day = 1 + selectedDayIndex;
                         
                         onDateSelected.onSelect(year + "-" + format(month) + "-" + format(day),
                                 year,
@@ -677,15 +685,15 @@ public class CalendarDialog {
     private void initDefaultDate() {
         Calendar calendar = Calendar.getInstance();
         nowYear = calendar.get(Calendar.YEAR);
-        if (selectYearIndex == 0) {
+        if (selectYearIndex == -1) {
             selectYearIndex = calendar.get(Calendar.YEAR) - minYear;
         }
         nowMonth = calendar.get(Calendar.MONTH);
-        if (selectMonthIndex == 0) {
+        if (selectMonthIndex == -1) {
             selectMonthIndex = calendar.get(Calendar.MONTH);
         }
         nowDay = calendar.get(Calendar.DAY_OF_MONTH);
-        if (selectDayIndex == 0) {
+        if (selectDayIndex == -1) {
             selectDayIndex = calendar.get(Calendar.DAY_OF_MONTH) - 1;
         }
     }
@@ -834,6 +842,7 @@ public class CalendarDialog {
         }
         return 0;
     }
+    
     boolean doubleDateFormat;
     
     public boolean isDoubleDateFormat() {
