@@ -274,9 +274,12 @@ public class CalendarDialog {
                     }
                 });
             }
-            
+    
+            List<String> yearList;
+            List<String> monthList;
+    
             private void initWheelYearAndMonthPicker() {
-                List<String> yearList = new ArrayList<>();
+                yearList = new ArrayList<>();
                 for (int i = minYear; i <= maxYear; i++) {
                     yearList.add(i + yearLabel);
                 }
@@ -290,11 +293,16 @@ public class CalendarDialog {
                     @Override
                     public void onChanged(WheelView wheel, int oldValue, int newValue) {
                         selectYearIndex = newValue;
+                        initMonthPicker();
                         txtDialogYearAndMonth.setText((selectYearIndex + minYear) + yearLabel + (selectMonthIndex + 1) + monthLabel);
                     }
                 });
                 
-                List<String> monthList = new ArrayList<>();
+                initMonthPicker();
+            }
+    
+            private void initMonthPicker() {
+                monthList = new ArrayList<>();
                 if (selectYearIndex == 0) {
                     //min
                     for (int i = Math.max(minYearMonth, 1); i <= 12; i++) {
@@ -324,7 +332,7 @@ public class CalendarDialog {
                     }
                 });
             }
-            
+    
             private void initCalendar() {
                 //默认选中的日期超限（低于最低允许日期或高于最高允许日期）的情况
                 int minDelta = dayDelta(minYear + "-" + minYearMonth + "-" + minYearDay,
@@ -338,6 +346,8 @@ public class CalendarDialog {
                     setDefaultSelect(maxYear, maxYearMonth, maxYearDay);
                 }
                 txtDialogYearAndMonth.setText((selectYearIndex + minYear) + yearLabel + (selectMonthIndex + 1) + monthLabel);
+                idYear.setCurrentItem(selectYearIndex < yearList.size() ? selectYearIndex : 0);
+                idMonth.setCurrentItem(selectMonthIndex < monthList.size() ? selectMonthIndex : 0);
                 
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.YEAR, (selectYearIndex + minYear));
