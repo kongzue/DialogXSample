@@ -188,7 +188,7 @@ public class CalendarDialog {
                     public void onClick(View v) {
                         if (boxCalendar.getVisibility() == View.VISIBLE) {
                             idYear.setCurrentItem(selectYearIndex < yearList.size() ? selectYearIndex : 0);
-                            idMonth.setCurrentItem(selectMonthIndex < monthList.size() ? selectMonthIndex + getMinMonthDefaultValue() : 0);
+                            idMonth.setCurrentItem(selectMonthIndex < monthList.size() ? selectMonthIndex - (getMinMonthDefaultValue() - 1) : 0);
                             
                             boxCalendar.animate().alpha(0f).withEndAction(new Runnable() {
                                 @Override
