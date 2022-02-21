@@ -53,7 +53,7 @@ public class CalendarDialog {
     protected String yearLabel = "年", monthLabel = "月", dayLabel = "日";
     protected String title;
     protected int selectedYearIndex, selectedMonthIndex, selectedDayIndex;
-    protected int selectYearIndex = -1, selectMonthIndex= -1, selectDayIndex= -1;
+    protected int selectYearIndex = -1, selectMonthIndex = -1, selectDayIndex = -1;
     protected int selectYearStart = -1, selectMonthStart = -1, selectDayStart = -1;
     protected int selectYearEnd = -1, selectMonthEnd = -1, selectDayEnd = -1;
     protected boolean multiSelect = false;
@@ -75,21 +75,40 @@ public class CalendarDialog {
     }
     
     public CalendarDialog setDefaultSelect(int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay) {
-        selectYearIndex = startYear - minYear;
-        selectMonthIndex = startMonth - 1;
-        selectDayIndex = startDay - 1;
-        
-        selectYearStart = startYear - minYear;
-        selectMonthStart = startMonth - 1;
-        selectDayStart = startDay;
-        
-        selectYearEnd = endYear - minYear;
-        selectMonthEnd = endMonth - 1;
-        selectDayEnd = endDay;
-        
-        selectedYearIndex = startYear - minYear;
-        selectedMonthIndex = startMonth - 1;
-        selectedDayIndex = startDay - 1;
+        int delta = dayDelta(startYear + "-" + startMonth + "-" + startDay, endYear + "-" + endMonth + "-" + endDay);
+        if (delta < 0) {
+            selectYearIndex = endYear - minYear;
+            selectMonthIndex = endMonth - 1;
+            selectDayIndex = endDay - 1;
+            
+            selectYearStart = endYear - minYear;
+            selectMonthStart = endMonth - 1;
+            selectDayStart = endDay;
+            
+            selectedYearIndex = endYear - minYear;
+            selectedMonthIndex = endMonth - 1;
+            selectedDayIndex = endDay - 1;
+            
+            selectYearEnd = startYear - minYear;
+            selectMonthEnd = startMonth - 1;
+            selectDayEnd = startDay;
+        } else {
+            selectYearIndex = startYear - minYear;
+            selectMonthIndex = startMonth - 1;
+            selectDayIndex = startDay - 1;
+            
+            selectYearStart = startYear - minYear;
+            selectMonthStart = startMonth - 1;
+            selectDayStart = startDay;
+            
+            selectedYearIndex = startYear - minYear;
+            selectedMonthIndex = startMonth - 1;
+            selectedDayIndex = startDay - 1;
+            
+            selectYearEnd = endYear - minYear;
+            selectMonthEnd = endMonth - 1;
+            selectDayEnd = endDay;
+        }
         return this;
     }
     
@@ -168,6 +187,9 @@ public class CalendarDialog {
                     @Override
                     public void onClick(View v) {
                         if (boxCalendar.getVisibility() == View.VISIBLE) {
+                            idYear.setCurrentItem(selectYearIndex < yearList.size() ? selectYearIndex : 0);
+                            idMonth.setCurrentItem(selectMonthIndex < monthList.size() ? selectMonthIndex + getMinMonthDefaultValue() : 0);
+                            
                             boxCalendar.animate().alpha(0f).withEndAction(new Runnable() {
                                 @Override
                                 public void run() {
@@ -301,11 +323,21 @@ public class CalendarDialog {
                 initMonthPicker();
             }
             
+            // 获取当前年的最小月份
+            private int getMinMonthDefaultValue() {
+                if (selectYearIndex == 0) {
+                    //min
+                    return Math.max(minYearMonth, 1);
+                } else {
+                    return 1;
+                }
+            }
+            
             private void initMonthPicker() {
                 monthList = new ArrayList<>();
                 if (selectYearIndex == 0) {
                     //min
-                    for (int i = Math.max(minYearMonth, 1); i <= 12; i++) {
+                    for (int i = getMinMonthDefaultValue(); i <= 12; i++) {
                         monthList.add(i + monthLabel);
                     }
                 } else if (selectYearIndex == yearList.size() - 1) {
@@ -327,7 +359,7 @@ public class CalendarDialog {
                 idMonth.addChangingListener(new OnWheelChangedListener() {
                     @Override
                     public void onChanged(WheelView wheel, int oldValue, int newValue) {
-                        selectMonthIndex = newValue;
+                        selectMonthIndex = newValue + (getMinMonthDefaultValue() - 1);
                         txtDialogYearAndMonth.setText((selectYearIndex + minYear) + yearLabel + (selectMonthIndex + 1) + monthLabel);
                     }
                 });
@@ -350,8 +382,6 @@ public class CalendarDialog {
                     setDefaultSelect(maxYear, maxYearMonth, maxYearDay);
                 }
                 txtDialogYearAndMonth.setText((selectYearIndex + minYear) + yearLabel + (selectMonthIndex + 1) + monthLabel);
-                idYear.setCurrentItem(selectYearIndex < yearList.size() ? selectYearIndex : 0);
-                idMonth.setCurrentItem(selectMonthIndex < monthList.size() ? selectMonthIndex : 0);
                 
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.YEAR, (selectYearIndex + minYear));
@@ -376,7 +406,7 @@ public class CalendarDialog {
                     dayView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
                     dayView.setText(String.valueOf(i));
                     dayView.setTag(i);
-                    if (i == nowDay && selectedMonthIndex == nowMonth && selectedYearIndex == nowYear - minYear) {
+                    if (i == nowDay && selectMonthIndex == nowMonth && selectYearIndex == nowYear - minYear) {
                         dayView.setToday(true);
                         selectDayViewCache = dayView;
                     } else {
@@ -831,7 +861,7 @@ public class CalendarDialog {
         return this;
     }
     
-    private int dayDelta(String origin, String newDate) {
+    private static int dayDelta(String origin, String newDate) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date date1 = df.parse(origin);
