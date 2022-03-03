@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialogx_filedialog_title_file">选择文件</string>
+    <string name="dialogx_filedialog_title_folder">选择文件夹</string>
+    <string name="dialogx_filedialog_select">选择</string>
+    <string name="dialogx_filedialog_cancel">取消</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dialogx_replydialog_reply">回复</string>
+    <string name="dialogx_replydialog_send">发送</string>
+    <string name="dialogx_replydialog_hint">请输入内容...</string>
+</resources>

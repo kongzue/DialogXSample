@@ -35,7 +35,10 @@ import com.kongzue.dialogx.style.IOSStyle;
 import com.kongzue.dialogx.style.KongzueStyle;
 import com.kongzue.dialogx.style.MIUIStyle;
 import com.kongzue.dialogx.style.MaterialStyle;
+import com.kongzue.filedialog.FileDialog;
+import com.kongzue.filedialog.interfaces.FileSelectCallBack;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -345,11 +348,11 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
                         ((Button) view).setText(startText + "~" + endText);
-                
+                        
                         defaultYear = startYear;
                         defaultMonth = startMonth;
                         defaultDay = startDay;
-                
+                        
                         defaultEndYear = endYear;
                         defaultEndMonth = endMonth;
                         defaultEndDay = endDay;
@@ -380,5 +383,25 @@ public class MainActivity extends AppCompatActivity {
                         defaultEndDay = endDay;
                     }
                 });
+    }
+    
+    FileDialog fileDialog;
+    
+    public void onFileSelect(View view) {
+        fileDialog = FileDialog.build();
+        fileDialog.selectFile(new FileSelectCallBack() {
+            @Override
+            public void onSelect(File file, String filePath) {
+            
+            }
+        });
+    }
+    
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (fileDialog != null) {
+            fileDialog.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }

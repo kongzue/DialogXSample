@@ -44,4 +44,5 @@ dependencies {
     implementation project(path: ':ShareDialog')
     implementation project(path: ':CustomWheelPicker')
     implementation project(path: ':ReplyDialog')
+    implementation project(path: ':FileDialog')
 }
