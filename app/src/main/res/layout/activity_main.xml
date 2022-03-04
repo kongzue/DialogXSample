@@ -188,6 +188,27 @@
                 android:onClick="onFileSelect"
                 android:text="选择文件" />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:onClick="onFolderSelect"
+                android:text="选择文件夹" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:onClick="onMultiFileSelect"
+                android:text="多选文件" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:onClick="onJPGFileSelect"
+                android:text="限定jpg格式文件" />
+
         </com.kongzue.stacklabelview.StackLayout>
     </LinearLayout>
 </ScrollView>

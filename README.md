@@ -34,16 +34,26 @@ DialogX 计划提供模块扩展包
 
 √ 底部弹出的评论输入对话框
 
-- 选择文件对话框
+√ 选择文件对话框
 
-  - 多选文件功能
+  √ 多选文件功能
   
-  - 文件类型筛选功能
+  √ 文件类型筛选功能
+  
+  - 文件选择支持暗色模式
 ```
 
 建议功能可以直接提交 [issues](https://github.com/kongzue/DialogXSample/issues)
 
-### 试用
+### Demo
+
+您可以先下载 Demo 进行尝试：http://beta.kongzue.com/dialogxsample
+
+<div align=center>    
+    <img src="https://github.com/kongzue/DialogXSample/raw/master/README.assets/qrcode.png" width="350">    
+</div>
+
+### 使用
 
 请注意目前本扩展包尚未完成开发，目前提供预览版试用，实际正式版依然可能出现 API 变更需，请谨慎使用！
 

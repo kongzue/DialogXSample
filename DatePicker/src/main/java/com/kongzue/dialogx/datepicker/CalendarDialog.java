@@ -746,7 +746,6 @@ public class CalendarDialog {
         return bitmap;
     }
     
-    
     public int getMaxYear() {
         return maxYear;
     }

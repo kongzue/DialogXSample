@@ -4,4 +4,7 @@
     <string name="dialogx_filedialog_title_folder">选择文件夹</string>
     <string name="dialogx_filedialog_select">选择</string>
     <string name="dialogx_filedialog_cancel">取消</string>
+    <string name="error_dialogx_filedialog_max_selection_tip">最多可选择 %s 个文件</string>
+    <string name="error_dialogx_filedialog_no_support_file_type_tip">不支持此文件类型</string>
+    <string name="error_dialogx_filedialog_no_file_selected_tip">请选择文件</string>
 </resources>

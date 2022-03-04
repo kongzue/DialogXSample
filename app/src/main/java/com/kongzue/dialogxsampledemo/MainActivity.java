@@ -27,7 +27,9 @@ import com.kongzue.dialogx.datepicker.CalendarDialog;
 import com.kongzue.dialogx.datepicker.DatePickerDialog;
 import com.kongzue.dialogx.datepicker.interfaces.OnDateSelected;
 import com.kongzue.dialogx.datepicker.interfaces.OnMultiDateSelected;
+import com.kongzue.dialogx.dialogs.PopTip;
 import com.kongzue.dialogx.replydialog.ReplyDialog;
+import com.kongzue.dialogx.replydialog.interfaces.OnReplyButtonClickListener;
 import com.kongzue.dialogx.sharedialog.ShareDialog;
 import com.kongzue.dialogx.sharedialog.bean.ShareData;
 import com.kongzue.dialogx.sharedialog.interfaces.OnShareClick;
@@ -286,7 +288,12 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle("回复 @Kongzue:")
                 .setReplyButtonText("发送")
                 .setContentHint("请输入回复内容...")
-                .show();
+                .show(new OnReplyButtonClickListener() {
+                    @Override
+                    public void onClick(View view, String replyText) {
+                        PopTip.show("Reply: " + replyText);
+                    }
+                });
     }
     
     @Override
@@ -392,9 +399,33 @@ public class MainActivity extends AppCompatActivity {
         fileDialog.selectFile(new FileSelectCallBack() {
             @Override
             public void onSelect(File file, String filePath) {
-            
+                PopTip.show("选择的文件：" + filePath);
             }
         });
+    }
+    
+    public void onFolderSelect(View view) {
+        fileDialog = FileDialog.build();
+        fileDialog.selectFolder(new FileSelectCallBack() {
+            @Override
+            public void onSelect(File file, String filePath) {
+                PopTip.show("选择的文件夹：" + filePath);
+            }
+        });
+    }
+    
+    public void onMultiFileSelect(View view) {
+        fileDialog = FileDialog.build();
+        fileDialog.setMaxSelectionNumber(3)
+                .selectFile(new FileSelectCallBack() {
+                    @Override
+                    public void onMultiSelect(File[] file, String[] filePath) {
+                        for (String path : filePath) {
+                            Log.i(">>>", "选中的文件: " + path);
+                        }
+                        PopTip.show("选中了" + filePath.length + "个文件");
+                    }
+                });
     }
     
     @Override
@@ -403,5 +434,16 @@ public class MainActivity extends AppCompatActivity {
         if (fileDialog != null) {
             fileDialog.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+    
+    public void onJPGFileSelect(View view) {
+        fileDialog = FileDialog.build();
+        fileDialog.setSuffixArray(new String[]{".jpg"})
+                .selectFile(new FileSelectCallBack() {
+                    @Override
+                    public void onSelect(File file, String filePath) {
+                        PopTip.show("选择的文件：" + filePath);
+                    }
+                });
     }
 }

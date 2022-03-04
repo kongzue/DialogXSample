@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,10 +21,10 @@
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:textStyle="bold"
             android:text="@string/dialogx_filedialog_cancel"
             android:textColor="@color/dialogxColorBlue"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txt_dialog_title"
@@ -34,27 +35,67 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="@string/dialogx_filedialog_title_file"
-            android:textColor="@color/black90"
+            android:textColor="@color/black"
             android:textSize="18dp" />
 
         <TextView
             android:id="@+id/btn_select"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textStyle="bold"
             android:clickable="true"
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="@string/dialogx_filedialog_select"
             android:textColor="@color/dialogxColorBlue"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/list_file"
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="35dp"
+        android:fadingEdge="horizontal"
+        android:fadingEdgeLength="30dp"
+        android:requiresFadingEdge="horizontal"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <TextView
+            android:id="@+id/txt_path"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textIsSelectable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text=""
+            android:textColor="@color/black80"
+            android:textSize="14dp" />
+
+    </HorizontalScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.kongzue.filedialog.util.FileListView
+            android:id="@+id/list_file"
+            android:tag="ScrollController"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:listSelector="@color/empty"
+            android:divider="@drawable/split_dialogx_filedialog_listitem"
+            android:dividerHeight="1px"
+            tools:listitem="@layout/item_dialogx_file_list" />
+
+        <ImageView
+            android:id="@+id/img_file_list_screenshot"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
 
 </LinearLayout>

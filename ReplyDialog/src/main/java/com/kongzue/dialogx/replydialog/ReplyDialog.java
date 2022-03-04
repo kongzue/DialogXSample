@@ -14,6 +14,7 @@ import com.kongzue.dialogx.DialogX;
 import com.kongzue.dialogx.dialogs.BottomDialog;
 import com.kongzue.dialogx.interfaces.BaseDialog;
 import com.kongzue.dialogx.interfaces.OnBindView;
+import com.kongzue.dialogx.replydialog.interfaces.OnReplyButtonClickListener;
 
 /**
  * @author: Kongzue
@@ -34,7 +35,7 @@ public class ReplyDialog {
         return new ReplyDialog();
     }
     
-    public void show() {
+    public void show(OnReplyButtonClickListener onReplyButtonClickListener) {
         bottomDialog = BottomDialog.show(new OnBindView<BottomDialog>(
                 isLightTheme() ? R.layout.layout_custom_reply : R.layout.layout_custom_reply_dark
         ) {
@@ -66,6 +67,14 @@ public class ReplyDialog {
                 if (!isNull(contentHint)) {
                     editReplyCommit.setHint(contentHint);
                 }
+                
+                btnReplyCommit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onReplyButtonClickListener.onClick(v,editReplyCommit.getText().toString());
+                        dialog.dismiss();
+                    }
+                });
                 
                 bottomDialog = dialog;
                 editReplyCommit.post(new Runnable() {
