@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         rdoLight = findViewById(R.id.rdo_light);
         rdoDark = findViewById(R.id.rdo_dark);
         
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        
         grpStyle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

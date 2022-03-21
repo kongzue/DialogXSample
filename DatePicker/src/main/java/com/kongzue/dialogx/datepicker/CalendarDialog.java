@@ -46,6 +46,7 @@ import java.util.List;
  */
 public class CalendarDialog {
     
+    public int errorNotAllowDateTipRes = R.string.error_dialogx_calendardialog_max_multi_select;
     protected BottomDialog bottomDialog;
     protected int maxYear = 2100, minYear = 1900;
     protected int maxYearMonth = 12, minYearMonth = 1;
@@ -426,7 +427,7 @@ public class CalendarDialog {
                                     refreshCalendarViews();
                                 } else {
                                     if (v.getAlpha() != 1f) {
-                                        PopTip.show(R.string.error_dialogx_calendardialog_max_multi_select);
+                                        PopTip.show(errorNotAllowDateTipRes);
                                         return;
                                     }
                                     int delta = dayDelta((minYear + selectYearStart) + "-" + (selectMonthStart + 1) + "-" + selectDayStart,
@@ -472,7 +473,7 @@ public class CalendarDialog {
                                 }
                             } else {
                                 if (v.getAlpha() != 1f) {
-                                    PopTip.show(R.string.error_dialogx_calendardialog_max_multi_select);
+                                    PopTip.show(errorNotAllowDateTipRes);
                                     return;
                                 }
                                 if (selectDayViewCache != null) selectDayViewCache.setSelect(false);
@@ -894,5 +895,14 @@ public class CalendarDialog {
     
     public BottomDialog getDialog() {
         return bottomDialog;
+    }
+    
+    public int getErrorNotAllowDateTipRes() {
+        return errorNotAllowDateTipRes;
+    }
+    
+    public CalendarDialog setErrorNotAllowDateTipRes(int errorNotAllowDateTipRes) {
+        this.errorNotAllowDateTipRes = errorNotAllowDateTipRes;
+        return this;
     }
 }
