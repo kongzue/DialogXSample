@@ -7,14 +7,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kongzue.dialogx.DialogX;
@@ -28,6 +35,7 @@ import com.kongzue.dialogx.datepicker.DatePickerDialog;
 import com.kongzue.dialogx.datepicker.interfaces.OnDateSelected;
 import com.kongzue.dialogx.datepicker.interfaces.OnMultiDateSelected;
 import com.kongzue.dialogx.dialogs.PopTip;
+import com.kongzue.dialogx.interfaces.OnBindView;
 import com.kongzue.dialogx.replydialog.ReplyDialog;
 import com.kongzue.dialogx.replydialog.interfaces.OnReplyButtonClickListener;
 import com.kongzue.dialogx.sharedialog.ShareDialog;
@@ -37,8 +45,15 @@ import com.kongzue.dialogx.style.IOSStyle;
 import com.kongzue.dialogx.style.KongzueStyle;
 import com.kongzue.dialogx.style.MIUIStyle;
 import com.kongzue.dialogx.style.MaterialStyle;
+import com.kongzue.dialogxsampledemo.function.searchdemo.DataWarehouse;
+import com.kongzue.dialogxsampledemo.function.searchdemo.FunctionBean;
+import com.kongzue.dialogxsampledemo.function.searchdemo.SearchAdapter;
+import com.kongzue.dialogxsampledemo.function.searchdemo.SearchListView;
+import com.kongzue.drawerbox.DrawerBox;
+import com.kongzue.drawerbox.DrawerBoxDialog;
 import com.kongzue.filedialog.FileDialog;
 import com.kongzue.filedialog.interfaces.FileSelectCallBack;
+import com.kongzue.stacklabelview.StackLayout;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -55,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton rdoAuto;
     private RadioButton rdoLight;
     private RadioButton rdoDark;
+    private StackLayout boxFunction;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         rdoAuto = findViewById(R.id.rdo_auto);
         rdoLight = findViewById(R.id.rdo_light);
         rdoDark = findViewById(R.id.rdo_dark);
+        boxFunction = findViewById(R.id.box_function);
         
         grpStyle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -109,6 +126,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                onDrawerShow(null);
+            }
+        },100);
     }
     
     String defaultProvince = "陕西省", defaultCity = "西安市", defaultDistrict = "未央区";
@@ -445,5 +469,87 @@ public class MainActivity extends AppCompatActivity {
                         PopTip.show("选择的文件：" + filePath);
                     }
                 });
+    }
+    
+    DrawerBox drawerBox;
+    List<FunctionBean> allFunctionList;
+    SearchAdapter searchAdapter;
+    
+    public void onDrawerShow(View view) {
+        if (allFunctionList == null) {
+            allFunctionList = DataWarehouse.getFunctionDataList();
+        }
+        if (drawerBox != null) {
+            if (drawerBox.isFold()) {
+                drawerBox.unfold();
+            } else {
+                drawerBox.fold();
+            }
+            return;
+        }
+        drawerBox = DrawerBox.build().show(new OnBindView<DrawerBoxDialog>(R.layout.layout_drawer) {
+            
+            private EditText editSearch;
+            private TextView txtEmptyResult;
+            private SearchListView listSearchResult;
+            
+            @Override
+            public void onBind(DrawerBoxDialog dialog, View v) {
+                editSearch = v.findViewById(R.id.edit_search);
+                txtEmptyResult = v.findViewById(R.id.txt_empty_result);
+                listSearchResult = v.findViewById(R.id.list_search_result);
+                
+                listSearchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        drawerBox.fold();
+                        
+                        FunctionBean selectFunction = (FunctionBean) listSearchResult.getAdapter().getItem(position);
+                        String tag = selectFunction.getName();
+                        View functionButton = boxFunction.findViewWithTag(tag);
+                        if (functionButton != null) {
+                            functionButton.callOnClick();
+                        }
+                    }
+                });
+                
+                editSearch.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    
+                    }
+                    
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        List<FunctionBean> searchResultList = new ArrayList<>();
+                        if (s.length() > 0) {
+                            for (FunctionBean functionBean : allFunctionList) {
+                                if (functionBean.isSame(s.toString())) {
+                                    searchResultList.add(functionBean);
+                                }
+                            }
+                        }
+                        if (searchResultList.isEmpty()) {
+                            txtEmptyResult.setVisibility(View.VISIBLE);
+                            listSearchResult.setVisibility(View.GONE);
+                        } else {
+                            txtEmptyResult.setVisibility(View.GONE);
+                            listSearchResult.setVisibility(View.VISIBLE);
+                            listSearchResult.setAdapter(new SearchAdapter(MainActivity.this, searchResultList));
+                        }
+                    }
+                    
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                    
+                    }
+                });
+            }
+        });
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

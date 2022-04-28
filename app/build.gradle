@@ -45,4 +45,5 @@ dependencies {
     implementation project(path: ':CustomWheelPicker')
     implementation project(path: ':ReplyDialog')
     implementation project(path: ':FileDialog')
+    implementation project(path: ':DrawerBox')
 }
