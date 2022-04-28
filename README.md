@@ -41,6 +41,8 @@ DialogX 计划提供模块扩展包
   √ 文件类型筛选功能
   
   - 文件选择支持暗色模式
+  
+√ 抽屉对话框
 ```
 
 建议功能可以直接提交 [issues](https://github.com/kongzue/DialogXSample/issues)
@@ -105,6 +107,8 @@ implementation 'com.github.kongzue.DialogXSample:DrawerBox:0.0.3'
 <a href="https://github.com/kongzue/DialogXSample/wiki/"><img src="https://github.com/kongzue/DialogX/raw/master/readme/img_how_to_use_tip.png" alt="如何使用" width="450" height="280" /></a>
 
 具体的使用说明，请参阅 [DialogXSample Wiki](https://github.com/kongzue/DialogXSample/wiki/)
+
+⚠️请注意，本库仅提供范例实现，如有定制需要请自行下载源代码修改，如需定制化开发请联系 myzcxhh@live.cn
 
 ### 其他
 
