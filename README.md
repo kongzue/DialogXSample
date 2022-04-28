@@ -79,22 +79,25 @@ allprojects {
 
 ```
 //地址选择对话框
-implementation 'com.github.kongzue.DialogXSample:CityPicker:0.0.1.alpha13'
+implementation 'com.github.kongzue.DialogXSample:CityPicker:0.0.3'
 
 //日期选择对话框
-implementation 'com.github.kongzue.DialogXSample:DatePicker:0.0.1.alpha13'
+implementation 'com.github.kongzue.DialogXSample:DatePicker:0.0.3'
 
 //分享选择对话框
-implementation 'com.github.kongzue.DialogXSample:ShareDialog:0.0.1.alpha13'
+implementation 'com.github.kongzue.DialogXSample:ShareDialog:0.0.3'
 
 //自定义联动选择对话框
-implementation 'com.github.kongzue.DialogXSample:CustomWheelPicker:0.0.1.alpha13'
+implementation 'com.github.kongzue.DialogXSample:CustomWheelPicker:0.0.3'
 
 //回复消息对话框
-implementation 'com.github.kongzue.DialogXSample:ReplyDialog:0.0.1.alpha13'
+implementation 'com.github.kongzue.DialogXSample:ReplyDialog:0.0.3'
 
 //文件选择对话框
-implementation 'com.github.kongzue.DialogXSample:FileDialog:0.0.1.alpha13'
+implementation 'com.github.kongzue.DialogXSample:FileDialog:0.0.3'
+
+//抽屉对话框
+implementation 'com.github.kongzue.DialogXSample:DrawerBox:0.0.3'
 ```
 
 ### 如何使用
