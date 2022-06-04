@@ -468,7 +468,7 @@ public class DrawerBoxDialog extends BaseDialog {
         
         @Override
         public void refreshView() {
-            if (boxRoot == null || BaseDialog.getContext() == null) {
+            if (boxRoot == null || BaseDialog.getTopActivity() == null) {
                 return;
             }
             if (backgroundColor != -1) {
@@ -546,7 +546,7 @@ public class DrawerBoxDialog extends BaseDialog {
         @Override
         public void doDismiss(View v) {
             if (v != null) v.setEnabled(false);
-            if (BaseDialog.getContext() == null) return;
+            if (BaseDialog.getTopActivity() == null) return;
             
             if (!dismissAnimFlag) {
                 dismissAnimFlag = true;

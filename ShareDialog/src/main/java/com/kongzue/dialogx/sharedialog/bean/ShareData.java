@@ -49,7 +49,7 @@ public class ShareData {
     
     public Drawable getIcon() {
         if (radius != 0) {
-            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(BaseDialog.getContext().getResources(), drawableToBitmap(icon));
+            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(BaseDialog.getTopActivity().getResources(), drawableToBitmap(icon));
             roundedBitmapDrawable.setCornerRadius(radius);
             return roundedBitmapDrawable;
         }

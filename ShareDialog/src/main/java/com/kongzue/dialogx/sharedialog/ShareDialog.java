@@ -99,7 +99,7 @@ public class ShareDialog {
     }
     
     public ShareDialog setTitle(int resId) {
-        this.title = BaseDialog.getContext().getString(resId);
+        this.title = BaseDialog.getTopActivity().getString(resId);
         if (txtDialogTitle != null) {
             txtDialogTitle.setText(title);
         }

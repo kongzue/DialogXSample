@@ -96,7 +96,7 @@ public class FileDialog {
     }
     
     private void readyShowDialog() {
-        Context context = BaseDialog.getContext();
+        Context context = BaseDialog.getTopActivity();
         if (!(context instanceof Activity)) {
             errorLog("请先完成 DialogX 组件的初始化，详情：https://github.com/kongzue/DialogX");
             return;
@@ -169,13 +169,13 @@ public class FileDialog {
                 if (title == null || title.length() == 0) {
                     if (selectType == SelectType.FILE) {
                         if (getMaxSelectionNumber() == 1) {
-                            txtDialogTitle.setText(BaseDialog.getContext().getResources().getText(R.string.dialogx_filedialog_title_file));
+                            txtDialogTitle.setText(BaseDialog.getTopActivity().getResources().getText(R.string.dialogx_filedialog_title_file));
                         } else {
-                            baseTitle = BaseDialog.getContext().getResources().getString(R.string.dialogx_filedialog_title_file);
+                            baseTitle = BaseDialog.getTopActivity().getResources().getString(R.string.dialogx_filedialog_title_file);
                             txtDialogTitle.setText(baseTitle + "(0/" + getMaxSelectionNumber() + ")");
                         }
                     } else {
-                        txtDialogTitle.setText(BaseDialog.getContext().getResources().getText(R.string.dialogx_filedialog_title_folder));
+                        txtDialogTitle.setText(BaseDialog.getTopActivity().getResources().getText(R.string.dialogx_filedialog_title_folder));
                     }
                 } else {
                     txtDialogTitle.setText(title);
@@ -254,7 +254,7 @@ public class FileDialog {
             
             private void loadFileList() {
                 path = Environment.getExternalStorageDirectory().getPath();
-                fileAdapter = new FileAdapter(FileDialog.this, (Activity) BaseDialog.getContext(), new ArrayList<String>());
+                fileAdapter = new FileAdapter(FileDialog.this, (Activity) BaseDialog.getTopActivity(), new ArrayList<String>());
                 listFile.setAdapter(fileAdapter);
                 listFile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -313,7 +313,7 @@ public class FileDialog {
                                     } else {
                                         if (selectPathList.size() >= getMaxSelectionNumber()) {
                                             PopTip.show(String.format(
-                                                    BaseDialog.getContext().getResources().getString(R.string.error_dialogx_filedialog_max_selection_tip),
+                                                    BaseDialog.getTopActivity().getResources().getString(R.string.error_dialogx_filedialog_max_selection_tip),
                                                     String.valueOf(getMaxSelectionNumber())
                                             ));
                                             return;
@@ -321,7 +321,7 @@ public class FileDialog {
                                         selectPathList.add(itemPath);
                                     }
                                     fileAdapter.notifyDataSetChanged();
-                                    baseTitle = BaseDialog.getContext().getResources().getString(R.string.dialogx_filedialog_title_file);
+                                    baseTitle = BaseDialog.getTopActivity().getResources().getString(R.string.dialogx_filedialog_title_file);
                                     txtDialogTitle.setText(baseTitle + "(" + selectPathList.size() + "/" + getMaxSelectionNumber() + ")");
                                 } else {
                                     //选择文件
@@ -368,7 +368,7 @@ public class FileDialog {
                             if (selectType == SelectType.FILE) {
                                 allFileArray.addAll(fileArray);
                             }
-                            ((Activity) BaseDialog.getContext()).runOnUiThread(new Runnable() {
+                            ((Activity) BaseDialog.getTopActivity()).runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     txtPath.setText(path);

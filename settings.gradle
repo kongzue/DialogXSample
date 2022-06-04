@@ -1,5 +1,6 @@
 rootProject.name = "DialogXSampleDemo"
 include ':app'
+include ':AlbumDialog'
 include ':CityPicker'
 include ':DatePicker'
 include ':ShareDialog'

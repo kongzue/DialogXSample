@@ -123,7 +123,7 @@ public class DatePickerDialog {
                 for (int i = minYear; i <= maxYear; i++) {
                     yearList.add(i + yearLabel);
                 }
-                ArrayWheelAdapter<String> yearAdapter = new ArrayWheelAdapter<String>(BottomDialog.getContext(), yearList);
+                ArrayWheelAdapter<String> yearAdapter = new ArrayWheelAdapter<String>(BottomDialog.getTopActivity(), yearList);
                 yearAdapter.setItemResource(R.layout.default_item_date);
                 yearAdapter.setItemTextResource(R.id.default_item_date_name_tv);
                 yearAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
@@ -148,7 +148,7 @@ public class DatePickerDialog {
                         monthList.add(i + monthLabel);
                     }
                 }
-                ArrayWheelAdapter<String> monthAdapter = new ArrayWheelAdapter<String>(BottomDialog.getContext(), monthList);
+                ArrayWheelAdapter<String> monthAdapter = new ArrayWheelAdapter<String>(BottomDialog.getTopActivity(), monthList);
                 monthAdapter.setItemResource(R.layout.default_item_date);
                 monthAdapter.setItemTextResource(R.id.default_item_date_name_tv);
                 monthAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
@@ -183,7 +183,7 @@ public class DatePickerDialog {
                     for (int i = minDay; i <= maxDay; i++) {
                         dayList.add(i + dayLabel);
                     }
-                    ArrayWheelAdapter<String> dayAdapter = new ArrayWheelAdapter<String>(BottomDialog.getContext(), dayList);
+                    ArrayWheelAdapter<String> dayAdapter = new ArrayWheelAdapter<String>(BottomDialog.getTopActivity(), dayList);
                     dayAdapter.setItemResource(R.layout.default_item_date);
                     dayAdapter.setItemTextResource(R.id.default_item_date_name_tv);
                     dayAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
@@ -343,7 +343,7 @@ public class DatePickerDialog {
     }
     
     public DatePickerDialog setTitle(int resId) {
-        this.title = BaseDialog.getContext().getString(resId);
+        this.title = BaseDialog.getTopActivity().getString(resId);
         if (txtDialogTitle != null) {
             txtDialogTitle.setText(title);
         }

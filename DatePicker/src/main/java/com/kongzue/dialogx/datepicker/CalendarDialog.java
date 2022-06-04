@@ -306,7 +306,7 @@ public class CalendarDialog {
                 for (int i = minYear; i <= maxYear; i++) {
                     yearList.add(i + yearLabel);
                 }
-                ArrayWheelAdapter<String> yearAdapter = new ArrayWheelAdapter<String>(BottomDialog.getContext(), yearList);
+                ArrayWheelAdapter<String> yearAdapter = new ArrayWheelAdapter<String>(BottomDialog.getTopActivity(), yearList);
                 yearAdapter.setItemResource(R.layout.default_item_date);
                 yearAdapter.setItemTextResource(R.id.default_item_date_name_tv);
                 yearAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
@@ -351,7 +351,7 @@ public class CalendarDialog {
                         monthList.add(i + monthLabel);
                     }
                 }
-                ArrayWheelAdapter<String> monthAdapter = new ArrayWheelAdapter<String>(BottomDialog.getContext(), monthList);
+                ArrayWheelAdapter<String> monthAdapter = new ArrayWheelAdapter<String>(BottomDialog.getTopActivity(), monthList);
                 monthAdapter.setItemResource(R.layout.default_item_date);
                 monthAdapter.setItemTextResource(R.id.default_item_date_name_tv);
                 monthAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
@@ -702,7 +702,7 @@ public class CalendarDialog {
     private Drawable getDefaultCalendarItemBackground() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             int[] attrs = new int[]{android.R.attr.selectableItemBackgroundBorderless};
-            TypedArray ta = BottomDialog.getContext().obtainStyledAttributes(attrs);
+            TypedArray ta = BottomDialog.getTopActivity().obtainStyledAttributes(attrs);
             Drawable mDefaultFocusHighlightCache = ta.getDrawable(0);
             ta.recycle();
             return mDefaultFocusHighlightCache;

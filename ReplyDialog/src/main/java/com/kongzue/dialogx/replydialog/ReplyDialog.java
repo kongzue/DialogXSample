@@ -101,8 +101,8 @@ public class ReplyDialog {
     
     protected boolean isLightTheme() {
         if (DialogX.globalTheme == DialogX.THEME.AUTO) {
-            if (BaseDialog.getContext() == null) return DialogX.globalTheme == DialogX.THEME.LIGHT;
-            return (BaseDialog.getContext().getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_NO;
+            if (BaseDialog.getTopActivity() == null) return DialogX.globalTheme == DialogX.THEME.LIGHT;
+            return (BaseDialog.getTopActivity().getApplicationContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_NO;
         }
         return DialogX.globalTheme == DialogX.THEME.LIGHT;
     }

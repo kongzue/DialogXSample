@@ -77,7 +77,7 @@ public class CityPickerDialog {
         if (parseHelper == null) {
             parseHelper = new CityParseHelper();
             if (parseHelper.getProvinceBeanArrayList().isEmpty()) {
-                parseHelper.initData(BottomDialog.getContext());
+                parseHelper.initData(BottomDialog.getTopActivity());
             }
         }
     }
@@ -148,7 +148,7 @@ public class CityPickerDialog {
             private void initProvince() {
                 //加载省份
                 provinceList = parseHelper.getProvinceBeenArray();
-                ArrayWheelAdapter arrayWheelAdapter = new ArrayWheelAdapter(BottomDialog.getContext(), provinceList);
+                ArrayWheelAdapter arrayWheelAdapter = new ArrayWheelAdapter(BottomDialog.getTopActivity(), provinceList);
                 arrayWheelAdapter.setItemResource(R.layout.default_item_city);
                 arrayWheelAdapter.setItemTextResource(R.id.default_item_city_name_tv);
                 arrayWheelAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
@@ -164,7 +164,7 @@ public class CityPickerDialog {
                 parseHelper.setProvinceBean(selectProvince);
                 List<CityBean> cityList = parseHelper.getPro_CityMap().get(selectProvince.getName());
                 if (cityList != null) {
-                    ArrayWheelAdapter cityWheelAdapter = new ArrayWheelAdapter(BottomDialog.getContext(), cityList);
+                    ArrayWheelAdapter cityWheelAdapter = new ArrayWheelAdapter(BottomDialog.getTopActivity(), cityList);
                     cityWheelAdapter.setItemResource(R.layout.default_item_city);
                     cityWheelAdapter.setItemTextResource(R.id.default_item_city_name_tv);
                     cityWheelAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
@@ -182,7 +182,7 @@ public class CityPickerDialog {
                 if (areaList == null) {
                     return;
                 }
-                ArrayWheelAdapter areaWheelAdapter = new ArrayWheelAdapter(BottomDialog.getContext(), areaList);
+                ArrayWheelAdapter areaWheelAdapter = new ArrayWheelAdapter(BottomDialog.getTopActivity(), areaList);
                 areaWheelAdapter.setItemResource(R.layout.default_item_city);
                 areaWheelAdapter.setItemTextResource(R.id.default_item_city_name_tv);
                 areaWheelAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
@@ -266,7 +266,7 @@ public class CityPickerDialog {
     }
     
     public CityPickerDialog setTitle(int resId) {
-        this.title = BaseDialog.getContext().getString(resId);
+        this.title = BaseDialog.getTopActivity().getString(resId);
         if (txtDialogTitle != null) {
             txtDialogTitle.setText(title);
         }

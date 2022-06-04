@@ -203,7 +203,7 @@ public class CustomWheelPickerDialog {
                 }
             }
             for (WheelView wheelView : wheelViewList) {
-                ArrayWheelAdapter<String> customAdapter = new ArrayWheelAdapter<String>(BottomDialog.getContext(),
+                ArrayWheelAdapter<String> customAdapter = new ArrayWheelAdapter<String>(BottomDialog.getTopActivity(),
                         Arrays.asList(wheelDataList.get(wheelViewList.indexOf(wheelView))));
                 customAdapter.setItemResource(R.layout.default_item_custom_wheel);
                 customAdapter.setItemTextResource(R.id.default_item_date_name_tv);
@@ -275,7 +275,7 @@ public class CustomWheelPickerDialog {
     }
     
     public CustomWheelPickerDialog setTitle(int resId) {
-        this.title = BaseDialog.getContext().getString(resId);
+        this.title = BaseDialog.getTopActivity().getString(resId);
         if (txtDialogTitle != null) {
             txtDialogTitle.setText(title);
         }
