@@ -681,14 +681,31 @@ public class CalendarDialog {
                         if (txtDialogYearAndMonth != null) txtDialogYearAndMonth.callOnClick();
                         return true;
                     }
+    
                     if (onDateSelected != null) {
-                        int year = minYear + selectYearIndex;
-                        int month = 1 + selectMonthIndex;
-                        int day = 1 + selectDayIndex;
+                        int year = minYear + selectedYearIndex;
+                        int month = 1 + selectedMonthIndex;
+                        int day = 1 + selectedDayIndex;
+        
                         onDateSelected.onSelect(year + "-" + format(month) + "-" + format(day),
                                 year,
                                 month,
                                 day
+                        );
+                    }
+                    if (onMultiDateSelected != null) {
+                        int startYear = minYear + selectYearStart;
+                        int startMonth = 1 + selectMonthStart;
+                        int startDay = selectDayStart;
+        
+                        int endYear = minYear + selectYearEnd;
+                        int endMonth = 1 + selectMonthEnd;
+                        int endDay = selectDayEnd;
+        
+                        onMultiDateSelected.onSelect((selectYearStart == -1 && selectMonthStart == -1 && startDay == -1) ? "" : startYear + "-" + format(startMonth) + "-" + format(startDay),
+                                (selectYearEnd == -1 && selectMonthEnd == -1 && endDay == -1) ? "" : endYear + "-" + format(endMonth) + "-" + format(endDay),
+                                startYear, startMonth, startDay,
+                                endYear, endMonth, endDay
                         );
                     }
                     return false;
