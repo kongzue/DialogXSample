@@ -83,11 +83,12 @@ public class FileAdapter extends BaseAdapter {
             viewHolder.imgIcon.setImageResource(R.drawable.ic_dialogx_filedialog_back);
             viewHolder.btnHaveChild.setVisibility(View.GONE);
         } else {
-            viewHolder.txtFileName.setText(fileName.substring(1));
             if (fileName.startsWith("/")) {
+                viewHolder.txtFileName.setText(fileName.substring(1));
                 viewHolder.imgIcon.setImageResource(R.drawable.ic_dialogx_filedialog_folder);
                 viewHolder.btnHaveChild.setVisibility(View.VISIBLE);
             } else {
+                viewHolder.txtFileName.setText(fileName);
                 if (dialog.getSelectPathList() != null && dialog.getSelectPathList().contains(itemPath)) {
                     viewHolder.imgIcon.setImageResource(R.drawable.ic_dialogx_filedialog_select);
                     viewHolder.txtFileName.getPaint().setFakeBoldText(true);
