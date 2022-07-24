@@ -430,9 +430,10 @@ public class MainActivity extends AppCompatActivity {
     
     public void onFolderSelect(View view) {
         fileDialog = FileDialog.build();
-        fileDialog.selectFolder(new FileSelectCallBack() {
+        fileDialog.setPath("/storage/emulated/0/DCIM").selectFolder(new FileSelectCallBack() {
             @Override
             public void onSelect(File file, String filePath) {
+                Log.i(">>>", "onSelect: "+filePath);
                 PopTip.show("选择的文件夹：" + filePath);
             }
         });

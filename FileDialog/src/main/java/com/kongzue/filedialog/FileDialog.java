@@ -1,5 +1,7 @@
 package com.kongzue.filedialog;
 
+import static com.kongzue.dialogx.interfaces.BaseDialog.isNull;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -221,7 +223,7 @@ public class FileDialog {
                 dialog.setOnBackPressedListener(new OnBackPressedListener() {
                     @Override
                     public boolean onBackPressed() {
-                        if (!Environment.getExternalStorageDirectory().getPath().equals(path)){
+                        if (!Environment.getExternalStorageDirectory().getPath().equals(path)) {
                             if (path.contains("/")) {
                                 String[] folders = path.split("/");
                                 if (folders.length > 2) {
@@ -229,15 +231,15 @@ public class FileDialog {
                                     for (int i = 0; i < folders.length - 1; i++) {
                                         path = path + (i == 0 ? "" : "/") + folders[i];
                                     }
-            
+                                    
                                     Bitmap screenshot = screenshotView(listFile);
                                     imgFileListScreenshot.setImageBitmap(screenshot);
-            
+                                    
                                     imgFileListScreenshot.setVisibility(View.VISIBLE);
                                     imgFileListScreenshot.setX(0);
-            
+                                    
                                     refreshFileList();
-            
+                                    
                                     listFile.setX(-listFile.getWidth());
                                     imgFileListScreenshot.animate().setInterpolator(new DecelerateInterpolator(2f)).x(listFile.getWidth());
                                     listFile.animate().setInterpolator(new DecelerateInterpolator(2f)).x(0);
@@ -253,7 +255,9 @@ public class FileDialog {
             }
             
             private void loadFileList() {
-                path = Environment.getExternalStorageDirectory().getPath();
+                if (isNull(path)) {
+                    path = Environment.getExternalStorageDirectory().getPath();
+                }
                 fileAdapter = new FileAdapter(FileDialog.this, (Activity) BaseDialog.getTopActivity(), new ArrayList<String>());
                 listFile.setAdapter(fileAdapter);
                 listFile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -445,6 +449,20 @@ public class FileDialog {
     
     public String getPath() {
         return path;
+    }
+    
+    public FileDialog setPath(String path) {
+        this.path = path;
+        return this;
+    }
+    
+    public FileDialog setPath(File folder) {
+        if (folder.isDirectory()) {
+            this.path = folder.getAbsolutePath();
+        }else{
+            this.path = folder.getParent();
+        }
+        return this;
     }
     
     public List<String> getSelectPathList() {
