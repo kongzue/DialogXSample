@@ -1,13 +1,14 @@
 package com.kongzue.dialogx.datepicker.view;
 
+import static com.kongzue.dialogx.interfaces.BaseDialog.isNull;
+
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -26,6 +27,7 @@ public class CalendarLabelTextView extends androidx.appcompat.widget.AppCompatTe
     int section = 2;
     boolean isLight;
     boolean today;
+    String label;
     
     public CalendarLabelTextView(Context context) {
         super(context);
@@ -67,6 +69,14 @@ public class CalendarLabelTextView extends androidx.appcompat.widget.AppCompatTe
         }
     }
     
+    int textColor;
+    
+    @Override
+    public void setTextColor(int color) {
+        super.setTextColor(color);
+        textColor=color;
+    }
+    
     Paint bkgPaint;
     
     @Override
@@ -97,6 +107,36 @@ public class CalendarLabelTextView extends androidx.appcompat.widget.AppCompatTe
             }
         }
         super.onDraw(canvas);
+        if (!isNull(label)) {
+            drawLabels(canvas);
+        }
+    }
+    
+    Paint labelPaint;
+    Rect labelRect;
+    int labelTextSize = dip2px(10);
+    
+    private void drawLabels(Canvas canvas) {
+        setPadding(0, 0, 0, dip2px(15));
+        
+        if (labelPaint == null) {
+            labelPaint = new Paint();
+        }
+        labelPaint.setAntiAlias(true);
+        labelPaint.setColor(textColor);
+        labelPaint.setTextSize(labelTextSize);
+        
+        if (labelRect == null) {
+            labelRect = new Rect();
+        }
+        labelPaint.getTextBounds(label, 0, label.length(), labelRect);
+        
+        canvas.drawText(label, getWidth() / 2 - labelRect.width() / 2, getHeight() - labelTextSize, labelPaint);
+    }
+    
+    private static int dip2px(float dpValue) {
+        final float scale = Resources.getSystem().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
     
     public int getSection() {
@@ -127,6 +167,16 @@ public class CalendarLabelTextView extends androidx.appcompat.widget.AppCompatTe
     public CalendarLabelTextView setToday(boolean today) {
         this.today = today;
         refreshStatus();
+        invalidate();
+        return this;
+    }
+    
+    public String getLabel() {
+        return label;
+    }
+    
+    public CalendarLabelTextView setLabel(String label) {
+        this.label = label;
         invalidate();
         return this;
     }
