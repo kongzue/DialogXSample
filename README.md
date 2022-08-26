@@ -110,6 +110,10 @@ implementation 'com.github.kongzue.DialogXSample:DrawerBox:0.0.3'
 
 ⚠️请注意，本库仅提供范例实现，如有定制需要请自行下载源代码修改，如需定制化开发请联系 myzcxhh@live.cn
 
+请注意 DialogXSample 提供了一些功能的具体实现范例，但不一定能完美满足你的实际使用需求，如需做细微功能调整，建议拉取代码到本地进行修改，方法如下：
+
+![如何添加库代码到自己的项目](https://user-images.githubusercontent.com/10115359/186886902-9d1237fe-383c-4aaf-b2c7-24e357d0acef.png)
+
 ### 其他
 
 DialogXSample 遵循 Apache License 2.0 开源协议。
