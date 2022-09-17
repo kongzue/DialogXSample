@@ -220,9 +220,9 @@ public class FileDialog {
                     btnSelect.setVisibility(View.INVISIBLE);
                 }
                 
-                dialog.setOnBackPressedListener(new OnBackPressedListener() {
+                dialog.setOnBackPressedListener(new OnBackPressedListener<FullScreenDialog>() {
                     @Override
-                    public boolean onBackPressed() {
+                    public boolean onBackPressed(FullScreenDialog dialog) {
                         if (!Environment.getExternalStorageDirectory().getPath().equals(path)) {
                             if (path.contains("/")) {
                                 String[] folders = path.split("/");

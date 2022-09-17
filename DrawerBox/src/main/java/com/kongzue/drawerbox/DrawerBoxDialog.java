@@ -57,6 +57,7 @@ public class DrawerBoxDialog extends BaseDialog {
     protected OnDialogButtonClickListener<DrawerBoxDialog> cancelButtonClickListener;
     protected OnDialogButtonClickListener<DrawerBoxDialog> okButtonClickListener;
     protected OnDialogButtonClickListener<DrawerBoxDialog> otherButtonClickListener;
+    protected OnBackPressedListener<DrawerBoxDialog> onBackPressedListener;
     protected BOOLEAN privateCancelable;
     
     protected TextInfo titleTextInfo;
@@ -173,7 +174,7 @@ public class DrawerBoxDialog extends BaseDialog {
         return drawerBoxDialog;
     }
     
-    public void show() {
+    public BaseDialog show() {
         super.beforeShow();
         if (getDialogView() == null) {
             int layoutId = isLightTheme() ? R.layout.layout_dialogx_bottom_material : R.layout.layout_dialogx_bottom_material_dark;
@@ -186,6 +187,7 @@ public class DrawerBoxDialog extends BaseDialog {
             if (dialogView != null) dialogView.setTag(me);
         }
         BaseDialog.show(dialogView);
+        return this;
     }
     
     public void show(Activity activity) {
@@ -395,11 +397,11 @@ public class DrawerBoxDialog extends BaseDialog {
                 }
             }
             
-            boxRoot.setOnBackPressedListener(new OnBackPressedListener() {
+            boxRoot.setOnBackPressedListener(new DialogXBaseRelativeLayout.PrivateBackPressedListener() {
                 @Override
                 public boolean onBackPressed() {
                     if (onBackPressedListener != null) {
-                        if (onBackPressedListener.onBackPressed()) {
+                        if (onBackPressedListener.onBackPressed(DrawerBoxDialog.this)) {
                             preDismiss();
                         }
                         return false;
@@ -407,7 +409,7 @@ public class DrawerBoxDialog extends BaseDialog {
                     if (isCancelable()) {
                         preDismiss();
                     }
-                    return false;
+                    return true;
                 }
             });
             boxRoot.setOnClickListener(new View.OnClickListener() {
