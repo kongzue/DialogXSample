@@ -2,11 +2,14 @@ package com.kongzue.drawerbox;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -221,12 +224,10 @@ public class DrawerBoxDialog extends BaseDialog {
         public LinearLayout boxContent;
         public TextView txtDialogTip;
         public View imgSplit;
-        public RelativeLayout boxList;
+        public ViewGroup boxList;
         public RelativeLayout boxCustom;
-        public BlurView blurView;
         public ViewGroup boxCancel;
         public TextView btnCancel;
-        public BlurView cancelBlurView;
         
         public TextView btnSelectOther;
         public TextView btnSelectPositive;
@@ -245,7 +246,6 @@ public class DrawerBoxDialog extends BaseDialog {
             imgSplit = convertView.findViewWithTag("split");
             boxList = convertView.findViewById(R.id.box_list);
             boxCustom = convertView.findViewById(R.id.box_custom);
-            blurView = convertView.findViewById(R.id.blurView);
             boxCancel = convertView.findViewWithTag("cancelBox");
             btnCancel = convertView.findViewWithTag("cancel");
     
@@ -294,7 +294,7 @@ public class DrawerBoxDialog extends BaseDialog {
             if (btnSelectPositive != null) btnSelectPositive.getPaint().setFakeBoldText(true);
             if (btnSelectOther != null) btnSelectOther.getPaint().setFakeBoldText(true);
             
-            boxBkg.setY(BaseDialog.getRootFrameLayout().getMeasuredHeight());
+            boxBkg.setY(getScreenHeight(boxBkg.getContext()));
             bkg.setMaxWidth(getMaxWidth());
             boxRoot.setParentDialog(me);
             boxRoot.setOnLifecycleCallBack(new DialogXBaseRelativeLayout.OnLifecycleCallBack() {
@@ -306,28 +306,6 @@ public class DrawerBoxDialog extends BaseDialog {
                     getDialogLifecycleCallback().onShow(me);
                     
                     onDialogInit(dialogImpl);
-                    
-                    boxRoot.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (style.messageDialogBlurSettings() != null && style.messageDialogBlurSettings().blurBackground() && boxBody != null && boxCancel != null) {
-                                int blurFrontColor = getResources().getColor(style.messageDialogBlurSettings().blurForwardColorRes(isLightTheme()));
-                                blurView = new BlurView(bkg.getContext(), null);
-                                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(bkg.getWidth(), bkg.getHeight());
-                                blurView.setOverlayColor(backgroundColor == -1 ? blurFrontColor : backgroundColor);
-                                blurView.setTag("blurView");
-                                blurView.setRadiusPx(style.messageDialogBlurSettings().blurBackgroundRoundRadiusPx());
-                                boxBody.addView(blurView, 0, params);
-                                
-                                cancelBlurView = new BlurView(boxCancel.getContext(), null);
-                                RelativeLayout.LayoutParams cancelButtonLp = new RelativeLayout.LayoutParams(boxCancel.getWidth(), boxCancel.getHeight());
-                                cancelBlurView.setOverlayColor(backgroundColor == -1 ? blurFrontColor : backgroundColor);
-                                cancelBlurView.setTag("blurView");
-                                cancelBlurView.setRadiusPx(style.messageDialogBlurSettings().blurBackgroundRoundRadiusPx());
-                                boxCancel.addView(cancelBlurView, 0, cancelButtonLp);
-                            }
-                        }
-                    });
                     
                     refreshUI();
                 }
@@ -475,11 +453,6 @@ public class DrawerBoxDialog extends BaseDialog {
             }
             if (backgroundColor != -1) {
                 tintColor(bkg, backgroundColor);
-                if (blurView != null && cancelBlurView != null) {
-                    blurView.setOverlayColor(backgroundColor);
-                    cancelBlurView.setOverlayColor(backgroundColor);
-                }
-                
                 tintColor(btnSelectOther, backgroundColor);
                 tintColor(btnCancel, backgroundColor);
                 tintColor(btnSelectPositive, backgroundColor);
@@ -1032,5 +1005,12 @@ public class DrawerBoxDialog extends BaseDialog {
             return getDialogImpl().isFold();
         }
         return false;
+    }
+
+    private int getScreenHeight(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(metrics);
+        return metrics.heightPixels;
     }
 }

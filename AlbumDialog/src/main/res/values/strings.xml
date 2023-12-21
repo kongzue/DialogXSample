@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="album_dialog_default_album_name">所有照片</string>
+    <string name="album_dialog_other_album">其他相册</string>
+</resources>

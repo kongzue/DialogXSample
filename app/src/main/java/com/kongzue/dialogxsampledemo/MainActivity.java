@@ -1,5 +1,9 @@
 package com.kongzue.dialogxsampledemo;
 
+import static com.kongzue.dialogx.dialogs.PopTip.tip;
+
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +28,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kongzue.albumdialog.PhotoAlbumDialog;
+import com.kongzue.albumdialog.util.DialogImplCallback;
+import com.kongzue.albumdialog.util.SelectPhotoCallback;
 import com.kongzue.dialogx.DialogX;
 import com.kongzue.dialogx.citypicker.CityPickerDialog;
 import com.kongzue.dialogx.citypicker.interfaces.OnCitySelected;
@@ -34,6 +41,7 @@ import com.kongzue.dialogx.datepicker.CalendarDialog;
 import com.kongzue.dialogx.datepicker.DatePickerDialog;
 import com.kongzue.dialogx.datepicker.interfaces.OnDateSelected;
 import com.kongzue.dialogx.datepicker.interfaces.OnMultiDateSelected;
+import com.kongzue.dialogx.dialogs.FullScreenDialog;
 import com.kongzue.dialogx.dialogs.PopTip;
 import com.kongzue.dialogx.interfaces.OnBindView;
 import com.kongzue.dialogx.replydialog.ReplyDialog;
@@ -552,5 +560,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    public void onPhotoAlbumShow(View view) {
+        PhotoAlbumDialog.build()
+                .setMaxSelectPhotoCount(3)
+                .setCallback(new SelectPhotoCallback() {
+                    @Override
+                    public void selectedPhotos(List<String> selectedPhotos) {
+                        tip("已选择 " + selectedPhotos.size() +" 张照片");
+                    }
+                })
+                .setDialogDialogImplCallback(new DialogImplCallback<FullScreenDialog>() {
+                    @Override
+                    public void onDialogCreated(FullScreenDialog dialog) {
+                        dialog.setRadius(dip2px(25));
+                    }
+                })
+                .show(this);
     }
 }

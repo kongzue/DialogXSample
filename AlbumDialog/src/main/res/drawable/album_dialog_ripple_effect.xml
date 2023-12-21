@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/black10"> <!-- 水波纹颜色 -->
+    <item android:id="@android:id/mask"
+        android:drawable="@drawable/album_dialog_bkg_album_gray" /> <!-- 水波纹区域 -->
+</ripple>

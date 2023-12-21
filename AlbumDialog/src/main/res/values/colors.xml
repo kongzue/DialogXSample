@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="albumDefaultThemeColor">#84A3A1</color>
+    <color name="albumDefaultThemeColorLight">#D5E3E2</color>
+    <color name="albumDefaultThemeDeep">#587472</color>
+    <color name="albumDefaultLabelColor">#8B8B8B</color>
+</resources>

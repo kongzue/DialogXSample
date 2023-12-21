@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:textColor="@color/textColor"
-            android:text="DialogX Simple 是基于 DialogX 框架的范例实现库，会不断的补充各种常用的工具对话框" />
+            android:text="DialogX Sample 是基于 DialogX 框架的范例实现库，会不断的补充各种常用的工具对话框" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -229,6 +229,14 @@
                 android:onClick="onDrawerShow"
                 android:text="抽屉对话框"
                 android:tag="抽屉对话框"  />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:onClick="onPhotoAlbumShow"
+                android:text="选择照片"
+                android:tag="选择照片"  />
 
         </com.kongzue.stacklabelview.StackLayout>
     </LinearLayout>

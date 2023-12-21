@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 33
 
     defaultConfig {
         applicationId 'com.kongzue.dialogxsampledemo'
         minSdk 21
-        targetSdk 30
+        targetSdk 33
         versionCode SAMPLE_VERSION_INT as int
         versionName SAMPLE_VERSION
 
@@ -46,4 +46,5 @@ dependencies {
     implementation project(path: ':ReplyDialog')
     implementation project(path: ':FileDialog')
     implementation project(path: ':DrawerBox')
+    implementation project(path: ':AlbumDialog')
 }

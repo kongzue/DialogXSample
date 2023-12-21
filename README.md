@@ -9,7 +9,7 @@ DialogX 计划提供模块扩展包
 
 此框架基于 [DialogX](https://github.com/kongzue/DialogX) 实现，需要先引入 DialogX 框架才可以使用，对话框样式、主题等继承自 DialogX 设置。
 
-![Demo](https://github.com/kongzue/DialogXSample/raw/master/img_dialogx_sample.png)
+![Demo](https://github.com/kongzue/DialogXSample/raw/master/img_dialogx_sample.jpg)
 
 ### 目前进度
 
@@ -43,6 +43,8 @@ DialogX 计划提供模块扩展包
   - 文件选择支持暗色模式
   
 √ 抽屉对话框
+
+√ 照片选择器
 ```
 
 建议功能可以直接提交 [issues](https://github.com/kongzue/DialogXSample/issues)
@@ -77,29 +79,33 @@ allprojects {
 
 #### 最新版本：
 
+如果默认的就能满足你的业务需求，直接引入对应功能的包即可，如果不能，请自行拉取代码集成到自己的项目里修改使用。
+
 [![最新版本](https://jitpack.io/v/kongzue/DialogXSample.svg)](https://jitpack.io/#kongzue/DialogXSample)
 
-```
+```gradle
+def dialogx_sample_version = "0.0.10"
+
 //地址选择对话框
-implementation 'com.github.kongzue.DialogXSample:CityPicker:0.0.3'
+implementation 'com.github.kongzue.DialogXSample:CityPicker:${dialogx_sample_version}'
 
 //日期选择对话框
-implementation 'com.github.kongzue.DialogXSample:DatePicker:0.0.3'
+implementation 'com.github.kongzue.DialogXSample:DatePicker:${dialogx_sample_version}'
 
 //分享选择对话框
-implementation 'com.github.kongzue.DialogXSample:ShareDialog:0.0.3'
+implementation 'com.github.kongzue.DialogXSample:ShareDialog:${dialogx_sample_version}'
 
 //自定义联动选择对话框
-implementation 'com.github.kongzue.DialogXSample:CustomWheelPicker:0.0.3'
+implementation 'com.github.kongzue.DialogXSample:CustomWheelPicker:${dialogx_sample_version}'
 
 //回复消息对话框
-implementation 'com.github.kongzue.DialogXSample:ReplyDialog:0.0.3'
+implementation 'com.github.kongzue.DialogXSample:ReplyDialog:${dialogx_sample_version}'
 
 //文件选择对话框
-implementation 'com.github.kongzue.DialogXSample:FileDialog:0.0.3'
+implementation 'com.github.kongzue.DialogXSample:FileDialog:${dialogx_sample_version}'
 
 //抽屉对话框
-implementation 'com.github.kongzue.DialogXSample:DrawerBox:0.0.3'
+implementation 'com.github.kongzue.DialogXSample:DrawerBox:${dialogx_sample_version}'
 ```
 
 ### 如何使用

@@ -12,6 +12,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="android:navigationBarColor">@color/white</item>
+
+        <item name="fontFamily">google-sans-text-medium</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>
