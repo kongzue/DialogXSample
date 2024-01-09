@@ -106,6 +106,9 @@ implementation 'com.github.kongzue.DialogXSample:FileDialog:${dialogx_sample_ver
 
 //抽屉对话框
 implementation 'com.github.kongzue.DialogXSample:DrawerBox:${dialogx_sample_version}'
+
+//照片选择器
+implementation 'com.github.kongzue.DialogXSample:AlbumDialog:${dialogx_sample_version}'
 ```
 
 ### 如何使用
