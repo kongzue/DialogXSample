@@ -2,7 +2,9 @@ package com.kongzue.albumdialog.util;
 
 import java.util.List;
 
-public interface SelectPhotoCallback {
+public abstract class SelectPhotoCallback {
 
-    void selectedPhotos(List<String> selectedPhotos);
+    public void selectedPhoto(String selectedPhotos){};
+
+    public void selectedPhotos(List<String> selectedPhotos){};
 }

@@ -5,13 +5,11 @@ import static com.kongzue.dialogx.interfaces.BaseDialog.isNull;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Outline;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +23,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.kongzue.albumdialog.R;
+import com.kongzue.albumdialog.views.PhotoSelectImageView;
 
 import java.util.List;
 

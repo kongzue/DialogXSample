@@ -2,4 +2,9 @@
 <resources>
     <string name="album_dialog_default_album_name">所有照片</string>
     <string name="album_dialog_other_album">其他相册</string>
+    <string name="album_dialog_default_select_tip">请选择需要使用的照片</string>
+    <string name="album_dialog_error_select_photo_max_tip">最多可选择 %s 张照片</string>
+    <string name="album_dialog_default_clip_tip">请裁剪照片</string>
+    <string name="please_wait">请稍候...</string>
+    <string name="album_dialog_error_not_clip_photo">第 %s 张照片还未裁剪</string>
 </resources>

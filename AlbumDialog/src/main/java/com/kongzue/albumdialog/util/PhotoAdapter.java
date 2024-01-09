@@ -4,6 +4,7 @@ import static com.kongzue.dialogx.interfaces.BaseDialog.isNull;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.kongzue.albumdialog.views.PhotoSelectImageView;
 
 import java.util.List;
 
@@ -71,6 +73,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 String uri = (String) v.getTag();
+
                 if (isNull(uri)) return;
                 if (selectedPhotos.contains(uri)) {
                     selectedPhotos.remove(uri);

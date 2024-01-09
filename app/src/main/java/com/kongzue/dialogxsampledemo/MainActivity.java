@@ -564,11 +564,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void onPhotoAlbumShow(View view) {
         PhotoAlbumDialog.build()
-                .setMaxSelectPhotoCount(3)
+                .setCompressQuality(90)     //开启压缩并指定质量 90%
+                .setCompressPhoto(false)    //是否压缩（开启回调格式为 jpg，不开启回调格式为 png）
+                .setMaxSelectPhotoCount(3)  //最多选择三张照片
+                .setClip(true)              //开启裁剪模式
+                .setMaxSize(1000)           //最高分辨率 1000（宽或高大于 1000会被等比缩小到 1000内）
+                .setMaxWidth(1000)          //最大宽度
+                .setMaxHeight(1000)         //最大高度
                 .setCallback(new SelectPhotoCallback() {
+
+                    //多张模式回调（二者其一任选）
                     @Override
                     public void selectedPhotos(List<String> selectedPhotos) {
                         tip("已选择 " + selectedPhotos.size() +" 张照片");
+                    }
+
+                    //单张模式回调（二者其一任选）
+                    @Override
+                    public void selectedPhoto(String selectedPhotos) {
+                        super.selectedPhoto(selectedPhotos);
                     }
                 })
                 .setDialogDialogImplCallback(new DialogImplCallback<FullScreenDialog>() {
