@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -68,7 +69,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    
+
     private RadioGroup grpStyle;
     private RadioButton rdoMaterial;
     private RadioButton rdoIos;
@@ -79,12 +80,12 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton rdoLight;
     private RadioButton rdoDark;
     private StackLayout boxFunction;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         grpStyle = findViewById(R.id.grp_style);
         rdoMaterial = findViewById(R.id.rdo_material);
         rdoIos = findViewById(R.id.rdo_ios);
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         rdoLight = findViewById(R.id.rdo_light);
         rdoDark = findViewById(R.id.rdo_dark);
         boxFunction = findViewById(R.id.box_function);
-        
+
         grpStyle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -117,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        
+
         grpTheme.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -134,17 +135,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        
+
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 onDrawerShow(null);
             }
-        },100);
+        }, 100);
     }
-    
+
     String defaultProvince = "陕西省", defaultCity = "西安市", defaultDistrict = "未央区";
-    
+
     public void onCityPicker(View view) {
         CityPickerDialog.build()
                 .setDefaultSelect(defaultProvince, defaultCity, defaultDistrict)
@@ -159,16 +160,16 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSelect(String text, String province, String city, String district) {
                         ((Button) view).setText(text);
-                        
+
                         defaultProvince = province;
                         defaultCity = city;
                         defaultDistrict = district;
                     }
                 });
     }
-    
+
     int defaultYear = 2021, defaultMonth = 9, defaultDay = 15;
-    
+
     public void onDatePicker(View view) {
         DatePickerDialog.build()
                 .setMinTime(1990, 5, 20)            //指定最小可选日期 1990年5月20日
@@ -185,14 +186,14 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSelect(String text, int year, int month, int day) {
                         ((Button) view).setText(text);
-                        
+
                         defaultYear = year;
                         defaultMonth = month;
                         defaultDay = day;
                     }
                 });
     }
-    
+
     public void onShare(View view) {
         int radius = dip2px(15);        //图标自动圆角，可选项，不必须设置
         List<ShareData> shareDataList = new ArrayList<>();
@@ -202,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
         shareDataList.add(new ShareData(MainActivity.this, "待办事项", R.mipmap.img_remind_ios).setRadius(radius));
         shareDataList.add(new ShareData(MainActivity.this, "微博", R.mipmap.img_weibo_ios).setRadius(radius));
         shareDataList.add(new ShareData(MainActivity.this, "备忘录", R.mipmap.img_memorandum_ios).setRadius(radius));
-        
+
         ShareDialog.build()
                 .setShareDataList(shareDataList)
                 .show(new OnShareClick() {
@@ -221,16 +222,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-    
+
     int[] defaultCustomWheelSelect = new int[]{1, 3, 1};
-    
+
     public void onCustomWheelPicker(View view) {
         CustomWheelPickerDialog.build()
                 .addWheel(new String[]{"小学", "初中", "高中"})
                 .addWheel(new String[]{"小1班", "小2班", "小3班", "小4班", "小5班", "小6班", "小7班", "小8班", "小9班"})
                 .addWheel(new String[]{"语文组", "数学组", "英语组", "美术组", "音乐组"})
                 .setOnWheelChangeListener(new OnWheelChangeListener() {
-                    
+
                     private void refreshWheelData(CustomWheelPickerDialog picker) {
                         String grade = picker.getWheelSelected(0);
                         int classIndex;
@@ -282,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                         }
                     }
-                    
+
                     /**
                      * 当滚轮滑动时触发
                      * @param picker            滑动对话框
@@ -314,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-    
+
     public void onReplyComments(View view) {
         ReplyDialog.build()
                 .setTitle("回复 @Kongzue:")
@@ -327,14 +328,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -350,12 +351,12 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    
+
     private int dip2px(int dpValue) {
         float scale = getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
-    
+
     public void onCalendar(View view) {
         CalendarDialog.build()
                 .setMinTime(1990, 5, 20)            //指定最小可选日期 1990年5月20日
@@ -365,16 +366,16 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSelect(String text, int year, int month, int day) {
                         ((Button) view).setText(text);
-                        
+
                         defaultYear = year;
                         defaultMonth = month;
                         defaultDay = day;
                     }
                 });
     }
-    
+
     int defaultEndYear = 2021, defaultEndMonth = 9, defaultEndDay = 17;
-    
+
     public void onCalendarMulti(View view) {
         CalendarDialog.build()
                 .setMinTime(1990, 5, 20)            //指定最小可选日期 1990年5月20日
@@ -387,18 +388,18 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
                         ((Button) view).setText(startText + "~" + endText);
-                        
+
                         defaultYear = startYear;
                         defaultMonth = startMonth;
                         defaultDay = startDay;
-                        
+
                         defaultEndYear = endYear;
                         defaultEndMonth = endMonth;
                         defaultEndDay = endDay;
                     }
                 });
     }
-    
+
     public void onCalendarMultiLimit(View view) {
         CalendarDialog.build()
                 .setMinTime(1990, 5, 20)            //指定最小可选日期 1990年5月20日
@@ -412,20 +413,20 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
                         ((Button) view).setText(startText + "~" + endText);
-                        
+
                         defaultYear = startYear;
                         defaultMonth = startMonth;
                         defaultDay = startDay;
-                        
+
                         defaultEndYear = endYear;
                         defaultEndMonth = endMonth;
                         defaultEndDay = endDay;
                     }
                 });
     }
-    
+
     FileDialog fileDialog;
-    
+
     public void onFileSelect(View view) {
         fileDialog = FileDialog.build();
         fileDialog.selectFile(new FileSelectCallBack() {
@@ -435,18 +436,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    
+
     public void onFolderSelect(View view) {
         fileDialog = FileDialog.build();
         fileDialog.setPath("/storage/emulated/0/DCIM").selectFolder(new FileSelectCallBack() {
             @Override
             public void onSelect(File file, String filePath) {
-                Log.i(">>>", "onSelect: "+filePath);
+                Log.i(">>>", "onSelect: " + filePath);
                 PopTip.show("选择的文件夹：" + filePath);
             }
         });
     }
-    
+
     public void onMultiFileSelect(View view) {
         fileDialog = FileDialog.build();
         fileDialog.setMaxSelectionNumber(3)
@@ -460,7 +461,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-    
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -468,7 +469,7 @@ public class MainActivity extends AppCompatActivity {
             fileDialog.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-    
+
     public void onJPGFileSelect(View view) {
         fileDialog = FileDialog.build();
         fileDialog.setSuffixArray(new String[]{".jpg"})
@@ -479,11 +480,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-    
+
     DrawerBox drawerBox;
     List<FunctionBean> allFunctionList;
     SearchAdapter searchAdapter;
-    
+
     public void onDrawerShow(View view) {
         if (allFunctionList == null) {
             allFunctionList = DataWarehouse.getFunctionDataList();
@@ -497,22 +498,22 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         drawerBox = DrawerBox.build().show(new OnBindView<DrawerBoxDialog>(R.layout.layout_drawer) {
-            
+
             private EditText editSearch;
             private TextView txtEmptyResult;
             private SearchListView listSearchResult;
-            
+
             @Override
             public void onBind(DrawerBoxDialog dialog, View v) {
                 editSearch = v.findViewById(R.id.edit_search);
                 txtEmptyResult = v.findViewById(R.id.txt_empty_result);
                 listSearchResult = v.findViewById(R.id.list_search_result);
-                
+
                 listSearchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         drawerBox.fold();
-                        
+
                         FunctionBean selectFunction = (FunctionBean) listSearchResult.getAdapter().getItem(position);
                         String tag = selectFunction.getName();
                         View functionButton = boxFunction.findViewWithTag(tag);
@@ -521,13 +522,13 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-                
+
                 editSearch.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    
+
                     }
-                    
+
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         List<FunctionBean> searchResultList = new ArrayList<>();
@@ -547,16 +548,16 @@ public class MainActivity extends AppCompatActivity {
                             listSearchResult.setAdapter(new SearchAdapter(MainActivity.this, searchResultList));
                         }
                     }
-                    
+
                     @Override
                     public void afterTextChanged(Editable s) {
-                    
+
                     }
                 });
             }
         });
     }
-    
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -576,7 +577,7 @@ public class MainActivity extends AppCompatActivity {
                     //多张模式回调（二者其一任选）
                     @Override
                     public void selectedPhotos(List<String> selectedPhotos) {
-                        tip("已选择 " + selectedPhotos.size() +" 张照片");
+                        tip("已选择 " + selectedPhotos.size() + " 张照片");
                     }
 
                     //单张模式回调（二者其一任选）
