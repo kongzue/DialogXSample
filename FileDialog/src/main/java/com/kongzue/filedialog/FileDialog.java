@@ -54,6 +54,7 @@ public class FileDialog {
     String[] suffixArray;
     FileSelectCallBack fileSelectCallBack;
     int maxSelectionNumber = 1;
+    boolean showFileDate = true;
     
     enum SelectType {
         FILE,
@@ -467,5 +468,14 @@ public class FileDialog {
     
     public List<String> getSelectPathList() {
         return selectPathList;
+    }
+
+    public boolean isShowFileDate() {
+        return showFileDate;
+    }
+
+    public FileDialog setShowFileDate(boolean showFileDate) {
+        this.showFileDate = showFileDate;
+        return this;
     }
 }

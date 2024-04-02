@@ -7,4 +7,7 @@
     <string name="error_dialogx_filedialog_max_selection_tip">最多可选择 %s 个文件</string>
     <string name="error_dialogx_filedialog_no_support_file_type_tip">不支持此文件类型</string>
     <string name="error_dialogx_filedialog_no_file_selected_tip">请选择文件</string>
+    <string name="dialogx_filedialog_default_date_format">yyyy年M月d日 HH:mm</string>
+    <string name="dialogx_filedialog_default_date_format_today">今天 HH:mm</string>
+    <string name="dialogx_filedialog_default_date_format_yesterday">昨天 HH:mm</string>
 </resources>

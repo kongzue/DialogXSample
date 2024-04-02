@@ -54,6 +54,7 @@ import com.kongzue.dialogx.style.IOSStyle;
 import com.kongzue.dialogx.style.KongzueStyle;
 import com.kongzue.dialogx.style.MIUIStyle;
 import com.kongzue.dialogx.style.MaterialStyle;
+import com.kongzue.dialogx.util.views.DialogXBaseRelativeLayout;
 import com.kongzue.dialogxsampledemo.function.searchdemo.DataWarehouse;
 import com.kongzue.dialogxsampledemo.function.searchdemo.FunctionBean;
 import com.kongzue.dialogxsampledemo.function.searchdemo.SearchAdapter;
@@ -96,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
         rdoLight = findViewById(R.id.rdo_light);
         rdoDark = findViewById(R.id.rdo_dark);
         boxFunction = findViewById(R.id.box_function);
+
+        DialogXBaseRelativeLayout.debugMode=true;
 
         grpStyle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

@@ -1,5 +1,8 @@
 package com.kongzue.albumdialog;
 
+import static androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING;
+import static androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE;
+import static androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_SETTLING;
 import static com.kongzue.albumdialog.util.AlbumUtil.getAllAlbums;
 import static com.kongzue.albumdialog.util.AlbumUtil.getPhotosByAlbum;
 import static com.kongzue.dialogx.dialogs.PopTip.tip;
@@ -39,10 +42,12 @@ import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -294,6 +299,21 @@ public class PhotoAlbumDialog {
             recyclerView.setTag("ScrollController");
             recyclerView.setAlpha(0f);
 
+//            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//                @Override
+//                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//                    super.onScrollStateChanged(recyclerView, newState);
+//                    switch (newState){
+//                        case SCROLL_STATE_SETTLING:
+//                            Glide.with(recyclerView.getContext()).pauseRequests();
+//                            break;
+//                        case SCROLL_STATE_IDLE:
+//                            Glide.with(recyclerView.getContext()).resumeRequests();
+//                            break;
+//                    }
+//                }
+//            });
+
             contentLayout.addView(recyclerView);
             boxLayout.addView(contentLayout);
 
@@ -392,6 +412,7 @@ public class PhotoAlbumDialog {
     List<ClipView> clipViewList;
     int clipIndex;
     int selectedPhotosSize;
+
 
     private void onFinishSelectPhoto(List<String> selectedPhotos) {
         if (!clip) {
@@ -591,9 +612,9 @@ public class PhotoAlbumDialog {
         Matrix matrix = new Matrix();
         matrix.postScale(scaleFactor, scaleFactor);
         Bitmap resizedBitmap = Bitmap.createBitmap(originBitmap, 0, 0, width, height, matrix, true);
-        if (resizedBitmap != originBitmap) {
-            originBitmap.recycle();
-        }
+//        if (resizedBitmap != originBitmap) {
+//            originBitmap.recycle();
+//        }
         return resizedBitmap;
     }
 

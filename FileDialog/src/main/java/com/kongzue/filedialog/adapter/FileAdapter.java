@@ -1,6 +1,7 @@
 package com.kongzue.filedialog.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,10 @@ import com.kongzue.filedialog.FileDialog;
 import com.kongzue.filedialog.R;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -111,6 +115,13 @@ public class FileAdapter extends BaseAdapter {
                 }
             }
         }
+
+        if (dialog.isShowFileDate() && !"...".equals(fileName)){
+            viewHolder.txtDate.setText(getFileDate(activity,new File(itemPath)));
+            viewHolder.txtDate.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.txtDate.setVisibility(View.GONE);
+        }
         
         return convertView;
     }
@@ -136,6 +147,30 @@ public class FileAdapter extends BaseAdapter {
         }
         return false;
     }
+
+    private String getFileDate(Context context,File file) {
+        Date lastModified = new Date(file.lastModified());
+        Calendar fileCal = Calendar.getInstance();
+        fileCal.setTime(lastModified);
+
+        Calendar today = Calendar.getInstance();
+        Calendar yesterday = Calendar.getInstance();
+        yesterday.add(Calendar.DATE, -1);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(context.getString(R.string.dialogx_filedialog_default_date_format));
+
+        if (fileCal.get(Calendar.YEAR) == today.get(Calendar.YEAR)
+                && fileCal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)) {
+            SimpleDateFormat timeFormat = new SimpleDateFormat(context.getString(R.string.dialogx_filedialog_default_date_format_today));
+            return timeFormat.format(lastModified);
+        } else if (fileCal.get(Calendar.YEAR) == yesterday.get(Calendar.YEAR)
+                && fileCal.get(Calendar.DAY_OF_YEAR) == yesterday.get(Calendar.DAY_OF_YEAR)) {
+            SimpleDateFormat timeFormat = new SimpleDateFormat(context.getString(R.string.dialogx_filedialog_default_date_format_yesterday));
+            return timeFormat.format(lastModified);
+        } else {
+            return dateFormat.format(lastModified);
+        }
+    }
     
     private String getMimeType(File file) {
         String suffix = getSuffix(file);
@@ -143,7 +178,7 @@ public class FileAdapter extends BaseAdapter {
             return "file/*";
         }
         String type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(suffix);
-        if (type != null || !type.isEmpty()) {
+        if (type != null && !type.isEmpty()) {
             return type;
         }
         return "file/*";
@@ -166,14 +201,16 @@ public class FileAdapter extends BaseAdapter {
     }
     
     class ViewHolder {
-        
+
         ImageView imgIcon;
         TextView txtFileName;
+        TextView txtDate;
         ImageView btnHaveChild;
-        
+
         public ViewHolder(View convertView) {
             imgIcon = convertView.findViewById(R.id.img_icon);
             txtFileName = convertView.findViewById(R.id.txt_fileName);
+            txtDate = convertView.findViewById(R.id.txt_date);
             btnHaveChild = convertView.findViewById(R.id.btn_have_child);
         }
     }
