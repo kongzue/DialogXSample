@@ -31,7 +31,7 @@ import com.kongzue.dialogx.interfaces.OnDialogButtonClickListener;
 import com.kongzue.dialogx.interfaces.ScrollController;
 import com.kongzue.dialogx.util.TextInfo;
 import com.kongzue.dialogx.util.views.BlurView;
-import com.kongzue.dialogx.util.views.BottomDialogScrollView;
+import com.kongzue.dialogx.util.views.DialogScrollView;
 import com.kongzue.dialogx.util.views.DialogXBaseRelativeLayout;
 import com.kongzue.dialogx.util.views.MaxRelativeLayout;
 
@@ -248,7 +248,9 @@ public class DrawerBoxDialog extends BaseDialog {
             boxCustom = convertView.findViewById(R.id.box_custom);
             boxCancel = convertView.findViewWithTag("cancelBox");
             btnCancel = convertView.findViewWithTag("cancel");
-    
+
+            bkg.setTag("DialogXSafetyArea");
+            bkg.setDialogXSafetyMode(4);
             boxRoot.setBackgroundResource(R.color.black30);
             boxRoot.setBkgAlpha(0f);
             
@@ -472,15 +474,15 @@ public class DrawerBoxDialog extends BaseDialog {
             if (onBindView != null && onBindView.getCustomView() != null) {
                 onBindView.bindParent(boxCustom, me);
                 if (onBindView.getCustomView() instanceof ScrollController) {
-                    if (scrollView instanceof BottomDialogScrollView) {
-                        ((BottomDialogScrollView) scrollView).setVerticalScrollBarEnabled(false);
+                    if (scrollView instanceof DialogScrollView) {
+                        ((DialogScrollView) scrollView).setVerticalScrollBarEnabled(false);
                     }
                     scrollView = (ScrollController) onBindView.getCustomView();
                 } else {
                     View scrollController = onBindView.getCustomView().findViewWithTag("ScrollController");
                     if (scrollController instanceof ScrollController) {
-                        if (scrollView instanceof BottomDialogScrollView) {
-                            ((BottomDialogScrollView) scrollView).setVerticalScrollBarEnabled(false);
+                        if (scrollView instanceof DialogScrollView) {
+                            ((DialogScrollView) scrollView).setVerticalScrollBarEnabled(false);
                         }
                         scrollView = (ScrollController) scrollController;
                     }

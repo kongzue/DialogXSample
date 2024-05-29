@@ -3,6 +3,7 @@ package com.kongzue.dialogxsampledemo;
 import android.app.Application;
 
 import com.kongzue.dialogx.DialogX;
+import com.kongzue.dialogx.util.views.DialogXBaseRelativeLayout;
 
 /**
  * @author: Kongzue
@@ -15,6 +16,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        DialogXBaseRelativeLayout.debugMode = true;
         DialogX.DEBUGMODE = BuildConfig.DEBUG;
         DialogX.init(this);
         DialogX.globalTheme = DialogX.THEME.AUTO;
