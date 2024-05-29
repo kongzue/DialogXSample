@@ -84,7 +84,7 @@ allprojects {
 [![最新版本](https://jitpack.io/v/kongzue/DialogXSample.svg)](https://jitpack.io/#kongzue/DialogXSample)
 
 ```gradle
-def dialogx_sample_version = "0.0.10"
+def dialogx_sample_version = "0.0.14"
 
 //地址选择对话框
 implementation 'com.github.kongzue.DialogXSample:CityPicker:${dialogx_sample_version}'
