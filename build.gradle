@@ -11,6 +11,7 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+
 allprojects {
     repositories {
         google()
@@ -20,6 +21,44 @@ allprojects {
         }
     }
 }
+
+rootProject.group = 'com.github.kongzue.DialogXSample'
+subprojects {
+    afterEvaluate { project ->
+        if (!plugins.hasPlugin('maven-publish')) {
+            return
+        }
+
+        def groupName = rootProject.group
+        def projectName = project.name
+        def versionName = SAMPLE_VERSION
+
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
+                    group groupName
+                    artifactId projectName
+                    version versionName
+                    afterEvaluate {
+                        from components.release
+                    }
+                }
+            }
+        }
+    }
+
+    afterEvaluate {
+        android {
+            publishing {
+                singleVariant("release") {
+                    withSourcesJar()
+                    withJavadocJar()
+                }
+            }
+        }
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
