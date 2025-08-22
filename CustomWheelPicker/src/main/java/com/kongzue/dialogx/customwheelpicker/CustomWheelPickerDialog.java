@@ -1,6 +1,5 @@
 package com.kongzue.dialogx.customwheelpicker;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -57,7 +56,7 @@ public class CustomWheelPickerDialog {
                 txtDialogTitle = v.findViewById(R.id.txt_dialog_title);
                 boxWheel = v.findViewById(R.id.box_wheel);
     
-                txtDialogTitle.setTextColor(dialog.getResources().getColor(dialog.isLightTheme() ? R.color.black : R.color.white));
+                txtDialogTitle.setTextColor(dialog.getResources().getColor(dialog.isLightTheme() ? com.kongzue.dialogx.R.color.black : com.kongzue.dialogx.R.color.white));
                 txtDialogTitle.getPaint().setFakeBoldText(true);
                 if (title != null) txtDialogTitle.setText(title);
                 
@@ -207,7 +206,7 @@ public class CustomWheelPickerDialog {
                         Arrays.asList(wheelDataList.get(wheelViewList.indexOf(wheelView))));
                 customAdapter.setItemResource(R.layout.default_item_custom_wheel);
                 customAdapter.setItemTextResource(R.id.default_item_date_name_tv);
-                customAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
+                customAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? com.kongzue.dialogx.R.color.black60 : com.kongzue.dialogx.R.color.white70));
                 wheelView.setViewAdapter(customAdapter);
                 
                 wheelView.setChangingListener(new OnWheelChangedListener() {

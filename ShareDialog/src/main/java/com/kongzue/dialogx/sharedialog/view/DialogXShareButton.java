@@ -5,18 +5,12 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.kongzue.dialogx.dialogs.BottomDialog;
-import com.kongzue.dialogx.interfaces.BaseDialog;
-import com.kongzue.dialogx.sharedialog.R;
-import com.kongzue.dialogx.util.views.DialogXBaseRelativeLayout;
 import com.kongzue.dialogx.util.views.MaxRelativeLayout;
 
 /**
@@ -91,7 +85,7 @@ public class DialogXShareButton extends androidx.appcompat.widget.AppCompatImage
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         View rootView = getRootView();
-        View bkgView = rootView.findViewById(R.id.bkg);
+        View bkgView = rootView.findViewById(com.kongzue.dialogx.R.id.bkg);
         if (bkgView instanceof MaxRelativeLayout) {
             dialogContentView = bkgView;
         }

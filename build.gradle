@@ -5,12 +5,13 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.0'
+        classpath 'com.android.tools.build:gradle:8.12.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
+
 allprojects {
     repositories {
         google()
@@ -20,6 +21,44 @@ allprojects {
         }
     }
 }
+
+rootProject.group = 'com.github.kongzue.DialogXSample'
+subprojects {
+    afterEvaluate { project ->
+        if (!plugins.hasPlugin('maven-publish')) {
+            return
+        }
+
+        def groupName = rootProject.group
+        def projectName = project.name
+        def versionName = SAMPLE_VERSION
+
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
+                    group groupName
+                    artifactId projectName
+                    version versionName
+                    afterEvaluate {
+                        from components.release
+                    }
+                }
+            }
+        }
+    }
+
+    afterEvaluate {
+        android {
+            publishing {
+                singleVariant("release") {
+                    withSourcesJar()
+                    withJavadocJar()
+                }
+            }
+        }
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
