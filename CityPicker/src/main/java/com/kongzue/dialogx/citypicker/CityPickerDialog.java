@@ -1,7 +1,6 @@
 package com.kongzue.dialogx.citypicker;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -151,7 +150,7 @@ public class CityPickerDialog {
                 ArrayWheelAdapter arrayWheelAdapter = new ArrayWheelAdapter(BottomDialog.getTopActivity(), provinceList);
                 arrayWheelAdapter.setItemResource(R.layout.default_item_city);
                 arrayWheelAdapter.setItemTextResource(R.id.default_item_city_name_tv);
-                arrayWheelAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
+                arrayWheelAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? com.kongzue.dialogx.R.color.black60 : com.kongzue.dialogx.R.color.white70));
                 idProvince.setViewAdapter(arrayWheelAdapter);
                 idProvince.setCurrentItem(selectProvinceIndex < provinceList.size() ? selectProvinceIndex : 0);
                 
@@ -167,7 +166,7 @@ public class CityPickerDialog {
                     ArrayWheelAdapter cityWheelAdapter = new ArrayWheelAdapter(BottomDialog.getTopActivity(), cityList);
                     cityWheelAdapter.setItemResource(R.layout.default_item_city);
                     cityWheelAdapter.setItemTextResource(R.id.default_item_city_name_tv);
-                    cityWheelAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
+                    cityWheelAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? com.kongzue.dialogx.R.color.black60 : com.kongzue.dialogx.R.color.white70));
                     idCity.setViewAdapter(cityWheelAdapter);
                     idCity.setCurrentItem(selectCityIndex < cityList.size() ? selectCityIndex : 0);
                     initArea();
@@ -185,7 +184,7 @@ public class CityPickerDialog {
                 ArrayWheelAdapter areaWheelAdapter = new ArrayWheelAdapter(BottomDialog.getTopActivity(), areaList);
                 areaWheelAdapter.setItemResource(R.layout.default_item_city);
                 areaWheelAdapter.setItemTextResource(R.id.default_item_city_name_tv);
-                areaWheelAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? R.color.black60 : R.color.white70));
+                areaWheelAdapter.setTextColor(bottomDialog.getResources().getColor(bottomDialog.isLightTheme() ? com.kongzue.dialogx.R.color.black60 : com.kongzue.dialogx.R.color.white70));
                 idDistrict.setViewAdapter(areaWheelAdapter);
                 idDistrict.setCurrentItem(selectAreaIndex < areaList.size() ? selectAreaIndex : 0);
                 

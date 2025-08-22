@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace "com.kongzue.dialogx.sharedialog"
     compileSdkVersion 30
 
     defaultConfig {

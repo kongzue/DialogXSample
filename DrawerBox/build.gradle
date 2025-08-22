@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace "com.kongzue.drawerbox"
     compileSdkVersion 30
 
     defaultConfig {

@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace "com.kongzue.dialogx.replydialog"
     compileSdkVersion 30
 
     defaultConfig {

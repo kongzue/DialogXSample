@@ -42,7 +42,7 @@ public class ShareDialog {
                 txtDialogTitle = v.findViewById(R.id.txt_dialog_title);
                 boxTable = v.findViewById(R.id.box_table);
                 
-                txtDialogTitle.setTextColor(dialog.getResources().getColor(dialog.isLightTheme() ? R.color.black : R.color.white));
+                txtDialogTitle.setTextColor(dialog.getResources().getColor(dialog.isLightTheme() ? com.kongzue.dialogx.R.color.black : com.kongzue.dialogx.R.color.white));
                 txtDialogTitle.getPaint().setFakeBoldText(true);
                 if (title != null) txtDialogTitle.setText(title);
                 
@@ -53,7 +53,7 @@ public class ShareDialog {
                         ImageView imgIcon = shareButton.findViewById(R.id.img_icon);
                         TextView txtLabel = shareButton.findViewById(R.id.txt_label);
     
-                        txtLabel.setTextColor(dialog.getResources().getColor(dialog.isLightTheme() ? R.color.black : R.color.white));
+                        txtLabel.setTextColor(dialog.getResources().getColor(dialog.isLightTheme() ? com.kongzue.dialogx.R.color.black : com.kongzue.dialogx.R.color.white));
                         
                         imgIcon.setImageDrawable(shareData.getIcon());
                         txtLabel.setText(shareData.getLabel());

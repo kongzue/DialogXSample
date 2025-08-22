@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace "com.kongzue.filedialog"
     compileSdkVersion 30
 
     defaultConfig {

@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace "com.kongzue.dialogx.citypicker"
     compileSdk 30
 
     defaultConfig {

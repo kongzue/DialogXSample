@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    namespace "com.kongzue.dialogx.datepicker"
     compileSdkVersion 30
 
     defaultConfig {
